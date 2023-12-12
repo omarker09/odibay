@@ -2,26 +2,124 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+.nav-top-background {
+  background-color: #303841;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+.nav-background {
+  background-color: #21262c;
+}
+
+.nav-background-text {
+  color: #21262c;
+}
+
+.lang {
+  background-color: rgb(203 213 225)
+}
+
+.lang:hover {
+  background-color: rgb(166, 184, 206)
+}
+
+.nofocus {
+  outline: none;
+  border: none;
+  user-select: none;
+}
+
+#app {
+  height: 100%;
+}
+
+html,
+body {
+  position: relative;
+  height: 100%;
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background: rgb(241 245 249);
+  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  color: #000;
+  margin: 0;
+  padding: 0;
+}
+
+.swiper {
+  width: 100%;
+  height: 200px;
+}
+
+.swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  /* Center slide text vertically */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover
+}
+
+@media screen and (min-width: 768px) {
+  .swiper {
+    width: 100%;
+    height: 100%;
+  }
+
+  .swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    width: 100%;
+    height: 400px;
+    /* Center slide text vertically */
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  .swiper-slide img {
+    display: block;
+    width: 100%;
+    height: 400px;
+    object-fit: cover
+  }
+}
+
+.shadow {
+  background-color: transparent;
+  transition: 0.5s;
+
+}
+
+.shadow:hover {
+  background-color: rgba(0, 0, 0, 0.3);
+  ;
+}
+
+.stickz {
+  position: sticky;
+  top: 20px;
+}
+
+.nodrag {
+
+  /* Standard syntax */
+  -webkit-user-drag: none;
+  /* Chrome, Safari, Opera */
+}
+.carouselItem{
+  padding-right: 40px
+} 
+.wrapersive{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(11.25rem,100%),1fr));
+  grid-gap: 1fr;
 }
