@@ -7,7 +7,10 @@ import Box from '@mui/material/Box';
 import Rating from '@mui/material/Rating';
 function Product(props) {
   return (
-    <div className=' border border-1 border-gray-300 w-full rounded-lg' >
+    <div className=' boxshadow duration-200    border border-1  relative border-gray-300  w-full rounded-lg' >
+      <div style={{ borderTopRightRadius: 8}} className={props.discount ? ' bg-red-600 text-white px-4 py-1 absolute top-0 right-0' : "hidden"}>
+        {props.discount}{props.discount ? '% OFF' : ""}
+      </div>
       <Image
         height={props.height}
         width={props.width}
@@ -18,23 +21,27 @@ function Product(props) {
       />
       <div className=' flex flex-col gap-1 select-none nodrag p-2 w-full justify-start items-start'>
         <div className=' flex items-center justify-between w-full'>
-          <p className=' text-xs lg:text-sm text-gray-400'>{props.category}</p>
-          <Link className=' p-1 text-xs lg:text-sm text-black' href={"/"}>Details <ArrowForwardIosIcon className=' text-xs text-black  ' fontSize='small' /></Link>
+        {props.category.length > 11 ? props.category.slice(0, 11) + "..." : props.category}
+          <Link className=' p-1 text-xs  text-black' href={"/"}>Details</Link>
         </div>
-        <h1 className=' text-bold text-md'>{props.title}</h1>
-        <div className=' flex flex-col gap-2 items-start w-full justify-between'>
-          <div className=' w-full items-center flex justify-between'>
-            <span className=' text-blue-950 font-bold text-xs sm:text-sm'>{props.price} DZD</span>
-            < Box
-              sx={{
-                '& > legend': { mt: 2 },
-              }}
-            >
-              <Rating name="read-only" size="small" value={props.rating} readOnly />
-
-            </Box >
+        <h1 className=' text-bold text-md'> {props.title.length > 20 ? props.title.slice(0, 16) + "..." : props.title}</h1>
+        <div className=' flex flex-col gap-0 items-start w-full justify-between'>
+          <div className=' w-full items-center flex flex-col justify-start'>
+            <div className=' flex  w-full gap-1 items-start justify-start'>
+              <span className=' text-gray-400 font-bold text-xs sm:text-sm line-through'>{props.dicountprice} </span>
+              <span className=' text-blue-950 font-bold text-xs sm:text-sm'>{props.price} DZD</span>
+            </div>
+            <div className=' w-full items-start'>
+              < Box
+                sx={{
+                  '& > legend': { mt: 1 },
+                }}
+              >
+                <Rating name="read-only" size="small" value={props.rating} readOnly />
+              </Box >
+            </div>
           </div>
-          <button className=' w-full nav-top-background text-xs lg:text-sm  px-1 md:px-3 lg:px-5 py-1 text-white'>add to cart</button>
+          <button className=' w-full nav-top-background text-xs lg:text-sm  px-1 md:px-3 lg:px-5 py-1 text-white rounded'>add to cart</button>
         </div>
       </div>
     </div>

@@ -12,7 +12,7 @@ import img2 from "../public/banner2.jpg"
 import img3 from "../public/Black Minimalist Motivation Quote LinkedIn Banner.png"
 import img4 from "../public/Photo Modern New Collection Banner.jpg"
 
-function MyswipperApp() {
+function MyswipperApp(props) {
 
     return (
         <>
@@ -48,7 +48,7 @@ function MyswipperApp() {
 
                 <SwiperSlide className=' flex justify-start relative h-full'>
                     <Image
-                        src={img4}
+                        src={img1}
                         width={"full"}
                         height={"auto"}
                         alt="Picture of the author"

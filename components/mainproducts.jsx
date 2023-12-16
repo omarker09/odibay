@@ -10,27 +10,18 @@ import gtav from "../public/collectble/red-dead.jpg"
 import grey from "../public/Grey Minimalist Product Advertising Instagram Post.png"
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
-import { ArrowProps } from 'react-multi-carousel/lib/types'
 
+import "../app/globals.css"
 import Box from '@mui/material/Box';
 import Rating from '@mui/material/Rating';
-import Typography from '@mui/material/Typography';
 
-import caros from "../app/caros.css"
-import { Swiper, SwiperSlide } from 'swiper/react';
+
 
 // Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/pagination';
 
 
-// import required modules
-import { Pagination } from 'swiper/modules';
-import img1 from "../public/collectble/discord.png"
-import img2 from "../public/collectble/app-development.png"
-import img3 from "../public/collectble/gift-card.png"
-import img4 from "../public/collectble/playstation.png"
-import Product from '@/componnent-sm/product';
 // The promotion must has only 2 link
 function Mainproducts() {
     const [value, setValue] = React.useState(4);
@@ -61,30 +52,8 @@ function Mainproducts() {
             items: 2
         }
     };
-    const arrowStyle = {
-        background: "blue",
-        border: 0,
-        color: "black",
-        fontSize: "80px"
-    };
-    const CustomRight = ({ onClick }) => (
-        <button className="arrow right" onClick={onClick} style={arrowStyle}>
-            <h1 style={{ fontSize: "50px" }} >
-                right
-            </h1>
-        </button>
-    );
-    const CustomLeft = ({ onClick }) => (
-        <button className="arrow left" onClick={onClick} style={arrowStyle}>
-            <h1 style={{ fontSize: "50px" }} >
-                left
-            </h1>
-        </button>
-    );
 
-    const styles = {
-        carouselItem: "padding-right: 0px"
-    }
+
     const arr = [
         { title: "GTA 5", price: 1000, category: "XBOX Games", image: gtv },
         { title: "Red dead 2", price: 2500, category: "PS5 Games", image: gtav },
@@ -97,10 +66,13 @@ function Mainproducts() {
     return (
         <div className=' flex flex-col gap-3 '>
             <div className=' w-full flex px-2 sm:px-10 py-2 justify-between items-center'>
-                <h1 className=' text-xl font-bold nav-background-text '>Popular Products</h1>
-                <Link className=' nav-background py-1 px-2 rounded text-sm  text-white ' href={"/"}>Discover all <ArrowForwardIosIcon className=' text-sm' /></Link>
+            <div className='flex flex-col gap-0 justify-start'>
+                <h1 className='nav-background-text text-2xl font-bold'>Popular</h1>
+                <p className='text-gray-500'>Explore exclusive programs and projects designed to enhance your experience</p>
             </div>
-            <div className='px-2 sm:px-10'>
+                <Link className=' nav-background py-1 px-2 rounded text-sm  text-white ' href={"/"}>Discover all</Link>
+            </div>
+            <div className='px-2 sm:px-10 bg-slate-100'>
                 <Carousel
                     responsive={responsive}
                     additionalTransfrom={2}
@@ -111,7 +83,7 @@ function Mainproducts() {
                     draggable
                     focusOnSelect={false}
                     infinite
-
+                    containerClass="my-carousel"
                     keyBoardControl
                     minimumTouchDrag={2}
                     renderButtonGroupOutside={true}
@@ -120,20 +92,21 @@ function Mainproducts() {
                     pauseOnHover={true}
                     slidesToSlide={2}
                     swipeable
-                    itemClass={styles.carouselItem}
+                    sliderClass='my-carousel'
+                    className=' bg-white'
                     partialVisible={false}
                 >
 
                     {/*Notice image size must be 1080 * 1080 px*/}
                     {arr.map((e) => {
-                        return <div key={e.title} className=' border border-1 mr-2 border-gray-300  rounded-lg' >
+                        return <div key={e.title} className=' border border-1 mr-2  border-gray-300  rounded-lg' >
                             <Image
                                 height={290}
                                 width={290}
                                 src={e.image}
                                 alt='Red Dead Redemption 2'
                                 style={{ borderTopRightRadius: 8, borderTopLeftRadius: 8 }}
-                                className=' select-none nodrag'
+                                className=' no-drag-img no-drag-text'
                             />
                             <div className=' flex flex-col gap-1 select-none nodrag p-2 w-full justify-start items-start'>
                                 <div className=' flex items-center justify-between w-full'>
@@ -153,7 +126,7 @@ function Mainproducts() {
 
                                         </Box >
                                     </div>
-                                    <button className=' w-full nav-top-background text-xs lg:text-sm  px-1 md:px-3 lg:px-5 py-1 text-white'>add to cart</button>
+                                    <button className=' w-full nav-top-background text-xs lg:text-sm  px-1 md:px-3 lg:px-5 py-1 text-white rounded'>add to cart</button>
                                 </div>
                             </div>
                         </div>

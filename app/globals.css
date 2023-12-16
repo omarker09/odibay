@@ -115,11 +115,69 @@ body {
   -webkit-user-drag: none;
   /* Chrome, Safari, Opera */
 }
-.carouselItem{
+
+.carouselItem {
   padding-right: 40px
-} 
-.wrapersive{
+}
+
+.wrapersive {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(11.25rem,100%),1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(11.25rem, 100%), 1fr));
   grid-gap: 1fr;
+}
+
+.my-carousel {
+  background-color: rgb(241 245 249)
+}
+
+.boxshadow {}
+
+.boxshadow:hover {
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+
+}
+
+.boxshadow-b {
+  box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+}
+
+.gridiant {
+  background: rgb(58, 67, 186);
+  background: linear-gradient(312deg, rgba(58, 67, 186, 1) 0%, rgba(224, 35, 80, 1) 56%);
+}
+
+.card-container {
+  perspective: 2000px;
+}
+
+.card {
+  transition: transform 0.5s;
+}
+
+.card:hover {
+  transform: rotateX(10deg) rotateY(10deg);
+}
+
+.button-hov {
+  background-color: #ffffff;
+  color: #21262c;
+}
+
+.button-hov:hover {
+  background-color: #21262c;
+  color: white;
+}
+
+.no-drag-img {
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+}
+
+/* Disable text selection */
+.no-drag-text {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
