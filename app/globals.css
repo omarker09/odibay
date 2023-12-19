@@ -7,7 +7,7 @@
 }
 
 .nav-background {
-  background-color: #21262c;
+  background-color: #21262c; 
 }
 
 .nav-background-text {
@@ -39,7 +39,7 @@ body {
 }
 
 body {
-  background: rgb(241 245 249);
+  background-color: white;
   font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
   font-size: 14px;
   color: #000;
@@ -127,7 +127,8 @@ body {
 }
 
 .my-carousel {
-  background-color: rgb(241 245 249)
+
+  background-color: white
 }
 
 .boxshadow {}

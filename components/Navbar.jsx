@@ -17,7 +17,8 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { deepOrange, deepPurple } from '@mui/material/colors';
 import MenuIcon from '@mui/icons-material/Menu';
 import Slide from '@mui/material/Slide';
-
+import { useSelector, useDispatch } from 'react-redux';
+import { trigerdon, trigerdoff } from "@/app/redux/slices/testSlice";
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -40,9 +41,11 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 }));
 
 function Navbar() {
+  const dispatch = useDispatch()
+  const currentState = useSelector((state) => state.product)
 
   const [open, setOpen] = React.useState(false);
-
+  const [iscat, setIscat] = React.useState(false)
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -59,6 +62,16 @@ function Navbar() {
     },
   }));
 
+  function CatHoveEnter() {
+ 
+    dispatch(trigerdon());
+    console.log(currentState);
+  }
+
+  function CatHovLeave() {
+    dispatch(trigerdoff());
+    console.log(currentState);
+  }
   return (
     <div >
       <div
@@ -98,7 +111,7 @@ function Navbar() {
         </div>
       </div>
       <div className="nav-background stickz z-50 flex items-center justify-between h-auto w-full px-2 sm:px-10 py-2">
-        <div className="  text-white flex cursor-pointer gap-3 items-center outline outline-1 outline-white px-3 rounded-lg py-1">
+        <div onMouseEnter={() => {CatHoveEnter()}} onMouseLeave={() => {CatHovLeave()}} className="  text-white flex cursor-pointer gap-3 items-center outline outline-1 outline-white px-3 rounded-lg py-1">
           <div style={{ fontSize: 10 }} className=" text-white  items-center gap-2 flex">
             <MenuIcon />
             All Categories

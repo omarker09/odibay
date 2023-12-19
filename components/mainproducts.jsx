@@ -64,7 +64,7 @@ function Mainproducts() {
         { title: "GTA 5", price: 1000, category: "XBOX Games", image: gtv },
     ]
     return (
-        <div className=' flex flex-col gap-3 '>
+        <div className=' flex flex-col gap-3 bg-white '>
             <div className=' w-full flex px-2 sm:px-10 py-2 justify-between items-center'>
             <div className='flex flex-col gap-0 justify-start'>
                 <h1 className='nav-background-text text-2xl font-bold'>Popular</h1>
@@ -72,7 +72,7 @@ function Mainproducts() {
             </div>
                 <Link className=' nav-background py-1 px-2 rounded text-sm  text-white ' href={"/"}>Discover all</Link>
             </div>
-            <div className='px-2 sm:px-10 bg-slate-100'>
+            <div className='px-2 sm:px-10 '>
                 <Carousel
                     responsive={responsive}
                     additionalTransfrom={2}

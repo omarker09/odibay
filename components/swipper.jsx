@@ -39,7 +39,7 @@ function MyswipperApp(props) {
                         height={"full"}
                         alt="Picture of the author"
                     />
-                    <div className=' w-full   h-full flex justify-center items-center  absolute top-0 left-0'>
+                    <div className=' hidden w-full   h-full flex justify-center items-center  absolute top-0 left-0'>
                         <div className='w-full shadow  h-full flex justify-end items-end p-4 '>
                             <button className='   nav-background border border-1 border-gray-600 rounded-sm text-xs px-1 py-1 sm:px-7 sm:text-sm sm:py-2 text-white'>More Details </button>
                         </div>
@@ -53,7 +53,7 @@ function MyswipperApp(props) {
                         height={"auto"}
                         alt="Picture of the author"
                     />
-                    <div className=' w-full   h-full flex justify-center items-center  absolute top-0 left-0'>
+                    <div className='hidden w-full   h-full flex justify-center items-center  absolute top-0 left-0'>
                         <div className='w-full shadow  h-full flex justify-end items-end p-4 '>
                             <button className='   nav-background border border-1 border-gray-600 rounded-sm text-xs px-1 py-1 sm:px-7 sm:text-sm sm:py-2 text-white'>More Details </button>
                         </div>
@@ -67,7 +67,7 @@ function MyswipperApp(props) {
                         height={"auto"}
                         alt="Picture of the author"
                     />
-                    <div className=' w-full   h-full flex justify-center items-center  absolute top-0 left-0'>
+                    <div className='hidden w-full   h-full flex justify-center items-center  absolute top-0 left-0'>
                         <div className='w-full shadow  h-full flex justify-end items-end p-4 '>
                             <button className='   nav-background border border-1 border-gray-600 rounded-sm text-xs px-1 py-1 sm:px-7 sm:text-sm sm:py-2 text-white'>More Details </button>
                         </div>
@@ -81,7 +81,7 @@ function MyswipperApp(props) {
                         height={"auto"}
                         alt="Picture of the author"
                     />
-                    <div className=' w-full   h-full flex justify-center items-center  absolute top-0 left-0'>
+                    <div className='hidden w-full   h-full flex justify-center items-center  absolute top-0 left-0'>
                         <div className='w-full shadow  h-full flex justify-end items-end p-4 '>
                             <button className='   nav-background border border-1 border-gray-600 rounded-sm text-xs px-1 py-1 sm:px-7 sm:text-sm sm:py-2 text-white'>More Details </button>
                         </div>

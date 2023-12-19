@@ -10,10 +10,10 @@ import Smgroups from '@/components/smgroups'
 import Footer from '@/components/footer'
 export default function Home() {
   return (
-    <div className=' h-full flex flex-col gap-1 w-full bg-slate-100 '>
+    <div className=' h-full flex flex-col gap-1 w-full bg-white '>
       <Navbar />
       <Banner />
-      <div className=' h-full flex flex-col gap-8 w-full bg-slate-100 '>
+      <div className=' h-full flex flex-col gap-8 w-full  '>
         <Fastcategory />
         <Productsgroup />
         <Mainproducts />

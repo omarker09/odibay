@@ -69,7 +69,7 @@ function Mainproducts() {
     }
 
     return (
-        <div className=' flex flex-col gap-3 '>
+        <div className=' flex flex-col gap- '>
             <div className=' w-full flex px-2 sm:px-10 py-2 justify-between items-center'>
             <div className='flex flex-col gap-0 items-start justify-start'>
                 <h1 className='nav-background-text text-2xl font-bold'>Events</h1>
@@ -103,8 +103,8 @@ function Mainproducts() {
                     {/*Notice image size must be 1080 * 1080 px*/}
 
                     {arr.map((e) => {
-                        return <Link href={e.link} key={e.link} draggable="false" className='  cursor-pointer flex  mr-3 items-center justify-start'>
-                            <div className=' h-full  overflow-hidden relative  flex-col'>
+                        return <Link href={e.link} key={e.link} draggable="false" className='   cursor-pointer flex  mr-3 items-center justify-start'>
+                            <div className=' h-full   overflow-hidden relative  flex-col'>
                                 <Image
                                     height={"full"}
                                     width={'full'}

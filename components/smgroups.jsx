@@ -16,7 +16,7 @@ function Smgroups() {
         <h1 className='nav-background-text text-2xl font-bold'>Get more out of GIXIFY.COM</h1>
         <p className='text-gray-500'>Explore exclusive programs and projects designed to enhance your experience</p>
       </div>
-      <div className='grid grid-cols-2 w-full bg-slate-100 sm:grid-cols-2 md:grid-cols-2 h-auto lg:grid-cols-2 justify-between gap-6 px-2 sm:px-10'>
+      <div className='grid grid-cols-2 w-full  sm:grid-cols-2 md:grid-cols-2 h-auto lg:grid-cols-2 justify-between gap-6 px-2 sm:px-10'>
         <Smallgroup img={winimgs} />
         <Smallgroup img={winimgz} />
         <Smallgroup img={winimg} />

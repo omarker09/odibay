@@ -9,7 +9,7 @@ import img4 from "../public/collectble/playstation.png"
 
 function Fastcategory() {
   return (
-    <div className=' w-full grid grid-cols-2 bg-slate-100 sm:grid-cols-3 h-auto lg:grid-cols-4 justify-between gap-4 px-2 sm:px-10 py-3'>
+    <div className=' w-full grid grid-cols-2 bg-white  sm:grid-cols-3 h-auto lg:grid-cols-4 justify-between gap-4 px-2 sm:px-10 py-3'>
         <CatIcon img={img1} title={"Discord Nitro"} smtitle={"Purchase nitro"} />
         <CatIcon img={img2} title={"Software"} smtitle={"Software products"} />
         <CatIcon img={img3} title={"Gift Cards"} smtitle={"Google amazong apple .."} />
