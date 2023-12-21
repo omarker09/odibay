@@ -79,7 +79,7 @@ function Navbar() {
         className="py-4 h-auto flex items-center justify-between  text-black bg-black outline-1 outline outline-gray-700 px-2 sm:px-10"
       >
         <div className=" flex justify-center gap-2 text-white items-center">
-          <Link href={"/"} className=" flex items-center gap-2">
+          <a href={"/"} className=" flex items-center gap-2">
             <Image
               className=" rounded-full"
               src={whiteLogo}
@@ -88,7 +88,7 @@ function Navbar() {
               alt="Picture of the author"
             />
             <span> Gixify</span>
-          </Link>
+          </a>
         </div>
         <div className=" flex items-center gap-2"> 
           <Link href={"/"}>

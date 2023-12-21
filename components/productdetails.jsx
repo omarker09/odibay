@@ -23,16 +23,29 @@ import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
-import "../app/globals.css"
+
 import gtv from "../public/collectble/gtv.png"
 import gtav from "../public/collectble/red-dead.jpg"
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import Footer from './footer'
 const imr = "http://localhost:3000/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fred-dead.d11f5ba7.jpg&w=96&q=75"
+import ImageGallery from "react-image-gallery";
+import "react-image-gallery/styles/css/image-gallery.css";
+import "../app/caros.css"
+
+import { Swiper, SwiperSlide } from 'swiper/react';
+
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/free-mode';
+import 'swiper/css/navigation';
+import 'swiper/css/thumbs';
+import { FreeMode, Navigation, Thumbs } from 'swiper/modules';
 function CustomTabPanel(props) {
     const { children, value, index, ...other } = props;
 
     return (
+
         <div
             role="tabpanel"
             hidden={value !== index}
@@ -64,6 +77,7 @@ function a11yProps(index) {
 
 
 function Productdetails() {
+    const [thumbsSwiper, setThumbsSwiper] = useState(null);
     const [age, setAge] = React.useState('');
     const [age2, setAge2] = React.useState('');
     const [value, setValue] = React.useState(0);
@@ -128,50 +142,110 @@ function Productdetails() {
         // Add any other logic you want to perform on image click
     };
 
+    const images = [
+        {
+            original: "https://cdn1.epicgames.com/0584d2013f0149a791e7b9bad0eec102/offer/GTAV_EGS_Artwork_2560x1440_Landscaped%20Store-2560x1440-79155f950f32c9790073feaccae570fb.jpg",
+            thumbnail: "https://cdn1.epicgames.com/0584d2013f0149a791e7b9bad0eec102/offer/GTAV_EGS_Artwork_2560x1440_Landscaped%20Store-2560x1440-79155f950f32c9790073feaccae570fb.jpg"
+        },
+        {
+            original: "https://picsum.photos/id/1015/1000/600/",
+            thumbnail: "https://picsum.photos/id/1015/250/150/",
+        },
+        {
+            original: "https://picsum.photos/id/1019/1000/600/",
+            thumbnail: "https://picsum.photos/id/1019/250/150/",
+        },
+    ];
 
     return (
         <div className=' flex flex-col justify-between h-auto  gap-4  bg-white '>
-            <div className='flex flex-col gap-10 px-2 py-10  sm:px-10'>
-                <div className=' w-full grid  gap-9 h-auto grid-cols-1 md:grid-cols-2 items-center  '>
-                    <div className=' w-full  h-96 flex flex-col rounded-md  relative justify-center items-center bg-slate-100   outline outline-1 outline-gray-300'>
-
-                        <Image
-                            src={imagePath}
-                            width={330}
-
-                            height={300}
-                            className=' rounded-md object-cover '
-                        />
-
-                        <div style={{ bottom: -38 }} className=' w-full absolute  z-30 flex items-center justify-center gap-3 h-20 '>
-                            <Image
-                                src={gtav}
-                                onClick={handleImageClick}
-                                height={40}
-                                width={40}
-                                className='outline outline-1  bg-white cursor-pointer outline-gray-300 p-2 rounded-md'
-                            />
-                            <Image
-                                src={Tesla}
-                                height={50}
-                                width={50}
-                                className='outline outline-1 cursor-pointer bg-white outline-gray-300 p-2 rounded-md'
-                            />
-                            <Image
-                                src={Tesla}
-                                height={50}
-                                width={50}
-                                className='outline outline-1 cursor-pointer bg-white outline-gray-300 p-2 rounded-md'
-                            />
-                            <Image
-                                src={Tesla}
-                                height={50}
-                                width={50}
-                                className='outline outline-1 cursor-pointer bg-white outline-gray-300 p-2 rounded-md'
-                            />
-                        </div>
+            <div className='flex flex-col gap-10 px-4 h-auto py-10  sm:px-10'>
+                <div className=' w-full grid gap-5 h-full grid-cols-1 md:grid-cols-2 items-start justify-start  '>
+                    <div className=' lg-height w-full flex flex-col '>
+                        <Swiper
+                            style={{
+                                '--swiper-navigation-color': '#fff',
+                                '--swiper-pagination-color': '#fff',
+                            }}
+                            spaceBetween={10}
+                            navigation={false}
+                            thumbs={{ swiper: thumbsSwiper }}
+                            modules={[FreeMode, Navigation, Thumbs]}
+                            className="mySwiper2"
+                        >
+                            <SwiperSlide>
+                                <img src="https://image.api.playstation.com/vulcan/ap/rnd/202203/1409/oltI7Zc96usbdvhVVXcV1EAi.png" />
+                            </SwiperSlide>
+                            <SwiperSlide>
+                                <img src="https://cdn.bynogame.com/games/gta5-1662829149472.webp" />
+                            </SwiperSlide>
+                            <SwiperSlide>
+                                <img src="https://swiperjs.com/demos/images/nature-3.jpg" />
+                            </SwiperSlide>
+                            <SwiperSlide>
+                                <img src="https://swiperjs.com/demos/images/nature-4.jpg" />
+                            </SwiperSlide>
+                            <SwiperSlide>
+                                <img src="https://swiperjs.com/demos/images/nature-5.jpg" />
+                            </SwiperSlide>
+                            <SwiperSlide>
+                                <img src="https://swiperjs.com/demos/images/nature-6.jpg" />
+                            </SwiperSlide>
+                            <SwiperSlide>
+                                <img src="https://swiperjs.com/demos/images/nature-7.jpg" />
+                            </SwiperSlide>
+                            <SwiperSlide>
+                                <img src="https://swiperjs.com/demos/images/nature-8.jpg" />
+                            </SwiperSlide>
+                            <SwiperSlide>
+                                <img src="https://swiperjs.com/demos/images/nature-9.jpg" />
+                            </SwiperSlide>
+                            <SwiperSlide>
+                                <img src="https://swiperjs.com/demos/images/nature-10.jpg" />
+                            </SwiperSlide>
+                        </Swiper>
+                        <Swiper
+                            onSwiper={setThumbsSwiper}
+                            spaceBetween={10}
+                            slidesPerView={4}
+                            freeMode={true}
+                            watchSlidesProgress={true}
+                            modules={[FreeMode, Navigation, Thumbs]}
+                            className="mySwiper"
+                        >
+                            <SwiperSlide>
+                                <img src="https://image.api.playstation.com/vulcan/ap/rnd/202203/1409/oltI7Zc96usbdvhVVXcV1EAi.png" />
+                            </SwiperSlide>
+                            <SwiperSlide>
+                                <img src="https://cdn.bynogame.com/games/gta5-1662829149472.webp" />
+                            </SwiperSlide>
+                            <SwiperSlide>
+                                <img src="https://swiperjs.com/demos/images/nature-3.jpg" />
+                            </SwiperSlide>
+                            <SwiperSlide>
+                                <img src="https://swiperjs.com/demos/images/nature-4.jpg" />
+                            </SwiperSlide>
+                            <SwiperSlide>
+                                <img src="https://swiperjs.com/demos/images/nature-5.jpg" />
+                            </SwiperSlide>
+                            <SwiperSlide>
+                                <img src="https://swiperjs.com/demos/images/nature-6.jpg" />
+                            </SwiperSlide>
+                            <SwiperSlide>
+                                <img src="https://swiperjs.com/demos/images/nature-7.jpg" />
+                            </SwiperSlide>
+                            <SwiperSlide>
+                                <img src="https://swiperjs.com/demos/images/nature-8.jpg" />
+                            </SwiperSlide>
+                            <SwiperSlide>
+                                <img src="https://swiperjs.com/demos/images/nature-9.jpg" />
+                            </SwiperSlide>
+                            <SwiperSlide>
+                                <img src="https://swiperjs.com/demos/images/nature-10.jpg" />
+                            </SwiperSlide>
+                        </Swiper>
                     </div>
-                    <div className=' w-full h-96 flex flex-col justify-between gap-3   sm:px-0 '>
+                    <div className=' w-full h-auto flex flex-col justify-between gap-3   sm:px-0 '>
                         <div className=' flex flex-col gap-2'>
                             <div className=' flex items-center justify-between'>
                                 <h1 className=' text-xl font-bold'>GTA 5</h1>
@@ -228,34 +302,51 @@ function Productdetails() {
                                 </FormControl>
                             </Box>
                         </div>
+                        <div className=' flex items-center gap-2'>
+                            <h1 className='font-bold'>Status : </h1>
+                            <span className=' text-orange-500 font-bold'> In stock</span>
+                        </div>
                         <div className=' flex gap-2 flex-col'>
-                            <h1>Style</h1>
-                            <div className=' flex gap-4 items-center'>
-                                <input type='text' onClick={() => {
-                                    setIsColor1(true)
-                                    setIsColor2(false)
-                                    setIsColor3(false)
-                                    if (iscolor1 === true) {
-                                        setIsColor1(false)
 
-                                    }
-                                }} style={{ backgroundColor: `blue`, fontSize: 0 }} className={iscolor1 == true ? ' p-4 rounded-full cursor-pointer  border-none outline-none   outline outline-2 outline-gray-400 border border-spacing-3 border-white ' : "p-4 rounded-full cursor-pointer  border-none outline-none   outline outline-2"}/>
-                                <input type='text' onClick={() => {
-                                    setIsColor2(true)
-                                    setIsColor1(false)
-                                    setIsColor3(false)
-                                    if (iscolor2 === true) {
-                                        setIsColor2(false)
-                                    }
-                                }} style={{ backgroundColor: `orange`, fontSize: 0 }} className={iscolor2 == true ? ' p-4 rounded-full cursor-pointer  border-none outline-none   outline outline-2 outline-gray-400 border border-spacing-3 border-white ' : "p-4 rounded-full cursor-pointer  border-none outline-none   outline outline-2"} />
-                                <input type='text' onClick={() => {
-                                    setIsColor3(true)
-                                    setIsColor1(false)
-                                    setIsColor2(false)
-                                    if (iscolor3 === true) {
-                                        setIsColor3(false)
-                                    }
-                                }} style={{ backgroundColor: `black`, fontSize: 0 }} className={iscolor3 == true ? ' p-4 rounded-full cursor-pointer  border-none outline-none   outline outline-2 outline-gray-400 border border-spacing-3 border-white ' : "p-4 rounded-full cursor-pointer  border-none outline-none   outline outline-2"}/>
+                            <div className=' flex items-center justify-between'>
+                                <div className=' flex flex-col gap-2'>
+                                    <p className=' text-xs'>Style :</p>
+                                    <div className=' flex gap-4 items-center'>
+                                        <input type='text' onClick={() => {
+                                            setIsColor1(true)
+                                            setIsColor2(false)
+                                            setIsColor3(false)
+                                            if (iscolor1 === true) {
+                                                setIsColor1(false)
+
+                                            }
+                                        }} style={{ backgroundColor: `blue`, fontSize: 0 }} className={iscolor1 == true ? ' p-4 rounded-full cursor-pointer  border-none outline-none   outline outline-2 outline-gray-400 border border-spacing-3 border-white ' : "p-4 rounded-full cursor-pointer  border-none outline-none   outline outline-2"} />
+                                        <input type='text' onClick={() => {
+                                            setIsColor2(true)
+                                            setIsColor1(false)
+                                            setIsColor3(false)
+                                            if (iscolor2 === true) {
+                                                setIsColor2(false)
+                                            }
+                                        }} style={{ backgroundColor: `orange`, fontSize: 0 }} className={iscolor2 == true ? ' p-4 rounded-full cursor-pointer  border-none outline-none   outline outline-2 outline-gray-400 border border-spacing-3 border-white ' : "p-4 rounded-full cursor-pointer  border-none outline-none   outline outline-2"} />
+                                        <input type='text' onClick={() => {
+                                            setIsColor3(true)
+                                            setIsColor1(false)
+                                            setIsColor2(false)
+                                            if (iscolor3 === true) {
+                                                setIsColor3(false)
+                                            }
+                                        }} style={{ backgroundColor: `black`, fontSize: 0 }} className={iscolor3 == true ? ' p-4 rounded-full cursor-pointer  border-none outline-none   outline outline-2 outline-gray-400 border border-spacing-3 border-white ' : "p-4 rounded-full cursor-pointer  border-none outline-none   outline outline-2"} />
+                                    </div>
+                                </div>
+                                <div className=' p-0 flex gap-2 items-start justify-start flex-col '>
+                                    <p className=' text-xs'>Quantity : </p>
+                                    <div className='outline outline-1 outline-gray-300 p-2'>
+                                        <button className=' text-lg' >-</button>
+                                        <input style={{ border: "none", outline: "none" }} className=' w-20 text-center ' type=' text' value={0} />
+                                        <button className=' text-lg'>+</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div className=' flex flex-col sm:flex-row gap-3'>
@@ -264,7 +355,7 @@ function Productdetails() {
                         </div>
                     </div>
                 </div>
-                <div className=' w-full h-96 outline outline-1 rounded-md outline-gray-300 '>
+                <div className=' w-full overflow-y-scroll h-96 outline outline-1 rounded-md outline-gray-300 '>
                     <Box sx={{ width: '100%' }}>
                         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                             <Tabs value={value} onChange={handleChangez} aria-label="basic tabs example">
@@ -274,13 +365,59 @@ function Productdetails() {
                             </Tabs>
                         </Box>
                         <CustomTabPanel value={value} index={0}>
-                            Item One
+                            Grand Theft Auto V (GTA V) is an action-adventure video game developed by Rockstar North and published by Rockstar Games. It was initially released for PlayStation 3 and Xbox 360 in September 2013 and later for PlayStation 4, Xbox One, and Microsoft Windows. Here's a brief description of the game:
+
+                            Title: Grand Theft Auto V
+
+                            Genre: Action-Adventure
+
+                            Platform: PlayStation 3, Xbox 360, PlayStation 4, Xbox One, Microsoft Windows
+
+                            Plot:
+                            The game is set in the fictional state of San Andreas, a satirical recreation of Southern California. The narrative revolves around three protagonists—Michael De Santa, a retired bank robber; Franklin Clinton, a street hustler looking for better opportunities; and Trevor Philips, a volatile and psychopathic criminal. Players switch between these characters throughout the game, each with their own unique skills and storylines.
+
+                            The plot follows their attempts to commit heists while dealing with personal issues and the pressures of the criminal underworld. The story explores themes of crime, morality, and the pursuit of the American Dream.
+
+                            Gameplay:
+                            GTA V offers an open-world environment with a detailed and expansive landscape, featuring the city of Los Santos and the surrounding countryside. Players can explore the world on foot or by various vehicles, including cars, motorcycles, airplanes, and boats. The game combines elements of driving, shooting, and exploration, providing a vast and immersive experience.
+
+                            One notable feature is the heist system, where players plan and execute elaborate robberies, making choices that impact the outcome of the missions and the overall story. The game also includes an online multiplayer mode, Grand Theft Auto Online, where players can engage in various activities, missions, and heists with other players.
+
+                            Graphics and Sound:
+                            GTA V is praised for its detailed graphics, realistic depiction of the game world, and attention to detail. The soundtrack features a diverse selection of music across various genres, enhancing the atmosphere of the game.
+
+                            Reception:
+                            Grand Theft Auto V received widespread critical acclaim for its gameplay, storytelling, open-world design, and technical achievements. It became one of the best-selling video games of all time, achieving both commercial success and cultural impact. The game's longevity has been extended through ongoing updates to Grand Theft Auto Online, keeping the community engaged years after its initial release.
                         </CustomTabPanel>
                         <CustomTabPanel value={value} index={1}>
-                            Item Two
+                            1. Grand Theft Auto V - PS4:
+
+                            Platform: PlayStation 4
+                            Storage: The game requires a certain amount of storage space on the PS4 hard drive.
+                            Internet Connection: While not mandatory for single-player gameplay, an internet connection is required for online features and updates.
+                            2. Grand Theft Auto V - PS5:
+
+                            Platform: PlayStation 5
+                            Storage: The game may take advantage of the increased storage capabilities of the PS5.
+                            Internet Connection: Similar to the PS4 version, online features and updates may require an internet connection.
+                            3. Grand Theft Auto V - PC:
+
+
+                            Other: A high-speed internet connection is recommended for online features.
                         </CustomTabPanel>
                         <CustomTabPanel value={value} index={2}>
-                            Item Three
+                            Platform: Microsoft Windows (PC)
+
+                            System Requirements:
+
+                            OS: Windows 10 64 Bit, Windows 8.1 64 Bit, Windows 8 64 Bit, Windows 7 64 Bit Service Pack 1
+                            Processor: Intel Core i5 3470 @ 3.2GHz (4 CPUs) / AMD X8 FX-8350 @ 4GHz (8 CPUs)
+                            Memory: 8 GB RAM
+                            Graphics: NVIDIA GTX 660 2GB / AMD HD 7870 2GB
+                            DirectX: Version 11
+                            Storage: 72 GB available space
+                            Sound Card: 100% DirectX 10 compatible
+                            Additional Requirements:
                         </CustomTabPanel>
                     </Box>
                 </div>
