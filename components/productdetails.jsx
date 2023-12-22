@@ -1,5 +1,7 @@
 "use client"
 import React, { useState } from 'react'
+import { useSelector, useDispatch } from 'react-redux';
+import { trigerdon, trigerdoff } from "@/app/redux/slices/testSlice";
 import Image from 'next/image'
 import img1 from "../public/collectble/discord.png"
 import winimg from "../public/collectble/steam.png"
@@ -23,7 +25,7 @@ import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
-
+import Navbar from './Navbar'
 import gtv from "../public/collectble/gtv.png"
 import gtav from "../public/collectble/red-dead.jpg"
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
@@ -156,9 +158,27 @@ function Productdetails() {
             thumbnail: "https://picsum.photos/id/1019/250/150/",
         },
     ];
-
+    const currentState = useSelector((state) => state.product)
+    const dispatch = useDispatch()
+    React.useEffect(() => {
+      console.log(currentState);
+    }, [currentState])
+  
+    function CatHovLeave() {
+      dispatch(trigerdoff());
+    
+    }
+  
+    function CatHoveEnter() {
+  
+      dispatch(trigerdon());
+    
+    }
     return (
-        <div className=' flex flex-col justify-between h-auto  gap-4  bg-white '>
+        <div className=' flex flex-col justify-between relative h-auto  gap-4  bg-white '>
+            <div onMouseLeave={() => { CatHovLeave() }} onMouseEnter={() => { CatHoveEnter() }} className={currentState ? ' bg-white w-96 h-96 absolute shadow-2xl top-0 left-2 sm:left-10 z-50 ' : ' bg-slate-400 w-40 h-96 absolute top-0 left-0 z-50 hidden'}>
+
+            </div>
             <div className='flex flex-col gap-10 px-4 h-auto py-10  sm:px-10'>
                 <div className=' w-full grid gap-5 h-full grid-cols-1 md:grid-cols-2 items-start justify-start  '>
                     <div className=' lg-height w-full flex flex-col '>

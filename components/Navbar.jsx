@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from 'next/image'
 import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
@@ -40,7 +40,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   },
 }));
 
-function Navbar() {
+function Navbar(props) {
   const dispatch = useDispatch()
   const currentState = useSelector((state) => state.product)
 
@@ -63,17 +63,32 @@ function Navbar() {
   }));
 
   function CatHoveEnter() {
- 
+
     dispatch(trigerdon());
-    console.log(currentState);
+  
   }
 
   function CatHovLeave() {
     dispatch(trigerdoff());
-    console.log(currentState);
+  
   }
+
+
+
+  const Datas = async () => {
+    try {
+      const getUsers = await fetch("https://www.logo.com/api/data")
+      const usersJson = getUsers.json()
+      return true
+    }
+    catch {
+      throw new Error()
+      return false
+    }
+  }
+
   return (
-    <div >
+    <div style={{display: props.display}} >
       <div
         style={{ display: "flex" }}
         className="py-4 h-auto flex items-center justify-between  text-black bg-black outline-1 outline outline-gray-700 px-2 sm:px-10"
@@ -90,7 +105,7 @@ function Navbar() {
             <span> Gixify</span>
           </a>
         </div>
-        <div className=" flex items-center gap-2"> 
+        <div className=" flex items-center gap-2">
           <Link href={"/"}>
             <FacebookIcon className=" text-xl text-white" color="white" />
           </Link>
@@ -111,7 +126,7 @@ function Navbar() {
         </div>
       </div>
       <div className="nav-background stickz z-50 flex items-center justify-between h-auto w-full px-2 sm:px-10 py-2">
-        <div onMouseEnter={() => {CatHoveEnter()}} onMouseLeave={() => {CatHovLeave()}} className="  text-white flex cursor-pointer gap-3 items-center outline outline-1 outline-white px-3 rounded-lg py-1">
+        <div onClick={() => {CatHoveEnter()}} onMouseEnter={() => { CatHoveEnter() }}  className="  text-white flex cursor-pointer gap-3 items-center outline outline-1 outline-white px-3 rounded-lg py-1">
           <div style={{ fontSize: 10 }} className=" text-white  items-center gap-2 flex">
             <MenuIcon />
             All Categories

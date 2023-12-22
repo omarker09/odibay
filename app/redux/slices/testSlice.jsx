@@ -3,13 +3,13 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const eliteslice = createSlice({
     name: "elitez",
-    initialState: {bol: false},
+    initialState: [],
     reducers: {
         trigerdon: (state, action) => {
-            return { bol: true };
+            return true
         },
         trigerdoff: (state, action) => {
-            return { bol: false };
+            return false
         },
     }
 })
