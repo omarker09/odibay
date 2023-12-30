@@ -11,9 +11,9 @@ import img1 from "../public/banner1.jpg"
 import img2 from "../public/banner2.jpg"
 import img3 from "../public/Black Minimalist Motivation Quote LinkedIn Banner.png"
 import img4 from "../public/Photo Modern New Collection Banner.jpg"
-
+import discordtest from "../public/iptv1080.png"
 function MyswipperApp(props) {
-
+// notice the size should be only 6912 * 3456 in (canvas its called Banner landscape 72 * 36)
     return (
         <>
             <Swiper

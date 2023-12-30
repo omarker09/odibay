@@ -1,9 +1,10 @@
+'use client'
 import { createSlice } from "@reduxjs/toolkit";
 
 
 const eliteslice = createSlice({
     name: "elitez",
-    initialState: [],
+    initialState: [false],
     reducers: {
         trigerdon: (state, action) => {
             return true

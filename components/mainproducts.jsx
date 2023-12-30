@@ -7,6 +7,8 @@ import Link from "next/link";
 import rdr2 from "../public/collectble/red-dead2.jpg"
 import gtv from "../public/collectble/gtv.png"
 import gtav from "../public/collectble/red-dead.jpg"
+import discord from "../public/collectble/discord.png"
+import iptbcard from "../public/collectble/iptvcard.png"
 import grey from "../public/Grey Minimalist Product Advertising Instagram Post.png"
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
@@ -22,7 +24,7 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 
 
-// The promotion must has only 2 link
+// The promotion must has only 2 link updated use what you want
 function Mainproducts() {
     const [value, setValue] = React.useState(4);
     const responsive = {
@@ -60,8 +62,8 @@ function Mainproducts() {
         { title: "GTA 5", price: 1000, category: "XBOX Games", image: gtv },
         { title: "Red dead 2", price: 2500, category: "PS5 Games", image: gtav },
         { title: "GTA 5", price: 1000, category: "XBOX Games", image: gtv },
-        { title: "Red dead 2", price: 2500, category: "PS5 Games", image: gtav },
-        { title: "GTA 5", price: 1000, category: "XBOX Games", image: gtv },
+        { title: "IPTV", price: 2500, category: "PS5 Games", image: iptbcard },
+        { title: "Discord", price: 1000, category: "XBOX Games", image: discord },
     ]
     return (
         <div className=' flex flex-col gap-3 bg-white '>
@@ -97,7 +99,7 @@ function Mainproducts() {
                     partialVisible={false}
                 >
 
-                    {/*Notice image size must be 1080 * 1080 px*/}
+                    {/*Notice image size must be at least  512 * 512 px*/}
                     {arr.map((e) => {
                         return <div key={e.title} className=' border border-1 mr-2  border-gray-300  rounded-lg' >
                             <Image

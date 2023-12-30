@@ -1,4 +1,7 @@
 import Image from 'next/image'
+import React from 'react'
+import { useSelector, useDispatch } from 'react-redux';
+import { trigerdon, trigerdoff } from "@/app/redux/slices/testSlice";
 import Navbar from '@/components/Navbar'
 import Banner from '@/components/banner'
 import Fastcategory from '@/components/fastcategory'
@@ -8,6 +11,7 @@ import Regulerproducts from '@/components/regulerproducts'
 import Bannersm from '@/componnent-sm/bannersm'
 import Smgroups from '@/components/smgroups'
 import Footer from '@/components/footer'
+import Bottomtabs from '@/components/bottomtabs';
 export default function Home() {
   return (
     <div className=' h-full flex flex-col gap-0 w-full bg-white '>
@@ -19,10 +23,14 @@ export default function Home() {
         <Mainproducts />
         <Regulerproducts />
         <Bannersm />
+
         <Smgroups />
-        <Footer/>
+        <Footer />
+        <div className=' h-full flex flex-col w-full  '>
+
+          <Bottomtabs />
+        </div>
       </div>
- 
     </div>
   )
 }

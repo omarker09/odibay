@@ -9,10 +9,11 @@ import img3 from "../public/collectble/gift-card.png"
 import img4 from "../public/collectble/playstation.png"
 import gtv from "../public/collectble/gtv.png"
 import gtav from "../public/collectble/red-dead.jpg"
+import pf from "../public/collectble/iptvcard.png"
 import "../app/globals.css"
 
 function Regulerproducts() {
-
+// Notice all images should be only 512 * 512 atleast !! or the product will not be resizble correct
   return (
     <div className=' flex flex-col gap-3 px-2 sm:px-10 py-2 bg-slate-100 '>
       <div className='flex flex-col gap-0 justify-start'>
@@ -21,7 +22,7 @@ function Regulerproducts() {
       </div>
       <div className=' w-full overflow-hidden  grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5    gap-4  py-3'>
         <Product img={gtv} discount={40} title="GTA V" dicountprice={1500} price={2000} category={"PS5 Games"} rating={5} width={290} height={290} />
-        <Product img={gtav} discount={20} title="RDR 2 fgh fhf ghgfh dghdghd" price={3500} category={"PS5 Games"} rating={4} width={290} height={290} />
+        <Product img={pf} discount={20} title="RDR 2 fgh fhf ghgfh dghdghd" price={3500} category={"PS5 Games"} rating={4} width={290} height={290} />
         <Product img={gtv} discount={5} title="GTA V" price={2000} category={"PS5 Games fghgfhf fgjfdgj fghfdjgfdjhjdghjdghjdghjghjghjg"} rating={5} width={290} height={290} />
         <Product img={gtav} discount={10} title="RDR 2" price={3500} category={"PS5 Games"} rating={4} width={290} height={290} />
         <Product img={gtv} discount={15} title="GTA V" price={2000} category={"PS5 Games"} rating={5} width={290} height={290} />

@@ -7,6 +7,7 @@ import Link from "next/link";
 import rdr2 from "../public/collectble/red-dead2.jpg"
 import gtv from "../public/collectble/gtv.png"
 import gtav from "../public/collectble/red-dead.jpg"
+import discordtest from "../public/iptv1080.png"
 import grey from "../public/Grey Minimalist Product Advertising Instagram Post.png"
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
@@ -24,7 +25,7 @@ import img3 from "../public/collectble/gift-card.png"
 import img4 from "../public/collectble/playstation.png"
 import Product from '@/componnent-sm/product';
 
-// The promotion must has only 2 link
+// notice the size should be only 6912 * 3456 in (canvas its called Banner landscape 72 * 36)
 function Mainproducts() {
     const [value, setValue] = React.useState(4);
     const responsive = {
@@ -59,7 +60,7 @@ function Mainproducts() {
  
     const arr = [
         { image: iml, link: "/" },
-        { image: iml3, link: "/" },
+        { image: discordtest, link: "/" },
         { image: iml, link: "/" },
         { image: iml3, link: "/" },
 

@@ -9,7 +9,12 @@
 .nav-background {
   background-color: #21262c; 
 }
-
+.bottom-tabs-background {
+  background-color: #292a2b; 
+}
+.search-background {
+  background-color: #40464e; 
+}
 .nav-background-text {
   color: #21262c;
 }
@@ -104,10 +109,6 @@ body {
   ;
 }
 
-.stickz {
-  position: sticky;
-  top: 20px;
-}
 
 .nodrag {
 
@@ -208,4 +209,7 @@ html {
 /* Handle on hover */
 html:hover {
   scrollbar-color: #f1f1f1 #555;
+}
+.boxsh1{
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 }

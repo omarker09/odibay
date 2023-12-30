@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import { trigerdon, trigerdoff } from "@/app/redux/slices/testSlice";
 import Image from 'next/image'
@@ -11,7 +11,7 @@ import rdr2 from "../public/collectble/gtv.png"
 import rd2 from "../public/collectble/red-dead.jpg"
 import Tesla from "../public/tesla.png"
 import soft from "../public/collectble/app-development.png"
-import Link from "next/link";
+import Link  from "next/link";
 import big from '../public/big.jpg'
 import Box from '@mui/material/Box';
 import Rating from '@mui/material/Rating';
@@ -36,6 +36,12 @@ import "react-image-gallery/styles/css/image-gallery.css";
 import "../app/caros.css"
 
 import { Swiper, SwiperSlide } from 'swiper/react';
+import Breadcrumbslinks from '@/componnent-sm/Breadcrumbslinks';
+import { emphasize, styled } from '@mui/material/styles';
+
+import Chip from '@mui/material/Chip';
+import HomeIcon from '@mui/icons-material/Home';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 // Import Swiper styles
 import 'swiper/css';
@@ -77,6 +83,31 @@ function a11yProps(index) {
     };
 }
 
+const StyledBreadcrumb = styled(Chip)(({ theme }) => {
+    const backgroundColor =
+        theme.palette.mode === 'light'
+            ? theme.palette.grey[100]
+            : theme.palette.grey[800];
+    return {
+        backgroundColor,
+        height: theme.spacing(3),
+        color: theme.palette.text.primary,
+        fontWeight: theme.typography.fontWeightRegular,
+        '&:hover, &:focus': {
+            backgroundColor: emphasize(backgroundColor, 0.06),
+        },
+        '&:active': {
+            boxShadow: theme.shadows[1],
+            backgroundColor: emphasize(backgroundColor, 0.12),
+        },
+    };
+}); // TypeScript only: need a type cast here because https://github.com/Microsoft/TypeScript/issues/26591
+
+function handleClick(event) {
+    event.preventDefault();
+    console.info('You clicked a breadcrumb.');
+}
+
 
 function Productdetails() {
     const [thumbsSwiper, setThumbsSwiper] = useState(null);
@@ -85,7 +116,7 @@ function Productdetails() {
     const [value, setValue] = React.useState(0);
     const [imgSrc, setImgsrc] = useState("")
     const [imagePath, setImagePath] = useState(Tesla);
-
+    const [bolState, setBolstate] = useState(false)
     const [color1, setColor1] = useState("")
     const [color2, setColor2] = useState("")
     const [color3, setColor3] = useState("")
@@ -144,48 +175,35 @@ function Productdetails() {
         // Add any other logic you want to perform on image click
     };
 
-    const images = [
-        {
-            original: "https://cdn1.epicgames.com/0584d2013f0149a791e7b9bad0eec102/offer/GTAV_EGS_Artwork_2560x1440_Landscaped%20Store-2560x1440-79155f950f32c9790073feaccae570fb.jpg",
-            thumbnail: "https://cdn1.epicgames.com/0584d2013f0149a791e7b9bad0eec102/offer/GTAV_EGS_Artwork_2560x1440_Landscaped%20Store-2560x1440-79155f950f32c9790073feaccae570fb.jpg"
-        },
-        {
-            original: "https://picsum.photos/id/1015/1000/600/",
-            thumbnail: "https://picsum.photos/id/1015/250/150/",
-        },
-        {
-            original: "https://picsum.photos/id/1019/1000/600/",
-            thumbnail: "https://picsum.photos/id/1019/250/150/",
-        },
-    ];
-    const currentState = useSelector((state) => state.product)
-    const dispatch = useDispatch()
-    React.useEffect(() => {
-      console.log(currentState);
-    }, [currentState])
-  
+
     function CatHovLeave() {
-      dispatch(trigerdoff());
-    
+        setBolstate(false)
+        console.log(bolState);
     }
-  
+
     function CatHoveEnter() {
-  
-      dispatch(trigerdon());
-    
+        setBolstate(true)
+        console.log(bolState);
     }
     return (
         <div className=' flex flex-col justify-between relative h-auto  gap-4  bg-white '>
-            <div onMouseLeave={() => { CatHovLeave() }} onMouseEnter={() => { CatHoveEnter() }} className={currentState ? ' bg-white w-96 h-96 absolute shadow-2xl top-0 left-2 sm:left-10 z-50 ' : ' bg-slate-400 w-40 h-96 absolute top-0 left-0 z-50 hidden'}>
-
-            </div>
-            <div className='flex flex-col gap-10 px-4 h-auto py-10  sm:px-10'>
+            <div className='flex flex-col gap-7 px-4 h-auto py-7 sm:px-10'>
+                <div className=' flex items-center'>
+                    <div className=' w-auto flex items-center gap-3 outline outline-1 outline-gray-300 rounded-md p-2'>
+                        <Breadcrumbslinks  home={true} title={"Home"} path={"/"} />
+                        /
+                        <Breadcrumbslinks title={"Products"} path={"/"} />
+                        /
+                        <Breadcrumbslinks title={"GTA V"} path={"/"} />
+                    </div>
+                </div>
                 <div className=' w-full grid gap-5 h-full grid-cols-1 md:grid-cols-2 items-start justify-start  '>
-                    <div className=' lg-height w-full flex flex-col '>
+                    <div className=' lg-height w-full h-full flex outline outline-1 outline-gray-300 pt-0 rounded-lg flex-col '>
                         <Swiper
                             style={{
                                 '--swiper-navigation-color': '#fff',
                                 '--swiper-pagination-color': '#fff',
+                                height: "100%"
                             }}
                             spaceBetween={10}
                             navigation={false}
@@ -194,34 +212,34 @@ function Productdetails() {
                             className="mySwiper2"
                         >
                             <SwiperSlide>
-                                <img src="https://image.api.playstation.com/vulcan/ap/rnd/202203/1409/oltI7Zc96usbdvhVVXcV1EAi.png" />
+                                <img alt='fg' src="https://image.api.playstation.com/vulcan/ap/rnd/202203/1409/oltI7Zc96usbdvhVVXcV1EAi.png" />
                             </SwiperSlide>
                             <SwiperSlide>
-                                <img src="https://cdn.bynogame.com/games/gta5-1662829149472.webp" />
+                                <img alt='fg' src="https://cdn.bynogame.com/games/gta5-1662829149472.webp" />
                             </SwiperSlide>
                             <SwiperSlide>
-                                <img src="https://swiperjs.com/demos/images/nature-3.jpg" />
+                                <img alt='fg' src="https://swiperjs.com/demos/images/nature-3.jpg" />
                             </SwiperSlide>
                             <SwiperSlide>
-                                <img src="https://swiperjs.com/demos/images/nature-4.jpg" />
+                                <img alt='fg' src="https://swiperjs.com/demos/images/nature-4.jpg" />
                             </SwiperSlide>
                             <SwiperSlide>
-                                <img src="https://swiperjs.com/demos/images/nature-5.jpg" />
+                                <img alt='fg' src="https://swiperjs.com/demos/images/nature-5.jpg" />
                             </SwiperSlide>
                             <SwiperSlide>
-                                <img src="https://swiperjs.com/demos/images/nature-6.jpg" />
+                                <img alt='fg' src="https://swiperjs.com/demos/images/nature-6.jpg" />
                             </SwiperSlide>
                             <SwiperSlide>
-                                <img src="https://swiperjs.com/demos/images/nature-7.jpg" />
+                                <img alt='fg' src="https://swiperjs.com/demos/images/nature-7.jpg" />
                             </SwiperSlide>
                             <SwiperSlide>
-                                <img src="https://swiperjs.com/demos/images/nature-8.jpg" />
+                                <img alt='fg' src="https://swiperjs.com/demos/images/nature-8.jpg" />
                             </SwiperSlide>
                             <SwiperSlide>
-                                <img src="https://swiperjs.com/demos/images/nature-9.jpg" />
+                                <img alt='fg' src="https://swiperjs.com/demos/images/nature-9.jpg" />
                             </SwiperSlide>
                             <SwiperSlide>
-                                <img src="https://swiperjs.com/demos/images/nature-10.jpg" />
+                                <img alt='fg' src="https://swiperjs.com/demos/images/nature-10.jpg" />
                             </SwiperSlide>
                         </Swiper>
                         <Swiper
@@ -234,38 +252,38 @@ function Productdetails() {
                             className="mySwiper"
                         >
                             <SwiperSlide>
-                                <img src="https://image.api.playstation.com/vulcan/ap/rnd/202203/1409/oltI7Zc96usbdvhVVXcV1EAi.png" />
+                                <img alt='fg' src="https://image.api.playstation.com/vulcan/ap/rnd/202203/1409/oltI7Zc96usbdvhVVXcV1EAi.png" />
                             </SwiperSlide>
                             <SwiperSlide>
-                                <img src="https://cdn.bynogame.com/games/gta5-1662829149472.webp" />
+                                <img alt='fg' src="https://cdn.bynogame.com/games/gta5-1662829149472.webp" />
                             </SwiperSlide>
                             <SwiperSlide>
-                                <img src="https://swiperjs.com/demos/images/nature-3.jpg" />
+                                <img alt='fg' src="https://swiperjs.com/demos/images/nature-3.jpg" />
                             </SwiperSlide>
                             <SwiperSlide>
-                                <img src="https://swiperjs.com/demos/images/nature-4.jpg" />
+                                <im alt='fg' g src="https://swiperjs.com/demos/images/nature-4.jpg" />
                             </SwiperSlide>
                             <SwiperSlide>
-                                <img src="https://swiperjs.com/demos/images/nature-5.jpg" />
+                                <img alt='fg' src="https://swiperjs.com/demos/images/nature-5.jpg" />
                             </SwiperSlide>
                             <SwiperSlide>
                                 <img src="https://swiperjs.com/demos/images/nature-6.jpg" />
                             </SwiperSlide>
                             <SwiperSlide>
-                                <img src="https://swiperjs.com/demos/images/nature-7.jpg" />
+                                <img alt='fg' src="https://swiperjs.com/demos/images/nature-7.jpg" />
                             </SwiperSlide>
                             <SwiperSlide>
-                                <img src="https://swiperjs.com/demos/images/nature-8.jpg" />
+                                <img alt='fg' src="https://swiperjs.com/demos/images/nature-8.jpg" />
                             </SwiperSlide>
                             <SwiperSlide>
-                                <img src="https://swiperjs.com/demos/images/nature-9.jpg" />
+                                <img alt='fg' src="https://swiperjs.com/demos/images/nature-9.jpg" />
                             </SwiperSlide>
                             <SwiperSlide>
-                                <img src="https://swiperjs.com/demos/images/nature-10.jpg" />
+                                <img alt='fg' src="https://swiperjs.com/demos/images/nature-10.jpg" />
                             </SwiperSlide>
                         </Swiper>
                     </div>
-                    <div className=' w-full h-auto flex flex-col justify-between gap-3   sm:px-0 '>
+                    <div className=' w-full h-auto flex flex-col justify-between gap-3    sm:px-0 '>
                         <div className=' flex flex-col gap-2'>
                             <div className=' flex items-center justify-between'>
                                 <h1 className=' text-xl font-bold'>GTA 5</h1>
@@ -332,7 +350,7 @@ function Productdetails() {
                                 <div className=' flex flex-col gap-2'>
                                     <p className=' text-xs'>Style :</p>
                                     <div className=' flex gap-4 items-center'>
-                                        <input type='text' onClick={() => {
+                                        <input readOnly type='text' onClick={() => {
                                             setIsColor1(true)
                                             setIsColor2(false)
                                             setIsColor3(false)
@@ -341,7 +359,7 @@ function Productdetails() {
 
                                             }
                                         }} style={{ backgroundColor: `blue`, fontSize: 0 }} className={iscolor1 == true ? ' p-4 rounded-full cursor-pointer  border-none outline-none   outline outline-2 outline-gray-400 border border-spacing-3 border-white ' : "p-4 rounded-full cursor-pointer  border-none outline-none   outline outline-2"} />
-                                        <input type='text' onClick={() => {
+                                        <input readOnly type='text' onClick={() => {
                                             setIsColor2(true)
                                             setIsColor1(false)
                                             setIsColor3(false)
@@ -349,7 +367,7 @@ function Productdetails() {
                                                 setIsColor2(false)
                                             }
                                         }} style={{ backgroundColor: `orange`, fontSize: 0 }} className={iscolor2 == true ? ' p-4 rounded-full cursor-pointer  border-none outline-none   outline outline-2 outline-gray-400 border border-spacing-3 border-white ' : "p-4 rounded-full cursor-pointer  border-none outline-none   outline outline-2"} />
-                                        <input type='text' onClick={() => {
+                                        <input readOnly type='text' onClick={() => {
                                             setIsColor3(true)
                                             setIsColor1(false)
                                             setIsColor2(false)
