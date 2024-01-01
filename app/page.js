@@ -1,5 +1,6 @@
+'use client'
 import Image from 'next/image'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import { trigerdon, trigerdoff } from "@/app/redux/slices/testSlice";
 import Navbar from '@/components/Navbar'

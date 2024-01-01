@@ -8,7 +8,7 @@ function Banner() {
   const currentState = useSelector((state) => state.product)
   const dispatch = useDispatch()
   React.useEffect(() => {
-    console.log(currentState);
+
   }, [currentState])
 
   function CatHovLeave() {

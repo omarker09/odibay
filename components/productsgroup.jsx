@@ -57,7 +57,7 @@ function Mainproducts() {
     };
 
 
- 
+
     const arr = [
         { image: iml, link: "/" },
         { image: discordtest, link: "/" },
@@ -71,12 +71,14 @@ function Mainproducts() {
 
     return (
         <div className=' flex flex-col gap- '>
-            <div className=' w-full flex px-2 sm:px-10 py-2 justify-between items-center'>
-            <div className='flex flex-col gap-0 items-start justify-start'>
-                <h1 className='nav-background-text text-2xl font-bold'>Events</h1>
-                <p className='text-gray-500'>Explore exclusive programs and projects designed to enhance your experience</p>
-            </div>
-                <Link className=' nav-background py-1 px-2 rounded text-sm  text-white ' href={"/"}>Discover all</Link>
+            <div className=' w-full flex flex-col px-2 sm:px-10 py-2 gap-3 justify-between items-start'>
+                <div className=' w-full flex items-center justify-between'>
+                    <h1 className='nav-background-text text-2xl font-bold'>Events</h1>
+                    <Link className=' nav-background py-1 px-2 rounded text-xs  underline text-white ' href={"/"}>Discover all</Link>
+                </div>
+                <div className='flex flex-col gap-0 justify-start'>
+                    <p className='text-gray-500'>Explore exclusive programs and projects designed to enhance your experience</p>
+                </div>
             </div>
             <div className='px-2 sm:px-10'>
                 <Carousel

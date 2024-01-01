@@ -4,7 +4,6 @@ import HomeIcon from '@mui/icons-material/Home';
 
 function Breadcrumbslinks(props) {
   const [isHome, setIsHome] = useState(false);
-  console.log(props.routepath);
   useEffect(() => {
     setIsHome(props.home === true);
   }, [props.home]);

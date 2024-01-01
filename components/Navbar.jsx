@@ -51,7 +51,6 @@ import MailIcon from '@mui/icons-material/Mail';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import ouad from "../public/collectble/ouadkniss.svg"
 import DiscordIcon from "../public/collectble/discord.png"
-
 // Data
 
 import Categoryitems from "@/data/categoryitems";
@@ -77,7 +76,7 @@ function Navbar(props) {
   const [searchBtnH, setSearchBtnH] = useState(false)
   const [ConditionScroll, setConditionScroll] = useState(false)
   const [offsetY, setOffsetY] = useState("fixed")
-
+  const [isOpen, setIsopen] = useState(false)
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -119,12 +118,7 @@ function Navbar(props) {
     })
   }, [])
 
-  const [state, setState] = React.useState({
-    top: false,
-    left: false,
-    bottom: false,
-    right: false,
-  });
+  const [state, setState] = React.useState(false);
 
   const toggleDrawer = (anchor, open) => (event) => {
     if (
@@ -135,6 +129,10 @@ function Navbar(props) {
       return;
     }
 
+    if (anchor === 'left' && open === false) {
+      setState(state.left = true);
+    }
+
     setState({ ...state, [anchor]: open });
   };
 
@@ -142,12 +140,17 @@ function Navbar(props) {
     <Box
       sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
       role="presentation"
-      onClick={toggleDrawer(anchor, false)}
+      onClick={toggleDrawer(anchor, true)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <div className=" w-full h-auto ">
         <List className=" w-full">
-          <p className=" ml-4 py-2">Account</p>
+          <div className=" flex items-end justify-between pr-3 pb-2">
+            <p className=" ml-4 py-0">Account</p>
+            <Button onClick={() => { setIsopen(true) }} size="small" className="rounded-full text-sm bg-gray-700 hover:bg-gray-700 text-white">
+              <CloseIcon fontSize="small" />
+            </Button>
+          </div>
           <ListItem disablePadding>
             <ListItemButton className=" flex items-center gap-3">
               <PersonIcon />
@@ -210,9 +213,9 @@ function Navbar(props) {
           </a>
         </div>
         <div className=" flex items-center gap-1">
-          <div onMouseEnter={() => { setSearchBtnH(true) }} onMouseLeave={() => { setSearchBtnH(false) }} className={searchBtnH === true ? " hidden sm:flex items-center justify-between w-96 search-background outline outline-1 outline-gray-400  p-1 pr-2 pl-3 rounded-2xl gap-2" : " hidden sm:flex items-center w-96 justify-between search-background outline outline-1  p-1 pr-2 pl-3 rounded-2xl gap-2"}>
+          <div onMouseEnter={() => { setSearchBtnH(true) }} onMouseLeave={() => { setSearchBtnH(false) }} className={searchBtnH === true ? " hidden sm:flex items-center justify-between w-96 search-background outline outline-1 outline-gray-400  p-1 pr-2 pl-3 rounded-md gap-2" : " hidden sm:flex items-center w-96 justify-between search-background outline outline-1 p-1 px-2   pl-3 rounded-md gap-2"}>
             <input style={{ border: "none", outline: "none" }} placeholder="Search..." className=" text-white w-full search-background " />
-            <button className=" p-1 px-4 bg-orange-500 rounded-2xl shadow-2xl text-white">
+            <button className=" p-1 px-4  bg-orange-500 rounded-md shadow-2xl text-white">
               <SearchOutlinedIcon fontSize="small" />
             </button>
           </div>
@@ -233,14 +236,71 @@ function Navbar(props) {
         <div className=" text-white">
           {['left'].map((anchor) => (
             <React.Fragment key={anchor}>
-              <Button className=" text-white rounded-full bg-gray-700 hover:bg-gray-700" onClick={toggleDrawer(anchor, true)}><MenuIcon /></Button>
+              <button className=" text-white rounded-full p-2 duration-300 bg-gray-700 hover:bg-gray-600" onClick={toggleDrawer(anchor, true)}><MenuIcon /></button>
               <SwipeableDrawer
                 anchor={anchor}
                 open={state[anchor]}
                 onClose={toggleDrawer(anchor, false)}
                 onOpen={toggleDrawer(anchor, true)}
               >
-                {list(anchor)}
+                <div className=" flex items-end justify-between pr-3 mt-3">
+                  <p className=" ml-4 py-0">Account</p>
+
+                  <button onClick={toggleDrawer(anchor, false)} size="small" className="rounded-full text-sm bg-gray-700 duration-300 hover:bg-gray-600 p-2 text-white">
+                    <CloseIcon fontSize="small" />
+                  </button>
+                </div>
+                <Box
+                  sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
+                  role="presentation"
+                  onClick={toggleDrawer(anchor, true)}
+                  onKeyDown={toggleDrawer(anchor, false)}
+                >
+                  <div className=" w-full h-auto ">
+                    <List className=" w-full">
+
+                      <ListItem disablePadding>
+                        <ListItemButton className=" flex items-center gap-3">
+                          <PersonIcon />
+                          <ListItemText primary={"Login"} />
+                        </ListItemButton>
+                      </ListItem>
+                      <ListItem disablePadding>
+                        <ListItemButton className=" flex items-center gap-3">
+                          <PersonAddIcon />
+                          <ListItemText primary={"Register"} />
+                        </ListItemButton>
+                      </ListItem>
+                    </List>
+                  </div>
+                  <Divider />
+                  <List className=" w-full">
+                    <p className=" ml-4 py-2">Categories</p>
+                    {Categoryitems.map((text, index) => (
+                      <ListItem key={text.Title} disablePadding>
+                        <ListItemButton className=" flex items-center gap-3">
+                          <Image src={text.img} height={30} width={30} />
+                          {/* <ListItemIcon>
+              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+            </ListItemIcon> */}
+                          <ListItemText primary={text.Title} />
+                        </ListItemButton>
+                      </ListItem>
+                    ))}
+                  </List>
+                  <Divider />
+                  <List className=" flex items-center flex-col gap-3 justify-center">
+                    <div className=" w-full items-center justify-center flex gap-2">
+                      <Link href={"/"}>
+                        <FacebookIcon />
+                      </Link>
+                      <Link href={"/"}>
+                        <InstagramIcon />
+                      </Link>
+                    </div>
+                    <span className=" text-gray-400 text-xs text-center">Copyright © 2023 Gixify.com , All rights reserved</span>
+                  </List>
+                </Box>
               </SwipeableDrawer>
             </React.Fragment>
           ))}

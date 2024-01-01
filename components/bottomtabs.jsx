@@ -1,6 +1,6 @@
 "use client"
 import React, { useEffect } from 'react'
-import { Button } from '@mui/material'
+import { button } from '@mui/material'
 import Link from 'next/link'
 import "../app/globals.css"
 
@@ -67,27 +67,27 @@ function Bottomtabs() {
             <div className=' w-full flex h-full search-background p-1  items-center justify-evenly'>
 
                 <Link href={"/"} className=' h-full'>
-                    <Button variant="contained" className={isHomePage ? 'h-full hover:bg-gray-600 bg-gray-600 rounded-md ' : 'h-full hover:bg-gray-600 rounded-md '}>
+                    <button variant="contained" className={isHomePage ? 'h-full bg-gray-500 shadow-2xl duration-200 hover:bg-gray-600 p-3 px-4 text-white rounded-md ' : 'h-full hover:bg-gray-600 outline outline-1 outline-gray-500 text-white px-2 rounded-md '}>
                         {isHomePage ? <HomeIcon/> : <HomeOutlinedIcon />}
                         <span>H</span>
                         <span className=' lowercase'>ome</span>
-                    </Button>
+                    </button>
                 </Link>
 
                 <Link href={"/profile"} className='h-full'>
-                    <Button variant="contained" className={isProfilePage ? 'h-full hover:bg-gray-600 bg-gray-600 rounded-md ' : 'h-full hover:bg-gray-600 rounded-md '}>
+                    <button variant="contained" className={isProfilePage ? 'h-full bg-gray-500 shadow-2xl duration-200 hover:bg-gray-600 p-3 px-4 text-white rounded-md' : 'h-full hover:bg-gray-600 outline outline-1 outline-gray-500 text-white px-2 rounded-md '}>
                         {isProfilePage ? <AccountCircleIcon/> : <AccountCircleOutlinedIcon />}
                         <span>P</span>
                         <span className=' lowercase'>rofile</span>
-                    </Button>
+                    </button>
                 </Link>
 
                 <Link href={"/settings"} className=' h-full'>
-                    <Button variant="contained" className={isSettingsPage ? 'h-full hover:bg-gray-600 bg-gray-600 rounded-md ' : 'h-full hover:bg-gray-600 rounded-md '}>
+                    <button variant="contained" className={isSettingsPage ? 'h-full bg-gray-500 text-sm shadow-2xl duration-200 hover:bg-gray-600 p-3 px-4 text-white rounded-md' : 'h-full hover:bg-gray-600 outline outline-1 outline-gray-500 text-white px-2 rounded-md '}>
                         {isSettingsPage ? <SettingsIcon/> : <SettingsOutlinedIcon />}
                         <span>S</span>
                         <span className=' lowercase'>ettings</span>
-                    </Button>
+                    </button>
                 </Link>
 
             </div>

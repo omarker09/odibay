@@ -22,6 +22,8 @@ import 'swiper/css';
 import 'swiper/css/free-mode';
 import 'swiper/css/navigation';
 import 'swiper/css/thumbs';
+import Slider from '@mui/material/Slider';
+import Checkbox from '@mui/material/Checkbox';
 
 
 // list 
@@ -38,8 +40,9 @@ import SendIcon from '@mui/icons-material/Send';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import StarBorder from '@mui/icons-material/StarBorder';
-
-
+import Pagination from '@mui/material/Pagination';
+import Stack from '@mui/material/Stack';
+import Product from '@/componnent-sm/product';
 import Rating from '@mui/material/Rating';
 
 
@@ -73,15 +76,73 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
-import Product from '@/componnent-sm/product';
+
+function valuetext(value) {
+    return `${value}°C`;
+}
+const minDistance = 10;
+const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
+
 
 function Categorypage() {
-    const [open, setOpen] = React.useState(true);
+    const [open, setOpen] = React.useState(false);
+    const [open2, setOpen2] = React.useState(false);
+    const [open3, setOpen3] = React.useState(false);
+    const [open4, setOpen4] = React.useState(false);
     const [isGrid, setIsGrid] = React.useState(true);
+
+
+
+    const [value2, setValue2] = React.useState([10.00, 30000]);
+
+    const t = 50000
+    const maxVal = t.toFixed(2)
+    const handleChange2 = (event, newValue, activeThumb) => {
+        if (!Array.isArray(newValue)) {
+            return;
+        }
+
+        if (newValue[1] - newValue[0] < minDistance) {
+            if (activeThumb === 0) {
+                const clamped = Math.min(newValue[0], 100 - minDistance);
+                setValue2([clamped, clamped + minDistance]);
+            } else {
+                const clamped = Math.max(newValue[1], minDistance);
+                setValue2([clamped - minDistance, clamped]);
+            }
+        } else {
+            setValue2(newValue);
+        }
+    };
+
+    function formatCurrency(number) {
+        return number.toLocaleString('en-US');
+    }
+
+    const firstVal = formatCurrency(value2[0]);
+    const secondetVal = formatCurrency(value2[1]);
+
+
+
+
+
     const handleClick = () => {
         setOpen(!open);
     };
-    const [view, setView] = React.useState('list');
+    const handleClick2 = () => {
+        setOpen2(!open2);
+    };
+
+    let grd = localStorage.getItem('isGrid')
+    const [view, setView] = React.useState('module');
+    useEffect(() => {
+
+        if (grd === "true") {
+            setView("module")
+        } else {
+            setView("list")
+        }
+    }, [])
 
     const handleChange = (event, nextView) => {
         setView(nextView);
@@ -129,6 +190,35 @@ function Categorypage() {
         { title: "GTA 5", price: 1000, category: "XBOX Games", image: pf },
     ]
 
+    const GridProducts = () => {
+        return (
+            <>
+                <Product img={gtv} discount={15} oldprice={6500} price={1000} title="GTA V" category={"PS5 Games"} rating={5} width={290} height={290} />
+                <Product img={gtv} price={16500} title="GTA V" category={"PS5 Games"} rating={5} width={290} height={290} />
+                <Product img={gtv} discount={5} title="GTA V" category={"PS5 Games"} rating={5} width={290} height={290} />
+                <Product img={gtv} discount={5} title="GTA V" category={"PS5 Games"} rating={5} width={290} height={290} />
+                <Product img={gtv} discount={5} title="GTA V" category={"PS5 Games"} rating={5} width={290} height={290} />
+                <Product img={gtv} discount={5} title="GTA V" category={"PS5 Games"} rating={5} width={290} height={290} />
+                <Product img={gtv} discount={5} title="GTA V" category={"PS5 Games"} rating={5} width={290} height={290} />
+                <Product img={gtv} discount={5} title="GTA V" category={"PS5 Games"} rating={5} width={290} height={290} />
+            </>
+        )
+    }
+
+    const RowProducts = () => {
+        return (
+            <>
+                <Productrow img={gtv} discount={5} oldprice={6500}  title="GTA V" category={"PS5 Games fghgfhf fgjfdgj fghfdjgfdjhjdghjdghjdghjghjghjg"} rating={5} width={isGrid ? 290 : 240} height={isGrid ? 290 : 190} />
+                <Productrow img={gtv} discount={5} title="GTA V" price={2000} category={"PS5 Games fghgfhf fgjfdgj fghfdjgfdjhjdghjdghjdghjghjghjg"} rating={5} width={isGrid ? 290 : 240} height={isGrid ? 290 : 190} />
+                <Productrow img={gtv} discount={5} title="GTA V" price={2000} category={"PS5 Games fghgfhf fgjfdgj fghfdjgfdjhjdghjdghjdghjghjghjg"} rating={5} width={isGrid ? 290 : 240} height={isGrid ? 290 : 190} />
+                <Productrow img={gtv} discount={5} title="GTA V" price={2000} category={"PS5 Games fghgfhf fgjfdgj fghfdjgfdjhjdghjdghjdghjghjghjg"} rating={5} width={isGrid ? 290 : 240} height={isGrid ? 290 : 190} />
+                <Productrow img={gtv} discount={5} title="GTA V" price={2000} category={"PS5 Games fghgfhf fgjfdgj fghfdjgfdjhjdghjdghjdghjghjghjg"} rating={5} width={isGrid ? 290 : 240} height={isGrid ? 290 : 190} />
+                <Productrow img={gtv} discount={5} title="GTA V" price={2000} category={"PS5 Games fghgfhf fgjfdgj fghfdjgfdjhjdghjdghjdghjghjghjg"} rating={5} width={isGrid ? 290 : 240} height={isGrid ? 290 : 190} />
+                <Productrow img={gtv} discount={5} title="GTA V" price={2000} category={"PS5 Games fghgfhf fgjfdgj fghfdjgfdjhjdghjdghjdghjghjghjg"} rating={5} width={isGrid ? 290 : 240} height={isGrid ? 290 : 190} />
+                <Productrow img={gtv} discount={5} title="GTA V" price={2000} category={"PS5 Games fghgfhf fgjfdgj fghfdjgfdjhjdghjdghjdghjghjghjg"} rating={5} width={isGrid ? 290 : 240} height={isGrid ? 290 : 190} />
+            </>
+        )
+    }
     return (
         <div className=' flex flex-col justify-between relative h-auto    bg-white '>
             <div className=' flex items-center px-4 sm:px-10 py-4 bg-slate-200'>
@@ -143,195 +233,320 @@ function Categorypage() {
             <div className='flex flex-col gap-7 px-4 h-auto py-7 sm:px-10'>
 
                 <div className=' w-full flex gap-5 flex-col-reverse lg:flex-row  h-full   '>
-                    <div className=' h-auto  w-full lg:w-64 bg-slate-100 '>
+                    <div className=' h-auto  w-full lg:w-64  '>
                         <div className=' p-2 nav-background '>
                             <h1 className=' text-white text-sm'>Categories</h1>
                         </div>
-                        <div>
+
+                        <div className=' flex flex-col gap-4'>
                             <List
                                 sx={{ width: '100%' }}
                                 component="nav"
                                 aria-labelledby="nested-list-subheader"
+                                className=' bg-slate-100'
                             >
-                                <ListItemButton className=' py-2 h-10'>
-                                    <ListItemText primary="Sent mail" />
+                                <ListItemButton className=' py-2 h-10 flex items-center' onClick={handleClick2}>
+
+                                    <ListItemText primary="Streaming" />
+                                    {open2 ? <ExpandLess /> : <ExpandMore />}
                                 </ListItemButton>
 
-                                <ListItemButton className=' py-2 h-10'>
-                                    <ListItemText primary="Drafts" />
+                                <Collapse in={open2} timeout="auto" unmountOnExit>
+                                
+
+                                        <ListItemButton className=' py-2 h-8 flex items-center' sx={{ pl: 4 }}>
+                                            <Checkbox size='small' {...label} />
+                                            <ListItemIcon >
+                                                <ListItemText primary="all" />
+                                            </ListItemIcon>
+                                        </ListItemButton>
+
+                                        <ListItemButton className=' py-2 h-8 flex items-center' sx={{ pl: 4 }}>
+                                            <Checkbox size='small' {...label} />
+                                            <ListItemIcon >
+                                                <ListItemText primary="Netflix" />
+                                            </ListItemIcon>
+                                        </ListItemButton>
+
+                                        <ListItemButton className=' py-2 h-8 flex items-center' sx={{ pl: 4 }}>
+                                            <Checkbox size='small' {...label} />
+                                            <ListItemIcon >
+                                                <ListItemText primary="HBO Max" />
+                                            </ListItemIcon>
+                                        </ListItemButton>
+
+                                        <ListItemButton className=' py-2 h-8 flex items-center' sx={{ pl: 4 }}>
+                                            <Checkbox size='small' {...label} />
+                                            <ListItemIcon >
+                                                <ListItemText primary="Amazon prime" />
+                                            </ListItemIcon>
+                                        </ListItemButton>
+
+                                        <ListItemButton className=' py-2 h-8 flex items-center' sx={{ pl: 4 }}>
+                                            <Checkbox size='small' {...label} />
+                                            <ListItemIcon >
+                                                <ListItemText primary="Shahid VIP" />
+                                            </ListItemIcon>
+                                        </ListItemButton>
+                            
+                                </Collapse>
+
+
+                                <ListItemButton className=' py-2 h-10 flex items-center'>
+                                    <Checkbox size='small' {...label} />
+                                    <ListItemText primary="Software" />
                                 </ListItemButton>
+
 
                                 <ListItemButton className=' py-2 h-10' onClick={handleClick}>
-                                    <ListItemText primary="Inbox" />
+                                    <ListItemText primary="IPTV" />
                                     {open ? <ExpandLess /> : <ExpandMore />}
                                 </ListItemButton>
 
                                 <Collapse in={open} timeout="auto" unmountOnExit>
                                     <List component="div" disablePadding>
-
-                                        <ListItemButton className=' py-2 h-8' sx={{ pl: 4 }}>
+                                        <ListItemButton className=' py-2 h-8 flex items-center' sx={{ pl: 4 }}>
+                                            <Checkbox size='small' {...label} />
                                             <ListItemIcon >
-                                                <ListItemText primary="Starred" />
+                                                <ListItemText primary="all" />
                                             </ListItemIcon>
+
+                                        </ListItemButton>
+                                        <ListItemButton className=' py-2 h-8 flex items-center' sx={{ pl: 4 }}>
+                                            <Checkbox size='small' {...label} />
+                                            <ListItemIcon >
+                                                <ListItemText primary="LYNX" />
+                                            </ListItemIcon>
+
                                         </ListItemButton>
 
-                                        <ListItemButton className=' py-2 h-8' sx={{ pl: 4 }}>
+                                        <ListItemButton className=' py-2 h-8 flex items-center' sx={{ pl: 4 }}>
+                                            <Checkbox size='small' {...label} />
                                             <ListItemIcon >
-                                                <ListItemText primary="Starred" />
+                                                <ListItemText primary="Iron PRO" />
                                             </ListItemIcon>
+
                                         </ListItemButton>
 
-                                        <ListItemButton className=' py-2 h-8' sx={{ pl: 4 }}>
+                                        <ListItemButton className=' py-2 h-8 flex items-center' sx={{ pl: 4 }}>
+                                            <Checkbox size='small' {...label} />
                                             <ListItemIcon >
-                                                <ListItemText primary="Starred" />
+                                                <ListItemText primary="GOGO" />
                                             </ListItemIcon>
+
                                         </ListItemButton>
                                     </List>
                                 </Collapse>
 
-                                <ListItemButton className=' py-2 h-10'>
-                                    <ListItemText primary="Sent mail" />
+                                <ListItemButton className=' py-2 h-10 flex items-center'>
+                                    <Checkbox size='small' {...label} />
+                                    <ListItemText primary="PC Games" />
                                 </ListItemButton>
 
-                                <ListItemButton className=' py-2 h-10'>
-                                    <ListItemText primary="Drafts" />
+                                <ListItemButton className=' py-2 h-10 flex items-center'>
+                                    <Checkbox size='small' {...label} />
+                                    <ListItemText primary="VPN" />
                                 </ListItemButton>
 
-                                <ListItemButton className=' py-2 h-10' onClick={handleClick}>
-                                    <ListItemText primary="Inbox" />
-                                    {open ? <ExpandLess /> : <ExpandMore />}
+                                <ListItemButton className=' py-2 h-10 flex items-center' onClick={handleClick2}>
+
+                                    <ListItemText primary="Gift Cards" />
+                                    {open2 ? <ExpandLess /> : <ExpandMore />}
                                 </ListItemButton>
 
-                                <Collapse in={open} timeout="auto" unmountOnExit>
+                                <Collapse in={open2} timeout="auto" unmountOnExit>
                                     <List component="div" disablePadding>
 
-                                        <ListItemButton className=' py-2 h-8' sx={{ pl: 4 }}>
+                                        <ListItemButton className=' py-2 h-8 flex items-center' sx={{ pl: 4 }}>
+                                            <Checkbox size='small' {...label} />
                                             <ListItemIcon >
-                                                <ListItemText primary="Starred" />
+                                                <ListItemText primary="all" />
                                             </ListItemIcon>
                                         </ListItemButton>
 
-                                        <ListItemButton className=' py-2 h-8' sx={{ pl: 4 }}>
+                                        <ListItemButton className=' py-2 h-8 flex items-center' sx={{ pl: 4 }}>
+                                            <Checkbox size='small' {...label} />
                                             <ListItemIcon >
-                                                <ListItemText primary="Starred" />
+                                                <ListItemText primary="Google Play" />
                                             </ListItemIcon>
                                         </ListItemButton>
 
-                                        <ListItemButton className=' py-2 h-8' sx={{ pl: 4 }}>
+                                        <ListItemButton className=' py-2 h-8 flex items-center' sx={{ pl: 4 }}>
+                                            <Checkbox size='small' {...label} />
                                             <ListItemIcon >
-                                                <ListItemText primary="Starred" />
+                                                <ListItemText primary="Itunes" />
                                             </ListItemIcon>
+
+                                        </ListItemButton>
+
+                                        <ListItemButton className=' py-2 h-8 flex items-center' sx={{ pl: 4 }}>
+                                            <Checkbox size='small' {...label} />
+                                            <ListItemIcon >
+                                                <ListItemText primary="Amazon " />
+                                            </ListItemIcon>
+
                                         </ListItemButton>
                                     </List>
                                 </Collapse>
 
-                                <ListItemButton className=' py-2 h-10'>
-                                    <ListItemText primary="Sent mail" />
+                                <ListItemButton className=' py-2 h-10 flex items-center'>
+                                    <Checkbox size='small' {...label} />
+                                    <ListItemText primary="PC Games" />
                                 </ListItemButton>
 
-                                <ListItemButton className=' py-2 h-10'>
-                                    <ListItemText primary="Drafts" />
+
+                                <ListItemButton className=' py-2 h-10 flex items-center' onClick={() => { setOpen3(!open3) }}>
+
+                                    <ListItemText primary="Playstation Games" />
+                                    {open3 ? <ExpandLess /> : <ExpandMore />}
                                 </ListItemButton>
 
-                                <ListItemButton className=' py-2 h-10' onClick={handleClick}>
-                                    <ListItemText primary="Inbox" />
-                                    {open ? <ExpandLess /> : <ExpandMore />}
+                                <Collapse in={open3} timeout="auto" unmountOnExit>
+                                    <List component="div" disablePadding>
+                                        <ListItemButton className=' py-2 h-8 flex items-center' sx={{ pl: 4 }}>
+                                            <Checkbox size='small' {...label} />
+                                            <ListItemIcon >
+                                                <ListItemText primary="all" />
+                                            </ListItemIcon>
+                                        </ListItemButton>
+
+                                        <ListItemButton className=' py-2 h-8 flex items-center' sx={{ pl: 4 }}>
+                                            <Checkbox size='small' {...label} />
+                                            <ListItemIcon >
+                                                <ListItemText primary="PS5" />
+                                            </ListItemIcon>
+                                        </ListItemButton>
+
+
+                                        <ListItemButton className=' py-2 h-8 flex items-center' sx={{ pl: 4 }}>
+                                            <Checkbox size='small' {...label} />
+                                            <ListItemIcon >
+                                                <ListItemText primary="PS4" />
+                                            </ListItemIcon>
+                                        </ListItemButton>
+
+
+                                    </List>
+                                </Collapse>
+
+                                <ListItemButton className=' py-2 h-10 flex items-center'>
+                                    <Checkbox size='small' {...label} />
+                                    <ListItemText primary="Steam" />
                                 </ListItemButton>
 
-                                <Collapse in={open} timeout="auto" unmountOnExit>
+
+
+                                <ListItemButton className=' py-2 h-10' onClick={() => { setOpen4(!open4) }}>
+                                    <ListItemText primary="Xbox Games" />
+                                    {open4 ? <ExpandLess /> : <ExpandMore />}
+                                </ListItemButton>
+
+                                <Collapse in={open4} timeout="auto" unmountOnExit>
                                     <List component="div" disablePadding>
 
-                                        <ListItemButton className=' py-2 h-8' sx={{ pl: 4 }}>
+
+                                        <ListItemButton className=' py-2 h-8 flex items-center' sx={{ pl: 4 }}>
+                                            <Checkbox size='small' {...label} />
                                             <ListItemIcon >
-                                                <ListItemText primary="Starred" />
+                                                <ListItemText primary="all" />
                                             </ListItemIcon>
                                         </ListItemButton>
 
-                                        <ListItemButton className=' py-2 h-8' sx={{ pl: 4 }}>
+                                        <ListItemButton className=' py-2 h-8 flex items-center' sx={{ pl: 4 }}>
+                                            <Checkbox size='small' {...label} />
                                             <ListItemIcon >
-                                                <ListItemText primary="Starred" />
+                                                <ListItemText primary="Xbox Series X" />
                                             </ListItemIcon>
                                         </ListItemButton>
 
-                                        <ListItemButton className=' py-2 h-8' sx={{ pl: 4 }}>
+                                        <ListItemButton className=' py-2 h-8 flex items-center' sx={{ pl: 4 }}>
+                                            <Checkbox size='small' {...label} />
                                             <ListItemIcon >
-                                                <ListItemText primary="Starred" />
+                                                <ListItemText primary="Xbox Sereis S" />
                                             </ListItemIcon>
                                         </ListItemButton>
+
+                                        <ListItemButton className=' py-2 h-8 flex items-center' sx={{ pl: 4 }}>
+                                            <Checkbox size='small' {...label} />
+                                            <ListItemIcon >
+                                                <ListItemText primary="Xbox One" />
+                                            </ListItemIcon>
+                                        </ListItemButton>
+
                                     </List>
                                 </Collapse>
-
-                                <ListItemButton className=' py-2 h-10'>
-                                    <ListItemText primary="Sent mail" />
-                                </ListItemButton>
-
-                                <ListItemButton className=' py-2 h-10'>
-                                    <ListItemText primary="Drafts" />
-                                </ListItemButton>
-
-                                <ListItemButton className=' py-2 h-10' onClick={handleClick}>
-                                    <ListItemText primary="Inbox" />
-                                    {open ? <ExpandLess /> : <ExpandMore />}
-                                </ListItemButton>
-
-                                <Collapse in={open} timeout="auto" unmountOnExit>
-                                    <List component="div" disablePadding>
-
-                                        <ListItemButton className=' py-2 h-8' sx={{ pl: 4 }}>
-                                            <ListItemIcon >
-                                                <ListItemText primary="Starred" />
-                                            </ListItemIcon>
-                                        </ListItemButton>
-
-                                        <ListItemButton className=' py-2 h-8' sx={{ pl: 4 }}>
-                                            <ListItemIcon >
-                                                <ListItemText primary="Starred" />
-                                            </ListItemIcon>
-                                        </ListItemButton>
-
-                                        <ListItemButton className=' py-2 h-8' sx={{ pl: 4 }}>
-                                            <ListItemIcon >
-                                                <ListItemText primary="Starred" />
-                                            </ListItemIcon>
-                                        </ListItemButton>
-                                    </List>
-                                </Collapse>
-
-
                             </List>
-                        </div>
-                    </div>
-                    {/*
-                    import GridOnIcon from '@mui/icons-material/GridOn';
-                    import ViewListIcon from '@mui/icons-material/ViewList';
-                    */}
-                    {/* ' h-auto w-full flex flex-col gap-2 ' */}
-                    <div className=' h-auto w-full flex flex-col gap-2 '>
-                        <div className=' w-full p-2 bg-white outline outline-1 outline-gray-300 flex flex-col-reverse md:flex-row items-center gap-5 justify-around'>
+                            <div className='  bg-slate-100 flex flex-col  w-full  '>
+                                <span className='p-2 nav-background h-auto w-full text-white'>Filter BY PRICE</span>
+                                <div className='p-3 gap-3 flex-col w-full h-auto flex items-start'>
+                                    <Slider
+                                        getAriaLabel={() => 'Minimum distance shift'}
+                                        value={value2}
+                                        onChange={handleChange2}
+                                        max={maxVal}
+                                        valueLabelDisplay="auto"
+                                        getAriaValueText={valuetext}
+                                        disableSwap
+                                    />
+                                    <div className='flex flex-col items-start w-full gap-3   justify-start '>
+                                        <div className=' w-full px-1'>
+                                            <span>Price : </span>
+                                            <div className='flex items-start justify-between w-full'>
+                                                <span>{firstVal} DZD</span>
 
-                            <div className=' flex items-center gap-4 w-full justify-around md:justify-start'>
-                                <div className=' flex gap-2'>
-                                    <span className=' text-xs lg:text-sm text-black font-bold'>8</span>
-                                    <span className=' text-xs lg:text-sm text-gray-500'>Products found</span>
-                                </div>
-
-                                <div className=' flex items-center gap-2'>
-                                    <label className='text-xs lg:text-sm'>Per page : </label>
-                                    <input defaultValue={5} max={10} min={1} className=' w-20 text-center border-none h-7 rounded-sm   p-1 px-1 outline outline-1 outline-gray-300' type='number' />
+                                                <span>{secondetVal} DZD</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button className=' bg-orange-400 p-2 w-full text-white'>FILTER</button>
                                 </div>
                             </div>
+                        </div>
+                    </div>
 
-                            <div className='flex items-center gap-3 justify-around md:justify-end w-full'>
+                    <div className=' h-auto w-full flex flex-col gap-2 '>
+                        <div className=' w-full p-2 bg-white outline outline-1 outline-gray-300 flex flex-col-reverse sm:flex-row items-center gap-5 justify-around'>
+
+                            <div className=' flex items-center gap-4 w-full justify-start md:justify-start'>
+                                <div className=' flex gap-2'>
+
+                                    <span className=' text-xs lg:text-sm text-gray-500'>Showing results for : 10 / 175 Products</span>
+                                </div>
+
+                            </div>
+
+                            <div className='flex flex-wrap sm:flex-nowrap items-start gap-3 justify-start md:justify-end w-full'>
+
                                 <div className=' flex items-center gap-2'>
-                                    <label className='text-xs lg:text-sm'>Sort By : </label>
                                     <Box sx={{ minWidth: 120 }}>
                                         <FormControl fullWidth>
-                                            <InputLabel style={{ marginTop: -10 }} className=' text-center flex items-center  rounded-none' id="demo-simple-select-label">Age</InputLabel>
+                                            <InputLabel style={{ marginTop: -10 }} className=' text-center flex items-center  rounded-none' id="demo-simple-select-label">Per Page</InputLabel>
                                             <Select
                                                 labelId="demo-simple-select-label"
                                                 id="demo-simple-select"
                                                 value={age}
-                                                label="auto"
+                                                label="ghj"
+                                                onChange={handleChangeSelect}
+                                                className='  h-8'
+                                            >
+                                                <MenuItem value={10}>5</MenuItem>
+                                                <MenuItem value={20}>10</MenuItem>
+                                                <MenuItem value={30}>50</MenuItem>
+                                                <MenuItem value={30}>100</MenuItem>
+                                            </Select>
+                                        </FormControl>
+                                    </Box>
+                                </div>
+
+                                <div className=' flex items-center gap-2'>
+                                    <Box sx={{ minWidth: 120 }}>
+                                        <FormControl fullWidth>
+                                            <InputLabel style={{ marginTop: -10 }} className=' text-center flex items-center  rounded-none' id="demo-simple-select-label">Sort By</InputLabel>
+                                            <Select
+                                                labelId="demo-simple-select-label"
+                                                id="demo-simple-select"
+                                                value={age}
+                                                label="ghj"
                                                 onChange={handleChangeSelect}
                                                 className='  h-8'
                                             >
@@ -349,25 +564,33 @@ function Categorypage() {
                                     exclusive
                                     onChange={handleChange}
                                 >
-                                    <ToggleButton  onClick={() => {setIsGrid(true)}} className=' h-8' value="module" aria-label="module">
+                                    <ToggleButton onClick={() => {
+
+                                        localStorage.setItem("isGrid", true)
+                                    }} className=' h-8' value="module" aria-label="module">
                                         <GridOnIcon />
                                     </ToggleButton>
 
-                                    <ToggleButton onClick={() => {setIsGrid(false)}} className=' h-8' value="list" aria-label="list">
+                                    <ToggleButton onClick={() => {
+
+                                        localStorage.setItem("isGrid", false)
+                                    }} className=' h-8' value="list" aria-label="list">
                                         <ViewListIcon />
                                     </ToggleButton>
                                 </ToggleButtonGroup>
                             </div>
 
                         </div>
-                        <div className={isGrid ? ' w-full h-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 items-center gap-4 ' : ' w-full h-auto grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 items-center gap-4 '}>
-                            {isGrid ?  <Product img={gtv} discount={5} title="GTA V" price={2000} category={"PS5 Games fghgfhf fgjfdgj fghfdjgfdjhjdghjdghjdghjghjghjg"} rating={5} width={290} height={290} /> :  <Productrow img={gtv} discount={5} title="GTA V" price={2000} category={"PS5 Games fghgfhf fgjfdgj fghfdjgfdjhjdghjdghjdghjghjghjg"} rating={5} width={isGrid ? 290 : 190} height={isGrid ? 290 : 190}  />}
-                           
-                          
+                        <div className={grd == "true" ? ' w-full h-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 items-center gap-4 ' : ' w-full h-auto grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 items-center gap-4 '}>
+                            {grd == "true" ? <GridProducts /> : <RowProducts />}
+                        </div>
+                        <div className=' py-4'>
+                            <Stack spacing={2}>
+                                <Pagination count={175} shape="rounded" />
+                            </Stack>
                         </div>
                     </div>
                 </div>
-
                 <div className=' text-2xl font-bold gap-3 flex flex-col'>
                     <h1>You Might also Like </h1>
                     <div>
@@ -392,9 +615,7 @@ function Categorypage() {
                             swipeable
                             sliderClass='my-carousel'
                             className=' bg-white'
-                            partialVisible={false}
-                        >
-
+                            partialVisible={false}>
                             {/*Notice image size must atleast be 512 * 512 px*/}
                             {arr.map((e) => {
                                 return <div key={e.title} className=' border border-1 mr-2  border-gray-300  rounded-lg' >
@@ -412,17 +633,15 @@ function Categorypage() {
                                             <Link className=' p-1 text-xs lg:text-sm text-black' href={"/"}>Details <ArrowForwardIosIcon className=' text-xs text-black  ' fontSize='small' /></Link>
                                         </div>
                                         <h1 className=' text-bold text-sm text-black'>{e.title}</h1>
-
                                     </div>
                                 </div>
                             })}
-
                         </Carousel>
                     </div>
                 </div>
             </div>
             <Footer />
-            <Bottomtabs/>
+            <Bottomtabs />
         </div>
     )
 }
