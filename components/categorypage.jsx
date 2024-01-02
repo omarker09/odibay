@@ -90,12 +90,15 @@ function Categorypage() {
     const [open2, setOpen2] = React.useState(false);
     const [open3, setOpen3] = React.useState(false);
     const [open4, setOpen4] = React.useState(false);
+    const [open5, setOpen5] = React.useState(false);
     const [isGrid, setIsGrid] = React.useState(true);
-    const [value, setValue] = React.useState([100, 300]);
+    const [value, setValue] = React.useState([100, 40000]);
+    const [value1, setValue1] = React.useState(100);
+    const [value2, setValue2] = React.useState(4000);
 
 
 
-    const [value2, setValue2] = React.useState([10.00, 30000]);
+
 
     const t = 50000
     const maxVal = t.toFixed(2)
@@ -121,9 +124,11 @@ function Categorypage() {
         return number.toLocaleString('en-US');
     }
 
-    const firstVal = formatCurrency(value[0]);
-    const secondetVal = formatCurrency(value[1]);
+    const firstVal = formatCurrency(value1);
+    const secondetVal = formatCurrency(value2);
 
+    const SliderFirstVal = formatCurrency(value[0])
+    const SlidersecondetVal = formatCurrency(value[1])
 
 
 
@@ -353,13 +358,13 @@ function Categorypage() {
                                     <ListItemText primary="VPN" />
                                 </ListItemButton>
 
-                                <ListItemButton className=' py-2 h-10 flex items-center' onClick={handleClick2}>
+                                <ListItemButton className=' py-2 h-10 flex items-center' onClick={() => {setOpen5(!open5)}}>
 
                                     <ListItemText primary="Gift Cards" />
-                                    {open2 ? <ExpandLess /> : <ExpandMore />}
+                                    {open5 ? <ExpandLess /> : <ExpandMore />}
                                 </ListItemButton>
 
-                                <Collapse in={open2} timeout="auto" unmountOnExit>
+                                <Collapse in={open5} timeout="auto" unmountOnExit>
                                     <List component="div" disablePadding>
 
                                         <ListItemButton className=' py-2 h-8 flex items-center' sx={{ pl: 4 }}>
@@ -484,23 +489,44 @@ function Categorypage() {
                             <div className='  bg-slate-100 flex flex-col  w-full  '>
                                 <span className='p-2 nav-background h-auto w-full text-white'>Filter BY PRICE</span>
                                 <div className='p-3 gap-3 flex-col w-full h-auto flex items-start'>
-                                    <Slider
-                                       
+                                    <div className=' w-full md:hidden flex gap-3 justify-between items-center'>
+                                        <div className='flex items-center gap-2 justify-between'>
+                                            <span>From</span>
+                                            <input type='number' onChange={(e) => {
+                                                const min =  parseInt(e.target.value)
+                                                setValue1(min)
+                                                }} placeholder={`min is 0`} minLength={0} className=' w-full p-1 border-none outline-none'  />
+                                        </div>
+                                        <div className='flex items-center gap-2 justify-between'>
+                                            <span>To</span>
+                                            <input  type='number'  onChange={(e) => {
+                                                const min =  parseInt(e.target.value)
+                                                setValue2(min)
+                                                }} placeholder={`max is 50000`} max={50000} className=' w-full p-1 border-none outline-none'  />
+                                        </div>
+                                    </div>
+                                    <Slider                                     
                                         formatOptions={{ style: "currency", currency: "USD" }}
-                                        step={10}
-                                        maxValue={1000}
+                                        step={100}
+                                        maxValue={50000}
                                         minValue={0}
                                         value={value}
                                         onChange={setValue}
-                                        className="max-w-md"
+                                        className="max-w-md hidden md:flex w-full"
                                     />
                                     <div className='flex flex-col items-start w-full gap-3   justify-start '>
                                         <div className=' w-full px-1'>
                                             <span>Price : </span>
-                                            <div className='flex items-start justify-between w-full'>
+                                            <div className='flex items-start md:hidden justify-between w-full'>
                                                 <span>{firstVal} DZD</span>
 
                                                 <span>{secondetVal} DZD</span>
+                                            </div>
+
+                                            <div className='hidden items-start md:flex justify-between w-full'>
+                                                <span>{SliderFirstVal} DZD</span>
+
+                                                <span>{SlidersecondetVal} DZD</span>
                                             </div>
                                         </div>
                                     </div>
