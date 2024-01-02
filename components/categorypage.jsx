@@ -487,7 +487,7 @@ function Categorypage() {
                                         value={value2}
                                         onChange={handleChange2}
                                         max={maxVal}
-                                        valueLabelDisplay="auto"
+                                        valueLabelDisplay="off"
                                         getAriaValueText={valuetext}
                                         disableSwap
                                     />
