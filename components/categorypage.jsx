@@ -191,11 +191,13 @@ function Categorypage() {
     ]
 
     const GridProducts = () => {
+        // You must alway add discount proop with oldprice if you want discount percentage and price show up  !!
+        // or add the price with no discount if you want normal
         return (
             <>
-                <Product img={gtv} discount={15} oldprice={6500} price={1000} title="GTA V" category={"PS5 Games"} rating={5} width={290} height={290} />
-                <Product img={gtv} price={16500} title="GTA V" category={"PS5 Games"} rating={5} width={290} height={290} />
-                <Product img={gtv} discount={5} title="GTA V" category={"PS5 Games"} rating={5} width={290} height={290} />
+                <Product img={gtv} discount={99} oldprice={6500} price={1000} title="GTA V" category={"PS5 Games"} rating={5} width={290} height={290} />
+                <Product img={gtv} discount={5} oldprice={100} price={16500} title="GTA V" category={"PS5 Games"} rating={5} width={290} height={290} />
+                <Product img={gtv} discount={5} price={16500} title="GTA V" category={"PS5 Games"} rating={5} width={290} height={290} />
                 <Product img={gtv} discount={5} title="GTA V" category={"PS5 Games"} rating={5} width={290} height={290} />
                 <Product img={gtv} discount={5} title="GTA V" category={"PS5 Games"} rating={5} width={290} height={290} />
                 <Product img={gtv} discount={5} title="GTA V" category={"PS5 Games"} rating={5} width={290} height={290} />
@@ -206,12 +208,13 @@ function Categorypage() {
     }
 
     const RowProducts = () => {
+        
         return (
             <>
                 <Productrow img={gtv} discount={5} oldprice={6500}  title="GTA V" category={"PS5 Games fghgfhf fgjfdgj fghfdjgfdjhjdghjdghjdghjghjghjg"} rating={5} width={isGrid ? 290 : 240} height={isGrid ? 290 : 190} />
                 <Productrow img={gtv} discount={5} title="GTA V" price={2000} category={"PS5 Games fghgfhf fgjfdgj fghfdjgfdjhjdghjdghjdghjghjghjg"} rating={5} width={isGrid ? 290 : 240} height={isGrid ? 290 : 190} />
                 <Productrow img={gtv} discount={5} title="GTA V" price={2000} category={"PS5 Games fghgfhf fgjfdgj fghfdjgfdjhjdghjdghjdghjghjghjg"} rating={5} width={isGrid ? 290 : 240} height={isGrid ? 290 : 190} />
-                <Productrow img={gtv} discount={5} title="GTA V" price={2000} category={"PS5 Games fghgfhf fgjfdgj fghfdjgfdjhjdghjdghjdghjghjghjg"} rating={5} width={isGrid ? 290 : 240} height={isGrid ? 290 : 190} />
+                <Productrow img={gtv} discount={5} oldprice={6500} title="GTA V" price={2000} category={"PS5 Games fghgfhf fgjfdgj fghfdjgfdjhjdghjdghjdghjghjghjg"} rating={5} width={isGrid ? 290 : 240} height={isGrid ? 290 : 190} />
                 <Productrow img={gtv} discount={5} title="GTA V" price={2000} category={"PS5 Games fghgfhf fgjfdgj fghfdjgfdjhjdghjdghjdghjghjghjg"} rating={5} width={isGrid ? 290 : 240} height={isGrid ? 290 : 190} />
                 <Productrow img={gtv} discount={5} title="GTA V" price={2000} category={"PS5 Games fghgfhf fgjfdgj fghfdjgfdjhjdghjdghjdghjghjghjg"} rating={5} width={isGrid ? 290 : 240} height={isGrid ? 290 : 190} />
                 <Productrow img={gtv} discount={5} title="GTA V" price={2000} category={"PS5 Games fghgfhf fgjfdgj fghfdjgfdjhjdghjdghjdghjghjghjg"} rating={5} width={isGrid ? 290 : 240} height={isGrid ? 290 : 190} />

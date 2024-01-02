@@ -8,23 +8,28 @@ import Box from '@mui/material/Box';
 import Rating from '@mui/material/Rating';
 function Product(props) {
   const [isDiscount, setIsdicount] = useState(false)
+  const [isFree,setIsFree] = useState("")
   const [afterDiscount, setAfterDiscount] = useState(0)
   const oldprice = props.oldprice
   const perc = props.discount
   function CalcuLateDiscount(oldprice, perc) {
     const percentageCalc = (oldprice * perc) / 100;
     const DiscountAmount = oldprice - percentageCalc;
-    return DiscountAmount
+    if (perc === 100) {
+      return "free"
+    } else {
+      return DiscountAmount + " DZD"
+    }
+ 
   }
   useEffect(() => {
     if (!props.dicountprice) {
       setIsdicount(true)
     }
-    
   }, [])
   return (
     <div className=' boxshadow duration-200 flex flex-col justify-between   border border-1  relative border-gray-300  w-full rounded-lg' >
-      <div style={{ borderTopRightRadius: 8 }} className={props.discount ? ' bg-red-600 text-white px-4 py-1 absolute top-0 right-0' : "hidden" }>
+      <div style={{ borderTopRightRadius: 8 }} className={props.discount ? ' bg-red-600 text-white px-4 py-1 absolute top-0 right-0' : " hidden" }>
         {props.discount}{props.discount ? '% OFF' : ""}
       </div>
       <Image
@@ -46,7 +51,7 @@ function Product(props) {
             <div className=' flex  w-full gap-0 items-start justify-start'>
               <div className={!props.oldprice ? ' hidden' : "flex items-center gap-2"}>
                 <span className='text-gray-400 font-bold text-xs sm:text-sm line-through'>{!props.oldprice ? "" : props.oldprice} </span>
-                <span className=' text-blue-950 font-bold text-xs sm:text-sm'>  {!CalcuLateDiscount(oldprice, perc) ? "" : CalcuLateDiscount(oldprice, perc) + " DZD"} </span>
+                <span className=' text-blue-950 font-bold text-xs sm:text-sm'>  {!CalcuLateDiscount(oldprice, perc) ? "" : CalcuLateDiscount(oldprice, perc)} </span>
               </div>
               <span className={props.oldprice ? " hidden" : ' text-blue-950 font-bold text-xs sm:text-sm'}>  {!props.price ? "No price included" : props.price} {!props.price ? "" : "DZD"}</span>
             </div>

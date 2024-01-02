@@ -15,6 +15,7 @@ import Badge from '@mui/material/Badge';
 import { styled } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import Modal from '@mui/material/Modal';
 import { deepOrange, deepPurple } from '@mui/material/colors';
 import MenuIcon from '@mui/icons-material/Menu';
 import Slide from '@mui/material/Slide';
@@ -67,6 +68,17 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   },
 }));
 
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  boxShadow: 24,
+  p: 4,
+};
+
 function Navbar(props) {
   const dispatch = useDispatch()
   const currentState = useSelector((state) => state.product)
@@ -77,6 +89,9 @@ function Navbar(props) {
   const [ConditionScroll, setConditionScroll] = useState(false)
   const [offsetY, setOffsetY] = useState("fixed")
   const [isOpen, setIsopen] = useState(false)
+
+
+
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -196,6 +211,7 @@ function Navbar(props) {
   );
   return (
     <div style={{ display: props.display, zIndex: 999 }} className="   duration-200 w-full" >
+
       <div
         style={{ display: "flex" }}
         className="py-4 h-auto  w-full  flex items-center  justify-between  text-black bg-black outline-1 outline outline-gray-700 px-2 sm:px-10"
@@ -315,8 +331,7 @@ function Navbar(props) {
         </div>
         <div className=" flex items-center gap-2">
           <div className=" flex items-center gap-2 text-sm text-white">
-            <SearchIcon onClick={handleClickOpen} className=" flex sm:hidden cursor-pointer" />
-            |
+            
             <IconButton aria-label="cart">
               <StyledBadge badgeContent={0} style={{ color: "white" }} color="secondary">
                 <ShoppingCartIcon />
