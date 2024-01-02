@@ -29,7 +29,7 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import HomeIcon from '@mui/icons-material/Home';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
-
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { usePathname } from 'next/navigation'
 
 function Bottomtabs() {
@@ -110,8 +110,8 @@ function Bottomtabs() {
 
                 <ListItemButton  className='text-white duration-300 hover:bg-gray-600 h-full w-7 flex text-center items-center justify-center'>
                     <div className='flex flex-col justify-center items-center gap-0'>
-                        <SearchIcon className=" text-md  cursor-pointer text-white" />
-                        <span className='text-xs text-white'>Search</span>
+                        <ShoppingCartIcon className=" text-md  cursor-pointer text-white" />
+                        <span className='text-xs text-white'>Cart</span>
                     </div>
                 </ListItemButton>
 

@@ -13,25 +13,29 @@ import Bannersm from '@/componnent-sm/bannersm'
 import Smgroups from '@/components/smgroups'
 import Footer from '@/components/footer'
 import Bottomtabs from '@/components/bottomtabs';
+import { NextUIProvider } from "@nextui-org/react";
 export default function Home() {
   return (
-    <div className=' h-full flex flex-col gap-0 w-full bg-white '>
-      <Navbar />
-      <Banner />
-      <div className=' h-full flex flex-col gap-8 w-full  '>
-        <Fastcategory />
-        <Productsgroup />
-        <Mainproducts />
-        <Regulerproducts />
-        <Bannersm />
+    <NextUIProvider>
+      <div className=' h-full flex flex-col gap-0 w-full bg-white '>
+        <Navbar />
+        <Banner />
+        <div className=' h-full flex flex-col gap-8 w-full  '>
+          <Fastcategory />
+          <Productsgroup />
+          <Mainproducts />
+          <Regulerproducts />
+          <Bannersm />
 
-        <Smgroups />
-        <Footer />
-        <div className=' h-full flex flex-col w-full  '>
+          <Smgroups />
+          <Footer />
+          <div className=' h-full flex flex-col w-full  '>
 
-          <Bottomtabs />
+            <Bottomtabs />
+          </div>
         </div>
       </div>
-    </div>
+    </NextUIProvider>
+
   )
 }

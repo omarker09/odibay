@@ -9,7 +9,7 @@ import Button from '@mui/material/Button';
 import Link from 'next/link'
 function Footer() {
   return (
-    <div className='flex flex-col pb-16 h-auto nav-background p-6  sm:pb-0'>
+    <div className='flex flex-col pb-12 h-auto nav-background p-6  sm:pb-0'>
       <div className=' w-full flex flex-col gap-4 items-center sm:items-start px-2 sm:px-10'>
         <Image
           src={ProjectLogo}

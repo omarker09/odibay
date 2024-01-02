@@ -22,7 +22,8 @@ import 'swiper/css';
 import 'swiper/css/free-mode';
 import 'swiper/css/navigation';
 import 'swiper/css/thumbs';
-import Slider from '@mui/material/Slider';
+import {Slider} from "@nextui-org/react";
+
 import Checkbox from '@mui/material/Checkbox';
 
 
@@ -90,6 +91,7 @@ function Categorypage() {
     const [open3, setOpen3] = React.useState(false);
     const [open4, setOpen4] = React.useState(false);
     const [isGrid, setIsGrid] = React.useState(true);
+    const [value, setValue] = React.useState([100, 300]);
 
 
 
@@ -119,8 +121,8 @@ function Categorypage() {
         return number.toLocaleString('en-US');
     }
 
-    const firstVal = formatCurrency(value2[0]);
-    const secondetVal = formatCurrency(value2[1]);
+    const firstVal = formatCurrency(value[0]);
+    const secondetVal = formatCurrency(value[1]);
 
 
 
@@ -208,10 +210,10 @@ function Categorypage() {
     }
 
     const RowProducts = () => {
-        
+
         return (
             <>
-                <Productrow img={gtv} discount={5} oldprice={6500}  title="GTA V" category={"PS5 Games fghgfhf fgjfdgj fghfdjgfdjhjdghjdghjdghjghjghjg"} rating={5} width={isGrid ? 290 : 240} height={isGrid ? 290 : 190} />
+                <Productrow img={gtv} discount={5} oldprice={6500} title="GTA V" category={"PS5 Games fghgfhf fgjfdgj fghfdjgfdjhjdghjdghjdghjghjghjg"} rating={5} width={isGrid ? 290 : 240} height={isGrid ? 290 : 190} />
                 <Productrow img={gtv} discount={5} title="GTA V" price={2000} category={"PS5 Games fghgfhf fgjfdgj fghfdjgfdjhjdghjdghjdghjghjghjg"} rating={5} width={isGrid ? 290 : 240} height={isGrid ? 290 : 190} />
                 <Productrow img={gtv} discount={5} title="GTA V" price={2000} category={"PS5 Games fghgfhf fgjfdgj fghfdjgfdjhjdghjdghjdghjghjghjg"} rating={5} width={isGrid ? 290 : 240} height={isGrid ? 290 : 190} />
                 <Productrow img={gtv} discount={5} oldprice={6500} title="GTA V" price={2000} category={"PS5 Games fghgfhf fgjfdgj fghfdjgfdjhjdghjdghjdghjghjghjg"} rating={5} width={isGrid ? 290 : 240} height={isGrid ? 290 : 190} />
@@ -255,43 +257,43 @@ function Categorypage() {
                                 </ListItemButton>
 
                                 <Collapse in={open2} timeout="auto" unmountOnExit>
-                                
 
-                                        <ListItemButton className=' py-2 h-8 flex items-center' sx={{ pl: 4 }}>
-                                            <Checkbox size='small' {...label} />
-                                            <ListItemIcon >
-                                                <ListItemText primary="all" />
-                                            </ListItemIcon>
-                                        </ListItemButton>
 
-                                        <ListItemButton className=' py-2 h-8 flex items-center' sx={{ pl: 4 }}>
-                                            <Checkbox size='small' {...label} />
-                                            <ListItemIcon >
-                                                <ListItemText primary="Netflix" />
-                                            </ListItemIcon>
-                                        </ListItemButton>
+                                    <ListItemButton className=' py-2 h-8 flex items-center' sx={{ pl: 4 }}>
+                                        <Checkbox size='small' {...label} />
+                                        <ListItemIcon >
+                                            <ListItemText primary="all" />
+                                        </ListItemIcon>
+                                    </ListItemButton>
 
-                                        <ListItemButton className=' py-2 h-8 flex items-center' sx={{ pl: 4 }}>
-                                            <Checkbox size='small' {...label} />
-                                            <ListItemIcon >
-                                                <ListItemText primary="HBO Max" />
-                                            </ListItemIcon>
-                                        </ListItemButton>
+                                    <ListItemButton className=' py-2 h-8 flex items-center' sx={{ pl: 4 }}>
+                                        <Checkbox size='small' {...label} />
+                                        <ListItemIcon >
+                                            <ListItemText primary="Netflix" />
+                                        </ListItemIcon>
+                                    </ListItemButton>
 
-                                        <ListItemButton className=' py-2 h-8 flex items-center' sx={{ pl: 4 }}>
-                                            <Checkbox size='small' {...label} />
-                                            <ListItemIcon >
-                                                <ListItemText primary="Amazon prime" />
-                                            </ListItemIcon>
-                                        </ListItemButton>
+                                    <ListItemButton className=' py-2 h-8 flex items-center' sx={{ pl: 4 }}>
+                                        <Checkbox size='small' {...label} />
+                                        <ListItemIcon >
+                                            <ListItemText primary="HBO Max" />
+                                        </ListItemIcon>
+                                    </ListItemButton>
 
-                                        <ListItemButton className=' py-2 h-8 flex items-center' sx={{ pl: 4 }}>
-                                            <Checkbox size='small' {...label} />
-                                            <ListItemIcon >
-                                                <ListItemText primary="Shahid VIP" />
-                                            </ListItemIcon>
-                                        </ListItemButton>
-                            
+                                    <ListItemButton className=' py-2 h-8 flex items-center' sx={{ pl: 4 }}>
+                                        <Checkbox size='small' {...label} />
+                                        <ListItemIcon >
+                                            <ListItemText primary="Amazon prime" />
+                                        </ListItemIcon>
+                                    </ListItemButton>
+
+                                    <ListItemButton className=' py-2 h-8 flex items-center' sx={{ pl: 4 }}>
+                                        <Checkbox size='small' {...label} />
+                                        <ListItemIcon >
+                                            <ListItemText primary="Shahid VIP" />
+                                        </ListItemIcon>
+                                    </ListItemButton>
+
                                 </Collapse>
 
 
@@ -483,13 +485,14 @@ function Categorypage() {
                                 <span className='p-2 nav-background h-auto w-full text-white'>Filter BY PRICE</span>
                                 <div className='p-3 gap-3 flex-col w-full h-auto flex items-start'>
                                     <Slider
-                                        getAriaLabel={() => 'Minimum distance shift'}
-                                        value={value2}
-                                        onChange={handleChange2}
-                                        max={maxVal}
-                                        valueLabelDisplay="off"
-                                        getAriaValueText={valuetext}
-                                        disableSwap
+                                       
+                                        formatOptions={{ style: "currency", currency: "USD" }}
+                                        step={10}
+                                        maxValue={1000}
+                                        minValue={0}
+                                        value={value}
+                                        onChange={setValue}
+                                        className="max-w-md"
                                     />
                                     <div className='flex flex-col items-start w-full gap-3   justify-start '>
                                         <div className=' w-full px-1'>

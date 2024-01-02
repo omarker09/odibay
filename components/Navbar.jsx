@@ -228,15 +228,15 @@ function Navbar(props) {
 
           </a>
         </div>
-        <div className=" flex items-center gap-1">
-          <div onMouseEnter={() => { setSearchBtnH(true) }} onMouseLeave={() => { setSearchBtnH(false) }} className={searchBtnH === true ? " hidden sm:flex items-center justify-between w-96 search-background outline outline-1 outline-gray-400  p-1 pr-2 pl-3 rounded-md gap-2" : " hidden sm:flex items-center w-96 justify-between search-background outline outline-1 p-1 px-2   pl-3 rounded-md gap-2"}>
+        <div className=" flex items-center w-6/12 gap-1">
+          <div onMouseEnter={() => { setSearchBtnH(true) }} onMouseLeave={() => { setSearchBtnH(false) }} className={searchBtnH === true ? " hidden sm:flex items-center justify-between w-full search-background outline outline-1 outline-gray-400  p-1 pr-2 pl-3 rounded-md gap-2" : " hidden sm:flex items-center w-full justify-between search-background outline outline-1 p-1 px-2   pl-3 rounded-md gap-2"}>
             <input style={{ border: "none", outline: "none" }} placeholder="Search..." className=" text-white w-full search-background " />
             <button className=" p-1 px-4  bg-orange-500 rounded-md shadow-2xl text-white">
               <SearchOutlinedIcon fontSize="small" />
             </button>
           </div>
         </div>
-        <div className=" flex hidden sm:flex justify-center items-center gap-3 ">
+        <div className=" flex  sm:flex justify-center items-center gap-3 ">
           <Link href={"https://www.google.com"} className=" text-gray-400 text-sm" target="_blank">
             Home
           </Link>
