@@ -1,6 +1,5 @@
 "use client";
 
-
 import React, { useEffect, useState } from "react";
 import Image from 'next/image'
 import { deleteProduct } from '@/app/redux/slices/cartSlice';
@@ -32,8 +31,6 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import ProjectLogo from "../public/project-logo.png"
 import "../app/globals.css"
-
-// Icons
 import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
 import DesktopMacOutlinedIcon from '@mui/icons-material/DesktopMacOutlined';
@@ -54,12 +51,8 @@ import MailIcon from '@mui/icons-material/Mail';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import ouad from "../public/collectble/ouadkniss.svg"
 import DiscordIcon from "../public/collectble/discord.png"
-// Data
-
+import cartEmpty from "../public/collectble/add-to-cart.png"
 import Categoryitems from "@/data/categoryitems";
-
-
-
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -82,18 +75,6 @@ const style = {
 };
 
 function Navbar(props) {
-  const data = useSelector((e) => e.cart)
-
-  const dispatch = useDispatch()
-
-  const totalNormal = data.reduce((acc, product) => {
-    acc += product.price * product.quantity
-    return acc;
-}, 0)
-
-
-
-
   const currentState = useSelector((state) => state.product)
   const [open, setOpen] = React.useState(false);
   const [iscat, setIscat] = React.useState(false)
@@ -102,8 +83,15 @@ function Navbar(props) {
   const [ConditionScroll, setConditionScroll] = useState(false)
   const [offsetY, setOffsetY] = useState("fixed")
   const [isOpen, setIsopen] = useState(false)
+  const [state, setState] = React.useState(false);
 
+  const data = useSelector((e) => e.cart)
+  const dispatch = useDispatch()
 
+  const totalNormal = data.reduce((acc, product) => {
+    acc += product.price * product.quantity
+    return acc;
+  }, 0)
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -120,12 +108,15 @@ function Navbar(props) {
       padding: '0 4px',
     },
   }));
+
   function CatHoveEnter() {
     setBolstate(true)
   }
+
   function CatHovLeave() {
     setBolstate(false)
   }
+
   useEffect(() => {
     CatHovLeave()
     let lastScroll = 0;
@@ -133,7 +124,6 @@ function Navbar(props) {
       const currentValue = this.scrollY
       setOffsetY(currentValue)
       if (currentValue > lastScroll) {
-
         setConditionScroll(true)
         setOffsetY("fixed")
       } else if (currentValue < lastScroll) {
@@ -146,8 +136,6 @@ function Navbar(props) {
     })
   }, [])
 
-  const [state, setState] = React.useState(false);
-
   const toggleDrawer = (anchor, open) => (event) => {
     if (
       event &&
@@ -156,64 +144,16 @@ function Navbar(props) {
     ) {
       return;
     }
-
     if (anchor === 'left' && open === false) {
       setState(state.left = true);
     }
-
     setState({ ...state, [anchor]: open });
   };
-  const CartDrawer = () => {
-    return (
-      <React.Fragment key={"right"}>
-        <SwipeableDrawer
-          anchor={"right"}
-          open={state["right"]}
-          onClose={toggleDrawer("right", false)}
-          onOpen={toggleDrawer("right", true)}
-        >
-          <div className=" flex items-end justify-between pr-3 mt-3">
-            <p className=" ml-4 py-0">Account</p>
-
-            <button onClick={toggleDrawer("right", false)} size="small" className="rounded-full text-sm bg-gray-700 duration-300 hover:bg-gray-600 p-2 text-white">
-              <CloseIcon fontSize="small" />
-            </button>
-          </div>
-          <Box
-            sx={{ width: "right" === 'top' || "right" === 'bottom' ? 'auto' : 250 }}
-            role="presentation"
-            onClick={toggleDrawer("right", true)}
-            onKeyDown={toggleDrawer("right", false)}
-          >
-
-            <List className=" w-full">
-              <p className=" ml-4 py-2">Categories</p>
-
-            </List>
-
-            <List className=" flex items-center flex-col gap-3 justify-center">
-              <div className=" w-full items-center justify-center flex gap-2">
-                <Link href={"/"}>
-                  <FacebookIcon />
-                </Link>
-                <Link href={"/"}>
-                  <InstagramIcon />
-                </Link>
-              </div>
-              <span className=" text-gray-400 text-xs text-center">Copyright © 2023 Gixify.com , All rights reserved</span>
-            </List>
-          </Box>
-        </SwipeableDrawer>
-      </React.Fragment>
-    )
-  }
   return (
     <div style={{ display: props.display, zIndex: 999 }} className="   duration-200 w-full" >
-
       <div
         style={{ display: "flex" }}
-        className="py-4 h-auto  w-full  flex items-center  justify-between  text-black bg-black outline-1 outline outline-gray-700 px-2 sm:px-10"
-      >
+        className="py-4 h-auto  w-full  flex items-center  justify-between  text-black bg-black outline-1 outline outline-gray-700 px-2 sm:px-10">
         <div className=" flex justify-center text-white items-center">
           <a href={"/"} className=" flex items-center p-1 ">
             <Image
@@ -223,7 +163,6 @@ function Navbar(props) {
               height={115}
               alt="Picture of the author"
             />
-
           </a>
         </div>
         <div className=" flex items-center w-6/12 gap-1">
@@ -255,12 +194,10 @@ function Navbar(props) {
                 anchor={anchor}
                 open={state[anchor]}
                 onClose={toggleDrawer(anchor, false)}
-                onOpen={toggleDrawer(anchor, true)}
-              >
+                onOpen={toggleDrawer(anchor, true)}>
                 <div className=" flex items-end justify-between pr-3 mt-3">
                   <p className=" ml-4 py-0">Account</p>
-
-                  <button onClick={toggleDrawer(anchor, false)} size="small" className="rounded-full text-sm bg-gray-700 duration-300 hover:bg-gray-600 p-2 text-white">
+                  <button onClick={toggleDrawer(anchor, false)} size="small" className="rounded-full text-sm bg-black p-1 text-white">
                     <CloseIcon fontSize="small" />
                   </button>
                 </div>
@@ -268,11 +205,9 @@ function Navbar(props) {
                   sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
                   role="presentation"
                   onClick={toggleDrawer(anchor, true)}
-                  onKeyDown={toggleDrawer(anchor, false)}
-                >
+                  onKeyDown={toggleDrawer(anchor, false)}>
                   <div className=" w-full h-auto ">
                     <List className=" w-full">
-
                       <ListItem disablePadding>
                         <ListItemButton className=" flex items-center gap-3">
                           <PersonIcon />
@@ -315,7 +250,6 @@ function Navbar(props) {
               </SwipeableDrawer>
             </React.Fragment>
           ))}
-
         </div>
         <div className="hidden md:flex  items-center gap-2">
           <button className="nav-buttons-bg text-xs sm:text-sm px-6 outline outline-1 outline-gray-700 py-2">IPTV</button>
@@ -338,69 +272,66 @@ function Navbar(props) {
             </Stack>
           </div>
           <React.Fragment key={"right"}>
-                    <SwipeableDrawer
-                        anchor={"right"}
-                        open={state["right"]}
-                        onClose={toggleDrawer("right", false)}
-                        onOpen={toggleDrawer("right", true)}
-                        className=" flex flex-col justify-between"
-                    >
-                        <div className=" flex items-end justify-between pr-3 mt-3">
-                            <p className=" ml-4 py-0">Cart</p>
-
-                            <button onClick={toggleDrawer("right", false)} size="small" className="rounded-full text-sm bg-gray-700 duration-300 hover:bg-gray-600 p-2 text-white">
-                                <CloseIcon fontSize="small" />
-                            </button>
-                        </div>
-                        <Box
-                            sx={{ width: "right" === 'top' || "right" === 'bottom' ? 'auto' : 250, display: "flex", height: "100%", justifyContent: "space-between", flexDirection: "column" }}
-                            role="presentation"
-                            onClick={toggleDrawer("right", true)}
-                            onKeyDown={toggleDrawer("right", false)}
-
-                        >
-
-                            <div className="flex flex-col h-full gap-2 py-2 px-2">
-                                {data.length === 0 ? <div className='h-full  flex w-full items-center justify-center text-black'>Cart is Empty</div> : (
-                                    <div className="flex flex-col gap-2 py-2 px-2">
-                                        {data.map((e) => (
-                                            <List key={e.id} className="w-full flex items-start gap-3 outline outline-1 outline-gray-300 justify-start text-white rounded-md p-2">
-                                                <div className="flex items-center justify-center">
-                                                    <Image alt='img' height={50} width={50} className="rounded-md" src={e.image.src} />
-                                                </div>
-                                                <div className="w-full">
-                                                    <span className="text-black">{e.title}</span>
-                                                    <div className="flex items-center gap-1">
-                                                        <span className="text-gray-400">{!e.oldpriceCart ? e.price + " DZD" : e.oldpriceCart + " DZD"}</span>
-                                                        <span className="text-gray-400">x{e.quantity}</span>
-                                                    </div>
-                                                </div>
-                                                <div className="flex items-center h-full justify-center">
-                                                    <button onClick={() => dispatch(deleteProduct(e))} size="small" className="rounded-full text-sm duration-300 p-1 c text-gray-500">
-                                                        <CloseIcon fontSize="small" />
-                                                    </button>
-                                                </div>
-                                            </List>
-                                        ))}
-                                    </div>
-                                )}
+            <SwipeableDrawer
+              anchor={"right"}
+              open={state["right"]}
+              onClose={toggleDrawer("right", false)}
+              onOpen={toggleDrawer("right", true)}
+              className=" flex flex-col justify-between">
+              <div className=" flex w-full  items-end justify-between pt-2 px-3">
+                <button onClick={toggleDrawer("right", false)} size="small" className="rounded-full text-xs bg-black duration-300  p-1 text-white">
+                  <CloseIcon fontSize="small" />
+                </button>
+                <p className=" ml-4 py-0">Cart</p>
+              </div>
+              <Box
+                sx={{ width: "right" === 'top' || "right" === 'bottom' ? 'auto' : 250, display: "flex", height: "100%", justifyContent: "space-between", flexDirection: "column" }}
+                role="presentation"
+                onClick={toggleDrawer("right", true)}
+                onKeyDown={toggleDrawer("right", false)}>
+                <div className="flex flex-col h-full gap-2 py-2 px-2">
+                  {data.length === 0 ? <div className='h-full  flex w-full flex-col gap-3 items-center justify-center text-black'>
+                    <span>Cart is Empty</span>
+                    <Image height={70} width={70} src={cartEmpty} />
+                  </div> : (
+                    <div className="flex flex-col gap-2 py-2 px-2">
+                      {data.map((e) => (
+                        <List key={e.id} className="w-full flex items-start gap-3 outline outline-1 outline-gray-300 justify-start text-white rounded-md p-2">
+                          <div className="flex items-center justify-center">
+                            <Image alt='img' height={50} width={50} className="rounded-md" src={e.image.src} />
+                          </div>
+                          <div className="w-full">
+                            <span className="text-black">{e.title}</span>
+                            <div className="flex items-center gap-1">
+                              <span className="text-gray-400">{!e.oldpriceCart ? e.price + " DZD" : e.oldpriceCart + " DZD"}</span>
+                              <span className="text-gray-400">x{e.quantity}</span>
                             </div>
-
-                            <List className=" flex items-center flex-col gap-3  px-3 justify-center">
-                                {data.length === 0 ? "" : <div className=" w-full items-center   justify-center flex flex-col gap-2">
-                                    <div className="flex items-center w-full justify-between">
-                                        <span>total: </span>
-                                        <span>{totalNormal + " DZD"}</span>
-                                    </div>
-                                    <button className=" w-full h-10 bg-black text-white p-2 rounded-md">
-                                        Checkout
-                                    </button>
-                                </div>}
-                                <span className=" text-gray-400 text-xs text-center">Copyright © 2023 Gixify.com , All rights reserved</span>
-                            </List>
-                        </Box>
-                    </SwipeableDrawer>
-                </React.Fragment>
+                          </div>
+                          <div className="flex items-center h-full justify-center">
+                            <button onClick={() => dispatch(deleteProduct(e))} size="small" className="rounded-full text-sm duration-300 p-1 c text-gray-500">
+                              <CloseIcon fontSize="small" />
+                            </button>
+                          </div>
+                        </List>
+                      ))}
+                    </div>
+                  )}
+                </div>
+                <List className=" flex items-center flex-col gap-3  px-3 justify-center">
+                  {data.length === 0 ? "" : <div className=" w-full items-center   justify-center flex flex-col gap-2">
+                    <div className="flex items-center w-full justify-between">
+                      <span>total: </span>
+                      <span>{totalNormal + " DZD"}</span>
+                    </div>
+                    <button className=" w-full h-10 bg-black text-white p-2 rounded-md">
+                      Checkout
+                    </button>
+                  </div>}
+                  <span className=" text-gray-400 text-xs text-center">Copyright © 2023 Gixify.com , All rights reserved</span>
+                </List>
+              </Box>
+            </SwipeableDrawer>
+          </React.Fragment>
         </div>
       </div>
     </div>
@@ -408,120 +339,3 @@ function Navbar(props) {
 }
 
 export default Navbar;
-
-
-/*
-
-    <div>
-      {['left', 'right', 'top', 'bottom'].map((anchor) => (
-        <React.Fragment key={anchor}>
-          <Button onClick={toggleDrawer(anchor, true)}>{anchor}</Button>
-          <SwipeableDrawer
-            anchor={anchor}
-            open={state[anchor]}
-            onClose={toggleDrawer(anchor, false)}
-            onOpen={toggleDrawer(anchor, true)}
-          >
-            {list(anchor)}
-          </SwipeableDrawer>
-        </React.Fragment>
-      ))}
-    </div>
-*/
-
-
-/*
-        <div style={{ marginBottom: -445 }} onMouseEnter={() => { CatHoveEnter() }} onMouseLeave={() => { CatHovLeave() }} className={bolstate === true ? "boxsh1 w-auto bg-slate-100 rounded-lg shadow-2xl h-96 absolute flex flex-col" : "hidden"}>
-          <div className=" flex justify-between w-full items-center p-2 ">
-            <h1><MenuIcon /> Ctegorries</h1>
-            <button className=" text-black"><CloseIcon fontSize="small" /></button>
-          </div>
-          <div className=" overflow-y-scroll w-full grid grid-cols-1">
-
-            <Button className=" rounded-none text-black">
-              <div className=" flex items-start gap-3 w-full justify-start ">
-                <DesktopMacOutlinedIcon fontSize="small" />
-                <span>PC | Laptop</span>
-              </div>
-            </Button>
-
-            <Button className=" rounded-none text-black">
-              <div className=" flex items-start gap-3 w-full justify-start ">
-                <PhoneIphoneOutlinedIcon fontSize="small" />
-                <span>Smart Phones</span>
-              </div>
-            </Button>
-
-            <Button className=" rounded-none text-black">
-              <div className=" flex items-start gap-3 w-full justify-start  ">
-                <CardGiftcardOutlinedIcon fontSize="small" />
-                <span>Gift Cards</span>
-              </div>
-            </Button>
-
-            <Button className=" rounded-none text-black">
-              <div className=" flex items-start gap-3 w-full justify-start  ">
-                <DesktopMacOutlinedIcon fontSize="small" />
-                <span>PC | Laptop</span>
-              </div>
-            </Button>
-
-            <Button className=" rounded-none text-black">
-              <div className=" flex items-start gap-3 w-full justify-start ">
-                <DesktopMacOutlinedIcon fontSize="small" />
-                <span>PC | Laptop</span>
-              </div>
-            </Button>
-
-            <Button className=" rounded-none text-black">
-              <div className=" flex items-start gap-3 w-full justify-start ">
-                <PhoneIphoneOutlinedIcon fontSize="small" />
-                <span>Smart Phones</span>
-              </div>
-            </Button>
-
-            <Button className=" rounded-none text-black">
-              <div className=" flex items-start gap-3 w-full justify-start  ">
-                <CardGiftcardOutlinedIcon fontSize="small" />
-                <span>Gift Cards</span>
-              </div>
-            </Button>
-
-            <Button className=" rounded-none text-black">
-              <div className=" flex items-start gap-3 w-full justify-start  ">
-                <DesktopMacOutlinedIcon fontSize="small" />
-                <span>PC | Laptop</span>
-              </div>
-            </Button>
-
-            <Button className=" rounded-none text-black">
-              <div className=" flex items-start gap-3 w-full justify-start ">
-                <DesktopMacOutlinedIcon fontSize="small" />
-                <span>PC | Laptop</span>
-              </div>
-            </Button>
-
-            <Button className=" rounded-none text-black">
-              <div className=" flex items-start gap-3 w-full justify-start ">
-                <PhoneIphoneOutlinedIcon fontSize="small" />
-                <span>Smart Phones</span>
-              </div>
-            </Button>
-
-            <Button className=" rounded-none text-black">
-              <div className=" flex items-start gap-3 w-full justify-start  ">
-                <CardGiftcardOutlinedIcon fontSize="small" />
-                <span>Gift Cards</span>
-              </div>
-            </Button>
-
-            <Button className=" rounded-none text-black">
-              <div className=" flex items-start gap-3 w-full justify-start  ">
-                <DesktopMacOutlinedIcon fontSize="small" />
-                <span>PC | Laptop</span>
-              </div>
-            </Button>
-
-          </div>
-        </div>
-*/

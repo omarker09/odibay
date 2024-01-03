@@ -1,4 +1,5 @@
 "use client"
+
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import { trigerdon, trigerdoff } from "@/app/redux/slices/testSlice";
@@ -17,12 +18,10 @@ import Navbar from './Navbar';
 
 
 function Cart() {
-
     return (
         <div className='flex flex-col justify-between h-auto'>
             <Navbar/>
-            <div className=' flex flex-col justify-between relative h-96    bg-black '>
-               
+            <div className=' flex flex-col justify-between relative h-96    bg-black '>      
             </div>
             <Footer />
             <Bottomtabs />

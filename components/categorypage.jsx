@@ -679,5 +679,3 @@ function Categorypage() {
 }
 
 export default Categorypage
-
-
