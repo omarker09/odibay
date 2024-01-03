@@ -22,7 +22,7 @@ import 'swiper/css';
 import 'swiper/css/free-mode';
 import 'swiper/css/navigation';
 import 'swiper/css/thumbs';
-import {Slider} from "@nextui-org/react";
+import { Slider } from "@nextui-org/react";
 
 import Checkbox from '@mui/material/Checkbox';
 
@@ -358,7 +358,7 @@ function Categorypage() {
                                     <ListItemText primary="VPN" />
                                 </ListItemButton>
 
-                                <ListItemButton className=' py-2 h-10 flex items-center' onClick={() => {setOpen5(!open5)}}>
+                                <ListItemButton className=' py-2 h-10 flex items-center' onClick={() => { setOpen5(!open5) }}>
 
                                     <ListItemText primary="Gift Cards" />
                                     {open5 ? <ExpandLess /> : <ExpandMore />}
@@ -493,22 +493,23 @@ function Categorypage() {
                                         <div className='flex items-center gap-2 justify-between'>
                                             <span>From</span>
                                             <input type='number' onChange={(e) => {
-                                                const min =  parseInt(e.target.value)
+                                                const min = parseInt(e.target.value)
                                                 setValue1(min)
-                                                }} placeholder={`min is 0`} minLength={0} className=' w-full p-1 border-none outline-none'  />
+                                            }} placeholder={`min is 0`} minLength={0} className=' w-full p-1 border-none outline-none' />
                                         </div>
                                         <div className='flex items-center gap-2 justify-between'>
                                             <span>To</span>
-                                            <input  type='number'  onChange={(e) => {
-                                                const min =  parseInt(e.target.value)
+                                            <input type='number' onChange={(e) => {
+                                                const min = parseInt(e.target.value)
                                                 setValue2(min)
-                                                }} placeholder={`max is 50000`} max={50000} className=' w-full p-1 border-none outline-none'  />
+                                            }} placeholder={`max is 50000`} max={50000} className=' w-full p-1 border-none outline-none' />
                                         </div>
                                     </div>
-                                    <Slider                                     
-                                        formatOptions={{ style: "currency", currency: "USD" }}
+                                    <Slider
+                                        formatOptions={{ style: "currency", currency: "DZD" }}
                                         step={100}
                                         maxValue={50000}
+                                        aria-label="fgh"
                                         minValue={0}
                                         value={value}
                                         onChange={setValue}
@@ -523,9 +524,8 @@ function Categorypage() {
                                                 <span>{secondetVal} DZD</span>
                                             </div>
 
-                                            <div className='hidden items-start md:flex justify-between w-full'>
+                                            <div className=' hidden md:flex items-start justify-between w-full'>
                                                 <span>{SliderFirstVal} DZD</span>
-
                                                 <span>{SlidersecondetVal} DZD</span>
                                             </div>
                                         </div>

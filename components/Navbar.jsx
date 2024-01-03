@@ -1,7 +1,9 @@
 "use client";
 
+
 import React, { useEffect, useState } from "react";
 import Image from 'next/image'
+import { deleteProduct } from '@/app/redux/slices/cartSlice';
 import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import Link from "next/link";
@@ -80,7 +82,18 @@ const style = {
 };
 
 function Navbar(props) {
+  const data = useSelector((e) => e.cart)
+
   const dispatch = useDispatch()
+
+  const totalNormal = data.reduce((acc, product) => {
+    acc += product.price * product.quantity
+    return acc;
+}, 0)
+
+
+
+
   const currentState = useSelector((state) => state.product)
   const [open, setOpen] = React.useState(false);
   const [iscat, setIscat] = React.useState(false)
@@ -150,65 +163,50 @@ function Navbar(props) {
 
     setState({ ...state, [anchor]: open });
   };
-
-  const list = (anchor) => (
-    <Box
-      sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
-      role="presentation"
-      onClick={toggleDrawer(anchor, true)}
-      onKeyDown={toggleDrawer(anchor, false)}
-    >
-      <div className=" w-full h-auto ">
-        <List className=" w-full">
-          <div className=" flex items-end justify-between pr-3 pb-2">
+  const CartDrawer = () => {
+    return (
+      <React.Fragment key={"right"}>
+        <SwipeableDrawer
+          anchor={"right"}
+          open={state["right"]}
+          onClose={toggleDrawer("right", false)}
+          onOpen={toggleDrawer("right", true)}
+        >
+          <div className=" flex items-end justify-between pr-3 mt-3">
             <p className=" ml-4 py-0">Account</p>
-            <Button onClick={() => { setIsopen(true) }} size="small" className="rounded-full text-sm bg-gray-700 hover:bg-gray-700 text-white">
+
+            <button onClick={toggleDrawer("right", false)} size="small" className="rounded-full text-sm bg-gray-700 duration-300 hover:bg-gray-600 p-2 text-white">
               <CloseIcon fontSize="small" />
-            </Button>
+            </button>
           </div>
-          <ListItem disablePadding>
-            <ListItemButton className=" flex items-center gap-3">
-              <PersonIcon />
-              <ListItemText primary={"Login"} />
-            </ListItemButton>
-          </ListItem>
-          <ListItem disablePadding>
-            <ListItemButton className=" flex items-center gap-3">
-              <PersonAddIcon />
-              <ListItemText primary={"Register"} />
-            </ListItemButton>
-          </ListItem>
-        </List>
-      </div>
-      <Divider />
-      <List className=" w-full">
-        <p className=" ml-4 py-2">Categories</p>
-        {Categoryitems.map((text, index) => (
-          <ListItem key={text.Title} disablePadding>
-            <ListItemButton className=" flex items-center gap-3">
-              <Image src={text.img} height={30} width={30} />
-              {/* <ListItemIcon>
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-            </ListItemIcon> */}
-              <ListItemText primary={text.Title} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-      <Divider />
-      <List className=" flex items-center flex-col gap-3 justify-center">
-        <div className=" w-full items-center justify-center flex gap-2">
-          <Link href={"/"}>
-            <FacebookIcon />
-          </Link>
-          <Link href={"/"}>
-            <InstagramIcon />
-          </Link>
-        </div>
-        <span className=" text-gray-400 text-xs text-center">Copyright © 2023 Gixify.com , All rights reserved</span>
-      </List>
-    </Box>
-  );
+          <Box
+            sx={{ width: "right" === 'top' || "right" === 'bottom' ? 'auto' : 250 }}
+            role="presentation"
+            onClick={toggleDrawer("right", true)}
+            onKeyDown={toggleDrawer("right", false)}
+          >
+
+            <List className=" w-full">
+              <p className=" ml-4 py-2">Categories</p>
+
+            </List>
+
+            <List className=" flex items-center flex-col gap-3 justify-center">
+              <div className=" w-full items-center justify-center flex gap-2">
+                <Link href={"/"}>
+                  <FacebookIcon />
+                </Link>
+                <Link href={"/"}>
+                  <InstagramIcon />
+                </Link>
+              </div>
+              <span className=" text-gray-400 text-xs text-center">Copyright © 2023 Gixify.com , All rights reserved</span>
+            </List>
+          </Box>
+        </SwipeableDrawer>
+      </React.Fragment>
+    )
+  }
   return (
     <div style={{ display: props.display, zIndex: 999 }} className="   duration-200 w-full" >
 
@@ -296,9 +294,6 @@ function Navbar(props) {
                       <ListItem key={text.Title} disablePadding>
                         <ListItemButton className=" flex items-center gap-3">
                           <Image src={text.img} height={30} width={30} />
-                          {/* <ListItemIcon>
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-            </ListItemIcon> */}
                           <ListItemText primary={text.Title} />
                         </ListItemButton>
                       </ListItem>
@@ -320,20 +315,18 @@ function Navbar(props) {
               </SwipeableDrawer>
             </React.Fragment>
           ))}
+
         </div>
-        <div className=" md:flex hidden py-3 flex items-center gap-5">
-          <button className=" text-white text-sm">IPTV</button>
-          <button className=" text-white text-sm">GAMES</button>
-          <button className=" text-white text-sm">XBOX</button>
-          <button className=" text-white text-sm">PLAYSTATION</button>
-          <button className=" text-white text-sm">Rayzer</button>
-          <button className=" text-white text-sm">Playstation</button>
+        <div className="hidden md:flex  items-center gap-2">
+          <button className="nav-buttons-bg text-xs sm:text-sm px-6 outline outline-1 outline-gray-700 py-2">IPTV</button>
+          <button className="nav-buttons-bg text-xs sm:text-sm px-6 outline outline-1 outline-gray-700 py-2">PC Games</button>
+          <button className="nav-buttons-bg text-xs sm:text-sm px-6 outline outline-1 outline-gray-700 py-2">Playstation</button>
+          <button className="nav-buttons-bg text-xs sm:text-sm px-6 outline outline-1 outline-gray-700 py-2">XBOX</button>
         </div>
         <div className=" flex items-center gap-2">
-          <div className=" flex items-center gap-2 text-sm text-white">
-            
-            <IconButton aria-label="cart">
-              <StyledBadge badgeContent={0} style={{ color: "white" }} color="secondary">
+          <div className=" hidden sm:flex items-center gap-2 text-sm text-white">
+            <IconButton onClick={toggleDrawer('right', true)} aria-label="cart">
+              <StyledBadge badgeContent={data.length} style={{ color: "white" }} color="secondary">
                 <ShoppingCartIcon />
               </StyledBadge>
             </IconButton>
@@ -344,27 +337,70 @@ function Navbar(props) {
               <Avatar className=" cursor-pointer" sx={{ width: 30, height: 30 }}>?</Avatar>
             </Stack>
           </div>
-          <React.Fragment>
-            <Dialog open={open} onClose={handleClose}>
-              <DialogContent>
-                <DialogContentText className=" w-60 sm:w-96">
-                </DialogContentText>
-                <TextField
-                  autoFocus
-                  margin="dense"
-                  id="name"
-                  label="Saerch"
-                  type="text"
-                  fullWidth
-                  variant="standard"
-                />
-              </DialogContent>
-              <DialogActions>
-                <Button onClick={handleClose}>Cancel</Button>
-                <Button variant="outlined" onClick={handleClose}>Search <SearchIcon className=" cursor-pointer" /></Button>
-              </DialogActions>
-            </Dialog>
-          </React.Fragment>
+          <React.Fragment key={"right"}>
+                    <SwipeableDrawer
+                        anchor={"right"}
+                        open={state["right"]}
+                        onClose={toggleDrawer("right", false)}
+                        onOpen={toggleDrawer("right", true)}
+                        className=" flex flex-col justify-between"
+                    >
+                        <div className=" flex items-end justify-between pr-3 mt-3">
+                            <p className=" ml-4 py-0">Cart</p>
+
+                            <button onClick={toggleDrawer("right", false)} size="small" className="rounded-full text-sm bg-gray-700 duration-300 hover:bg-gray-600 p-2 text-white">
+                                <CloseIcon fontSize="small" />
+                            </button>
+                        </div>
+                        <Box
+                            sx={{ width: "right" === 'top' || "right" === 'bottom' ? 'auto' : 250, display: "flex", height: "100%", justifyContent: "space-between", flexDirection: "column" }}
+                            role="presentation"
+                            onClick={toggleDrawer("right", true)}
+                            onKeyDown={toggleDrawer("right", false)}
+
+                        >
+
+                            <div className="flex flex-col h-full gap-2 py-2 px-2">
+                                {data.length === 0 ? <div className='h-full  flex w-full items-center justify-center text-black'>Cart is Empty</div> : (
+                                    <div className="flex flex-col gap-2 py-2 px-2">
+                                        {data.map((e) => (
+                                            <List key={e.id} className="w-full flex items-start gap-3 outline outline-1 outline-gray-300 justify-start text-white rounded-md p-2">
+                                                <div className="flex items-center justify-center">
+                                                    <Image alt='img' height={50} width={50} className="rounded-md" src={e.image.src} />
+                                                </div>
+                                                <div className="w-full">
+                                                    <span className="text-black">{e.title}</span>
+                                                    <div className="flex items-center gap-1">
+                                                        <span className="text-gray-400">{!e.oldpriceCart ? e.price + " DZD" : e.oldpriceCart + " DZD"}</span>
+                                                        <span className="text-gray-400">x{e.quantity}</span>
+                                                    </div>
+                                                </div>
+                                                <div className="flex items-center h-full justify-center">
+                                                    <button onClick={() => dispatch(deleteProduct(e))} size="small" className="rounded-full text-sm duration-300 p-1 c text-gray-500">
+                                                        <CloseIcon fontSize="small" />
+                                                    </button>
+                                                </div>
+                                            </List>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+
+                            <List className=" flex items-center flex-col gap-3  px-3 justify-center">
+                                {data.length === 0 ? "" : <div className=" w-full items-center   justify-center flex flex-col gap-2">
+                                    <div className="flex items-center w-full justify-between">
+                                        <span>total: </span>
+                                        <span>{totalNormal + " DZD"}</span>
+                                    </div>
+                                    <button className=" w-full h-10 bg-black text-white p-2 rounded-md">
+                                        Checkout
+                                    </button>
+                                </div>}
+                                <span className=" text-gray-400 text-xs text-center">Copyright © 2023 Gixify.com , All rights reserved</span>
+                            </List>
+                        </Box>
+                    </SwipeableDrawer>
+                </React.Fragment>
         </div>
       </div>
     </div>

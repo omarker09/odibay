@@ -1,35 +1,65 @@
 "use client"
 import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector, useStore } from 'react-redux'
+
 import Image from 'next/image'
 import img1 from "../public/collectble/discord.png"
 import Link from "next/link";
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import Box from '@mui/material/Box';
 import Rating from '@mui/material/Rating';
+import { addProduct } from '@/app/redux/slices/cartSlice'
+
 function Product(props) {
+
+
   const [isDiscount, setIsdicount] = useState(false)
-  const [isFree,setIsFree] = useState("")
+  const [isFree, setIsFree] = useState("")
   const [afterDiscount, setAfterDiscount] = useState(0)
   const oldprice = props.oldprice
   const perc = props.discount
+
+  const datas = useSelector((e) => e.cart)
+
+  const dispatch = useDispatch()
+
+  function handleAdd() {
+    const data = {
+      id: props.id,
+      title: props.title,
+      image: props.img,
+      price: props.price
+    }
+    dispatch(addProduct(data))
+  }
+
+  useEffect(() => {
+    const percentageCalc = (oldprice * perc) / 100;
+    const DiscountAmount = oldprice - percentageCalc;
+    setAfterDiscount(DiscountAmount)
+  }, [])
+
   function CalcuLateDiscount(oldprice, perc) {
     const percentageCalc = (oldprice * perc) / 100;
     const DiscountAmount = oldprice - percentageCalc;
+
     if (perc === 100) {
       return "free"
     } else {
+
       return DiscountAmount + " DZD"
     }
- 
+
   }
   useEffect(() => {
     if (!props.dicountprice) {
       setIsdicount(true)
     }
+
   }, [])
   return (
-    <div className=' boxshadow duration-200 flex flex-col justify-between   border border-1  relative border-gray-300  w-full rounded-lg' >
-      <div style={{ borderTopRightRadius: 8 }} className={props.discount ? ' bg-red-600 text-white px-4 py-1 absolute top-0 right-0' : " hidden" }>
+    <div key={props.id} className=' boxshadow duration-200 flex flex-col justify-between   border border-1  relative border-gray-300  w-full rounded-lg' >
+      <div style={{ borderTopRightRadius: 8 }} className={props.discount ? ' bg-red-600 text-white px-4 py-1 absolute top-0 right-0' : " hidden"}>
         {props.discount}{props.discount ? '% OFF' : ""}
       </div>
       <Image
@@ -49,11 +79,11 @@ function Product(props) {
         <div className=' flex flex-col gap-0 items-start w-full justify-between'>
           <div className=' w-full items-center flex flex-col justify-start'>
             <div className=' flex  w-full gap-0 items-start justify-start'>
-              <div className={!props.oldprice ? ' hidden' : "flex items-center gap-2"}>
-                <span className='text-gray-400 font-bold text-xs sm:text-sm line-through'>{!props.oldprice ? "" : props.oldprice} </span>
-                <span className=' text-blue-950 font-bold text-xs sm:text-sm'>  {!CalcuLateDiscount(oldprice, perc) ? "" : CalcuLateDiscount(oldprice, perc)} </span>
+              <div className="flex items-center gap-2">
+                <span className={!props.oldprice ? "hidden": 'text-gray-400 font-bold text-xs sm:text-sm line-through'}>{props.oldprice} </span>
+                <span className=' text-blue-950 font-bold text-xs sm:text-sm'>  {props.price + " DZD"}</span>
               </div>
-              <span className={props.oldprice ? " hidden" : ' text-blue-950 font-bold text-xs sm:text-sm'}>  {!props.price ? "No price included" : props.price} {!props.price ? "" : "DZD"}</span>
+             
             </div>
             <div className=' w-full items-start'>
               < Box
@@ -65,7 +95,7 @@ function Product(props) {
               </Box >
             </div>
           </div>
-          <button className={!props.price && !props.oldprice ? ' w-full bg-gray-500 cursor-no-drop text-xs lg:text-sm px-1 md:px-3 lg:px-5 py-1 text-white rounded' : ' w-full text-xs nav-top-background lg:text-sm px-1 md:px-3 lg:px-5 py-1 text-white rounded'}>add to cart</button>
+          <button onClick={() => { handleAdd() }} className={!props.price && !props.oldprice ? ' w-full bg-gray-500 cursor-no-drop text-xs lg:text-sm px-1 md:px-3 lg:px-5 py-1 text-white rounded' : ' w-full text-xs nav-top-background lg:text-sm px-1 md:px-3 lg:px-5 py-1 text-white rounded'}>add to cart</button>
         </div>
       </div>
     </div>

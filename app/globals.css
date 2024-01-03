@@ -5,7 +5,16 @@
 .nav-top-background {
   background-color: #303841;
 }
+.nav-buttons-bg {
+  background-color: rgb(33, 33, 33);
+  color: rgba(255, 255, 255, 0.9);
+  border-radius: 3px 3px 0px 0px;
+  font-size: 12px;
+}
+.nav-buttons-bg:hover {
+  background-color: rgb(49, 49, 49);
 
+}
 .nav-background {
   background-color: #21262c; 
 }

@@ -26,11 +26,9 @@ export default function Home() {
           <Mainproducts />
           <Regulerproducts />
           <Bannersm />
-
           <Smgroups />
           <Footer />
           <div className=' h-full flex flex-col w-full  '>
-
             <Bottomtabs />
           </div>
         </div>
