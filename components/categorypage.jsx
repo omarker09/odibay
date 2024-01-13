@@ -231,7 +231,7 @@ function Categorypage() {
     }
     return (
         <div className=' flex flex-col justify-between relative h-auto    bg-white '>
-            <div className=' flex items-center px-4 sm:px-10 py-4 bg-slate-200'>
+            <div className=' flex items-center px-4 sm:px-10 py-4 '>
                 <div className=' w-auto flex items-center gap-3 outline bg-white outline-1 outline-gray-300 rounded-sm p-2'>
                     <Breadcrumbslinks home={true} title={"Home"} path={"/"} />
                     /

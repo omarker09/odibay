@@ -157,7 +157,7 @@ function Navbar(props) {
         <div className=" flex justify-center text-white items-center">
           <a href={"/"} className=" flex items-center p-1 ">
             <Image
-              className=" rounded-full  object-cover"
+              className="  object-cover"
               src={ProjectLogo}
               width={115}
               height={115}
@@ -298,7 +298,7 @@ function Navbar(props) {
                       {data.map((e) => (
                         <List key={e.id} className="w-full flex items-start gap-3 outline outline-1 outline-gray-300 justify-start text-white rounded-md p-2">
                           <div className="flex items-center justify-center">
-                            <Image alt='img' height={50} width={50} className="rounded-md" src={e.image.src} />
+                            <Image alt='img' height={50} width={50} className="rounded-md" src={e.image} />
                           </div>
                           <div className="w-full">
                             <span className="text-black">{e.title}</span>

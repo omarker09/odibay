@@ -20,8 +20,6 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 });
 
 function Product(props) {
-
-
   const [isDiscount, setIsdicount] = useState(false)
   const [isFree, setIsFree] = useState("")
   const [afterDiscount, setAfterDiscount] = useState(0)
@@ -30,22 +28,17 @@ function Product(props) {
   const handleClickSnack = () => {
     setOpenSnack(true);
   };
-
   const handleCloseSnack = (event, reason) => {
     if (reason === 'clickaway') {
       return;
     }
-
     setOpenSnack(false);
   };
-
   const oldprice = props.oldprice
   const perc = props.discount
-
   const datas = useSelector((e) => e.cart)
-
+  console.log(datas);
   const dispatch = useDispatch()
-
   function handleAdd() {
     const data = {
       id: props.id,
@@ -56,7 +49,6 @@ function Product(props) {
     dispatch(addProduct(data))
     setOpenSnack(true)
   }
-
   useEffect(() => {
     const percentageCalc = (oldprice * perc) / 100;
     const DiscountAmount = oldprice - percentageCalc;
@@ -78,6 +70,7 @@ function Product(props) {
   useEffect(() => {
     if (!props.dicountprice) {
       setIsdicount(true)
+      console.log(datas);
     }
 
   }, [])
@@ -114,7 +107,6 @@ function Product(props) {
                 <span className={!props.oldprice ? "hidden" : 'text-gray-400 font-bold text-xs sm:text-sm line-through'}>{props.oldprice} </span>
                 <span className=' text-blue-950 font-bold text-xs sm:text-sm'>  {props.price + " DZD"}</span>
               </div>
-
             </div>
             <div className=' w-full items-start'>
               < Box
@@ -129,8 +121,6 @@ function Product(props) {
           <button onClick={() => { handleAdd() }} className={!props.price && !props.oldprice ? ' w-full bg-gray-500 cursor-no-drop text-xs lg:text-sm px-1 md:px-3 lg:px-5 py-1 text-white rounded' : ' w-full text-xs nav-top-background lg:text-sm px-1 md:px-3 lg:px-5 py-1 text-white rounded'}>add to cart</button>
         </div>
       </div>
-
-
     </div>
   )
 }
