@@ -1,5 +1,5 @@
 "use client";
-
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Image from 'next/image'
 import { deleteProduct } from '@/app/redux/slices/cartSlice';
@@ -53,6 +53,10 @@ import ouad from "../public/collectble/ouadkniss.svg"
 import DiscordIcon from "../public/collectble/discord.png"
 import cartEmpty from "../public/collectble/add-to-cart.png"
 import Categoryitems from "@/data/categoryitems";
+import LogoutIcon from '@mui/icons-material/Logout';
+
+import avatar1 from "../public/avatars/team-01.jpg"
+
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -84,8 +88,12 @@ function Navbar(props) {
   const [offsetY, setOffsetY] = useState("fixed")
   const [isOpen, setIsopen] = useState(false)
   const [state, setState] = React.useState(false);
-
+  const [username, setUsername] = useState('')
   const data = useSelector((e) => e.cart)
+  const [open2, setOpen2] = React.useState(false);
+  const handleOpen2 = () => setOpen(true);
+  const handleClose2 = () => setOpen(false);
+  const [noAuth, setoAuth] = useState(false)
   const dispatch = useDispatch()
 
   const totalNormal = data.reduce((acc, product) => {
@@ -99,7 +107,21 @@ function Navbar(props) {
   const handleClose = () => {
     setOpen(false);
   };
-
+  function getCookie(name) {
+    var cname = name + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for (var i = 0; i < ca.length; i++) {
+      var c = ca[i];
+      while (c.charAt(0) == ' ') {
+        c = c.substring(1);
+      }
+      if (c.indexOf(cname) == 0) {
+        return c.substring(cname.length, c.length);
+      }
+    }
+    return "";
+  }
   const StyledBadge = styled(Badge)(({ theme }) => ({
     '& .MuiBadge-badge': {
       right: -3,
@@ -116,24 +138,23 @@ function Navbar(props) {
   function CatHovLeave() {
     setBolstate(false)
   }
+  function getUserinfo() {
 
+    const usr_info = localStorage.getItem("u_inf")
+    const usr_info_json = JSON.parse(usr_info)
+    setUsername(usr_info_json[0].username)
+    console.log(usr_info_json);
+  }
   useEffect(() => {
+    const u_k = getCookie("u_tk")
+    if (u_k === "") {
+      setoAuth(true)
+      alert("no")
+    } else {
+      alert("yes")
+    }
     CatHovLeave()
-    let lastScroll = 0;
-    window.addEventListener('scroll', function () {
-      const currentValue = this.scrollY
-      setOffsetY(currentValue)
-      if (currentValue > lastScroll) {
-        setConditionScroll(true)
-        setOffsetY("fixed")
-      } else if (currentValue < lastScroll) {
-        setOffsetY("flex")
-        setConditionScroll(false)
-      } else {
-        console.log("none");
-      }
-      lastScroll = currentValue
-    })
+    getUserinfo()
   }, [])
 
   const toggleDrawer = (anchor, open) => (event) => {
@@ -149,6 +170,9 @@ function Navbar(props) {
     }
     setState({ ...state, [anchor]: open });
   };
+  function signOut() {
+    alert("done")
+  }
   return (
     <div style={{ display: props.display, zIndex: 999 }} className="   duration-200 w-full" >
       <div
@@ -189,14 +213,14 @@ function Navbar(props) {
         <div className=" text-white">
           {['left'].map((anchor) => (
             <React.Fragment key={anchor}>
-              <button className=" text-white rounded-full p-2 duration-300 bg-gray-700 hover:bg-gray-600" onClick={toggleDrawer(anchor, true)}><MenuIcon /></button>
+              <button className=" text-white rounded-full px-2 py-2 duration-300 bg-gray-700 hover:bg-gray-600" onClick={toggleDrawer(anchor, true)}><MenuIcon /></button>
               <SwipeableDrawer
                 anchor={anchor}
                 open={state[anchor]}
                 onClose={toggleDrawer(anchor, false)}
                 onOpen={toggleDrawer(anchor, true)}>
-                <div className=" flex items-end justify-between pr-3 mt-3">
-                  <p className=" ml-4 py-0">Account</p>
+                <div className=" flex bg-orange-400 items-end justify-between pr-3 ">
+                  <p className=" ml-4 py-0"></p>
                   <button onClick={toggleDrawer(anchor, false)} size="small" className="rounded-full text-sm bg-black p-1 text-white">
                     <CloseIcon fontSize="small" />
                   </button>
@@ -207,20 +231,35 @@ function Navbar(props) {
                   onClick={toggleDrawer(anchor, true)}
                   onKeyDown={toggleDrawer(anchor, false)}>
                   <div className=" w-full h-auto ">
-                    <List className=" w-full">
+                    <List className=" hidden w-full">
                       <ListItem disablePadding>
                         <ListItemButton className=" flex items-center gap-3">
                           <PersonIcon />
-                          <ListItemText primary={"Login"} />
+                          <Link href={"/login"}>
+                            <ListItemText primary={"Login"} />
+                          </Link>
                         </ListItemButton>
                       </ListItem>
                       <ListItem disablePadding>
                         <ListItemButton className=" flex items-center gap-3">
                           <PersonAddIcon />
-                          <ListItemText primary={"Register"} />
+                          <Link href={"/signup"}>
+                            <ListItemText primary={"Register"} />
+                          </Link>
                         </ListItemButton>
                       </ListItem>
                     </List>
+                  </div>
+                  <div className=" w-full justify-center items-center">
+                    <div className=" bg-orange-400 flex items-center justify-center">
+                      <Image
+                        src={avatar1}
+                        height={100}
+                        width={100}
+                        style={{ border: "solid 3px yellow" }}
+                        className="    rounded-full "
+                      />
+                    </div>
                   </div>
                   <Divider />
                   <List className=" w-full">
@@ -235,6 +274,14 @@ function Navbar(props) {
                     ))}
                   </List>
                   <Divider />
+                  <ListItem className={noAuth ? "hidden" : " py-2"} disablePadding>
+                    <ListItemButton onClick={() => { setOpen2(true) }} className=" flex justify-center items-center gap-3">
+                      <div className=" flex items-center w-full justify-center gap-x-3">
+                        <ListItemText className=" text-red-600" primary="Sign out" />
+                        <LogoutIcon className=" text-red-600" color="red" />
+                      </div>
+                    </ListItemButton>
+                  </ListItem>
                   <List className=" flex items-center flex-col gap-3 justify-center">
                     <div className=" w-full items-center justify-center flex gap-2">
                       <Link href={"/"}>
@@ -266,7 +313,7 @@ function Navbar(props) {
             </IconButton>
           </div>
           <div className=" flex items-center gap-2 text-white">
-            <Link className=" text-sm cursor-pointer" href={"/signup"}>Sign Up</Link>
+            <Link className=" text-sm cursor-pointer" href={"/signup"}> {noAuth ? "Sign in" : username} </Link>
             <Stack direction="row" spacing={2}>
               <Avatar className=" cursor-pointer" sx={{ width: 30, height: 30 }}>?</Avatar>
             </Stack>
@@ -334,6 +381,28 @@ function Navbar(props) {
           </React.Fragment>
         </div>
       </div>
+      <Modal
+        open={open2}
+        onClose={handleClose2}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+
+        <div className=" w-full h-full bg-transparent flex  items-center justify-center">
+          <div className=" w-80 h-auto nav-background flex items-center flex-col justify-center rounded-md gap-y-3 py-10 px-5">
+            <h1 className=" text-white text-center w-full">Are you sure you want Sign out ?</h1>
+            <div className=" flex items-center w-full  gap-x-4 justify-center">
+              <button onClick={() => { setOpen2(false) }} className=" p-1 px-4  outline outline-1 outline-orange-500 py-2 rounded-md w-full flex items-center justify-center gap-3 shadow-2xl text-white">
+                <span>No</span>
+              </button>
+              <button onClick={() => { signOut() }} className=" p-1 px-4  bg-orange-500 py-2 rounded-md w-full flex items-center justify-center gap-3 shadow-2xl text-white">
+                <span>Yes</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </Modal>
     </div>
   );
 }
