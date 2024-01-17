@@ -17,7 +17,7 @@ import { errorsLang } from "@/language_config";
 
 export default function SignIn() {
     const router = useRouter();
-    const [password, setPassword] = useState("")
+    const [password, setPassword] = useState("") 
     const [email, setEmail] = useState("")
     const [loading, setLoading] = useState(false)
     const [hideEye, setHideEye] = useState(false)

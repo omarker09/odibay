@@ -149,9 +149,9 @@ function Navbar(props) {
     const u_k = getCookie("u_tk")
     if (u_k === "") {
       setoAuth(true)
-      alert("no")
+ 
     } else {
-      alert("yes")
+   
     }
     CatHovLeave()
     getUserinfo()
@@ -251,7 +251,7 @@ function Navbar(props) {
                     </List>
                   </div>
                   <div className=" w-full justify-center items-center">
-                    <div className=" bg-orange-400 flex items-center justify-center">
+                    <div className=" bg-orange-400 flex flex-col py-2 items-center justify-center">
                       <Image
                         src={avatar1}
                         height={100}
@@ -259,6 +259,9 @@ function Navbar(props) {
                         style={{ border: "solid 3px yellow" }}
                         className="    rounded-full "
                       />
+                      <div>
+                        <span className=" text-white text-lg font-bold">{username}</span>
+                      </div>
                     </div>
                   </div>
                   <Divider />
