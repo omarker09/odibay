@@ -1,7 +1,11 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./*"],
+      "@/components/*": ["./components/*"],
+      "@/componnent-sm/*": ["./componnent-sm/*"]
+      // Add more aliases if needed
     }
   }
 }

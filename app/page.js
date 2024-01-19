@@ -3,7 +3,7 @@ import Image from 'next/image'
 import React, { useState, useEffect } from 'react'
 import ScrollTop from './scrollTop';
 import Navbar from '../components/Navbar'
-import Banner from '@/components/Banner'
+import Banner from '@/components/banner';
 import Fastcategory from '@/components/fastcategory'
 import Productsgroup from '@/components/productsgroup'
 import Mainproducts from '@/components/mainproducts'
