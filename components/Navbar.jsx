@@ -1,6 +1,7 @@
 "use client";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import { deleteProduct } from '@/app/redux/slices/cartSlice';
 import FacebookIcon from "@mui/icons-material/Facebook";
@@ -80,6 +81,7 @@ const style = {
 
 function Navbar(props) {
   const currentState = useSelector((state) => state.product)
+  const router = useRouter();
   const [open, setOpen] = React.useState(false);
   const [iscat, setIscat] = React.useState(false)
   const [bolstate, setBolstate] = useState(false)
@@ -147,7 +149,7 @@ function Navbar(props) {
   }
   useEffect(() => {
     const u_k = getCookie("u_tk")
-    if (u_k === "") {
+    if (!u_k || u_k === "") {
       setoAuth(true)
  
     } else {
@@ -171,7 +173,15 @@ function Navbar(props) {
     setState({ ...state, [anchor]: open });
   };
   function signOut() {
-    alert("done")
+    function deleteCookie(name) {
+      var d = new Date();
+      d.setTime(d.getTime() - (60*60*1000));
+      var expires = "expires=" + d.toGMTString();
+      document.cookie = name + "=;" + expires + ";path=/";
+  }
+  deleteCookie("u_tk")
+  router.push('/', { scroll: false })
+
   }
   return (
     <div style={{ display: props.display, zIndex: 999 }} className="   duration-200 w-full" >
@@ -212,14 +222,15 @@ function Navbar(props) {
       <div style={{ zIndex: 9999999 }} className=" nav-background  z-50 flex items-center  justify-between h-auto w-full px-2 sm:px-10 py-2">
         <div className=" text-white">
           {['left'].map((anchor) => (
-            <React.Fragment key={anchor}>
+            <React.Fragment  key={anchor}>
               <button className=" text-white rounded-full px-2 py-2 duration-300 bg-gray-700 hover:bg-gray-600" onClick={toggleDrawer(anchor, true)}><MenuIcon /></button>
               <SwipeableDrawer
                 anchor={anchor}
                 open={state[anchor]}
+                className=""
                 onClose={toggleDrawer(anchor, false)}
                 onOpen={toggleDrawer(anchor, true)}>
-                <div className=" flex bg-orange-400 items-end justify-between pr-3 ">
+                <div className=" flex  items-end justify-between py-3 pr-3 ">
                   <p className=" ml-4 py-0"></p>
                   <button onClick={toggleDrawer(anchor, false)} size="small" className="rounded-full text-sm bg-black p-1 text-white">
                     <CloseIcon fontSize="small" />
@@ -231,7 +242,7 @@ function Navbar(props) {
                   onClick={toggleDrawer(anchor, true)}
                   onKeyDown={toggleDrawer(anchor, false)}>
                   <div className=" w-full h-auto ">
-                    <List className=" hidden w-full">
+                    <List className={noAuth === true ? " flex flex-col w-full" : "hidden"}>
                       <ListItem disablePadding>
                         <ListItemButton className=" flex items-center gap-3">
                           <PersonIcon />
@@ -251,7 +262,7 @@ function Navbar(props) {
                     </List>
                   </div>
                   <div className=" w-full justify-center items-center">
-                    <div className=" bg-orange-400 flex flex-col py-2 items-center justify-center">
+                    <div className={noAuth ? "hidden" : " bg-orange-400 flex flex-col py-2 items-center justify-center"}>
                       <Image
                         src={avatar1}
                         height={100}
@@ -260,7 +271,7 @@ function Navbar(props) {
                         className="    rounded-full "
                       />
                       <div>
-                        <span className=" text-white text-lg font-bold">{username}</span>
+                        <span className=" text-white text-lg font-bold">{!username || username === "" ? "" : username}</span>
                       </div>
                     </div>
                   </div>

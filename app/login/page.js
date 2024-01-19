@@ -13,7 +13,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import axios from "axios";
 import GppBadIcon from '@mui/icons-material/GppBad';
 import { errorsLang } from "@/language_config";
-
+import Cookies from 'js-cookie';
 
 export default function SignIn() {
     const router = useRouter();
@@ -27,12 +27,7 @@ export default function SignIn() {
         email,
         password
     }
-    function setCookie(name,value,exp_days) {
-        var d = new Date();
-        d.setTime(d.getTime() + (exp_days*24*60*60*1000));
-        var expires = "expires=" + d.toGMTString();
-        document.cookie = name + "=" + value + ";" + expires + ";path=/";
-    }
+ 
     const handleTest = async () => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         const testMail = emailRegex.test(email)
@@ -54,7 +49,7 @@ export default function SignIn() {
             })
                 .then((resp) => {
                     setLoading(false)
-                    setCookie("u_tk",resp.data.data.token,30)
+                    Cookies.set("u_tk", resp.data.data.token, { expires: 30 });
                     const userData = [
                         {
                             username: resp.data.data.username,
@@ -65,7 +60,7 @@ export default function SignIn() {
                     localStorage.setItem("u_inf", JSON.stringify(userData))
                     console.log(resp.data);
                     setErrorType("")
-                    router.replace("/").refresh()
+                    router.replace("/")
                 })
                 .catch((e) => {
                     setErrorType(e.data)

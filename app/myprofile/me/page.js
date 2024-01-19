@@ -1,6 +1,7 @@
 "use client"
 import React, { useState, useEffect } from 'react';
 import Navbar from '@/components/Navbar';
+import Cookies from 'js-cookie';
 import Image from "next/image";
 import Footer from '@/components/footer';
 import avatartest from '../../../public/avatars/avatar-03.png'
@@ -84,8 +85,11 @@ export default function SignIn() {
     const [stateProvinceRegion, setstateProvinceRegion] = useState("")
     const [zipCode, setZipcode] = useState("")
     const [country, setCountry] = useState("")
-    const [turnOnAnim,setTurnOnAnim] = useState(false)
+    const [turnOnAnim, setTurnOnAnim] = useState(false)
+    const router = useRouter()
+    
     async function SaveBilBillAddressServer() {
+        
         setLoading2(true)
         const collection = {
             email: email,
@@ -106,7 +110,7 @@ export default function SignIn() {
             setSeccType2("")
         } else {
             localStorage.setItem("u_billing", StringIt)
-            axios.post("http://localhost:3002/api/v1/auth/usr/inf/addrr" , {
+            axios.post("http://localhost:3002/api/v1/auth/usr/inf/addrr", {
                 email: email,
                 user_id: user_id,
                 first_name: firstName,
@@ -122,21 +126,21 @@ export default function SignIn() {
                     "Authorization": 'Bearer ' + token
                 }
             })
-            .then((res) => {
-                setSeccType2("Billing address has been saved !! ")
-                setErrorType2("")
-                setLoading2(false)
-                setTurnOnAnim(true)
-                setTimeout(() => {
-                    setTurnOnAnim(false)
-                }, 4300)
-            })
-            .catch((err) => {
-                setSeccType2("")
-                setErrorType2(err.response.data)
-                setLoading2(false)
-            })
-        }    
+                .then((res) => {
+                    setSeccType2("Billing address has been saved !! ")
+                    setErrorType2("")
+                    setLoading2(false)
+                    setTurnOnAnim(true)
+                    setTimeout(() => {
+                        setTurnOnAnim(false)
+                    }, 4300)
+                })
+                .catch((err) => {
+                    setSeccType2("")
+                    setErrorType2(err.response.data)
+                    setLoading2(false)
+                })
+        }
     }
 
     function getUserDataStorage() {
@@ -156,6 +160,7 @@ export default function SignIn() {
         setZipcode(dataBillingJson.zip_code)
         setCity(dataBillingJson.city)
     }
+  /*
     function getCookie(name) {
         var cname = name + "=";
         var decodedCookie = decodeURIComponent(document.cookie);
@@ -171,17 +176,46 @@ export default function SignIn() {
         }
         return "";
     }
+    
+  */
     useEffect(() => {
         getUserDataStorage()
-        setToken(getCookie("u_tk"))
-    }, [email])
+        setToken(Cookies.get("u_tk"))
+         if (Cookies.get("u_tk")) {
+            axios.post("http://localhost:3002/api/v1/auth/usr/cltk", {
+                email: email
+            }, {
+                headers: {
+                    "Authorization": 'Bearer ' + token
+                }
+            })
+            .then((res) => {
+                console.log(res.data);
+
+            })
+            .catch((err) => {
+                console.log(err.response.status);
+                if (err.response.status === 403) {
+                    router.push("/login")
+                } else {
+                    alert("200")
+                }
+            })
+        } else if (!Cookies.get("u_tk") || Cookies.get("u_tk") === "") {
+            
+        }
+    }, [token])
     const handleChange = (event, newValue) => {
         setValue(newValue);
+        
     };
     return (
-        <div className=' flex w-full flex-col justify-between h-auto'>
+        <div>
+            {!Cookies.get("u_tk") || Cookies.get("u_tk") === "" ? <div>
+                
+            </div> :        <div className=' flex w-full flex-col justify-between h-auto'>
             <Navbar />
-            <div className=' bg-slate-100 w-full px-2 sm:px-10 gap-6  flex flex-col lg:flex-row py-10 items-start justify-center'>
+             <div className=' bg-slate-100 w-full px-2 sm:px-10 gap-6  flex flex-col lg:flex-row py-10 items-start justify-center'>
                 <div className=' shadow-2xl bg-white w-full lg:w-96 p-4 gap-y-4 flex flex-col items-center justify-center'>
                     <div className=' w-full text-center'>
                         <h1> {username} </h1>
@@ -395,7 +429,7 @@ export default function SignIn() {
                                     {loading2 ? <CircularProgress className=" text-white font-extrabold" size={20} /> : <span style={{ fontSize: 15 }} className=" text-white ">Save</span>}
                                 </button>
                                 <div className=' w-full h-10 flex items-center justify-start'>
-                                <Lottie className={turnOnAnim ? ' h-40 w-40' : "hidden"} size={10}   animationData={SentAnim} autoPlay={turnOnAnim ? true : false} loop={turnOnAnim ? true : false} />
+                                    <Lottie className={turnOnAnim ? ' h-40 w-40' : "hidden"} size={10} animationData={SentAnim} autoPlay={turnOnAnim ? true : false} loop={turnOnAnim ? true : false} />
                                 </div>
                             </div>
                         </CustomTabPanel>
@@ -407,6 +441,7 @@ export default function SignIn() {
             </div>
             <Footer />
             <Bottomtabs />
+        </div>}
         </div>
     );
 }
