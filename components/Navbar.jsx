@@ -1,7 +1,7 @@
 "use client";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useRouter } from 'next/navigation'
+import { redirect, useRouter } from 'next/navigation'
 import Image from 'next/image'
 import { deleteProduct } from '@/app/redux/slices/cartSlice';
 import FacebookIcon from "@mui/icons-material/Facebook";
@@ -55,6 +55,7 @@ import DiscordIcon from "../public/collectble/discord.png"
 import cartEmpty from "../public/collectble/add-to-cart.png"
 import Categoryitems from "@/data/categoryitems";
 import LogoutIcon from '@mui/icons-material/Logout';
+import Cookies from 'js-cookie';
 
 import avatar1 from "../public/avatars/team-01.jpg"
 
@@ -148,12 +149,12 @@ function Navbar(props) {
     console.log(usr_info_json);
   }
   useEffect(() => {
-    const u_k = getCookie("u_tk")
+    const u_k = Cookies.get("u_tk")
     if (!u_k || u_k === "") {
       setoAuth(true)
- 
+
     } else {
-   
+      setoAuth(false)
     }
     CatHovLeave()
     getUserinfo()
@@ -175,12 +176,14 @@ function Navbar(props) {
   function signOut() {
     function deleteCookie(name) {
       var d = new Date();
-      d.setTime(d.getTime() - (60*60*1000));
+      d.setTime(d.getTime() - (60 * 60 * 1000));
       var expires = "expires=" + d.toGMTString();
       document.cookie = name + "=;" + expires + ";path=/";
-  }
-  deleteCookie("u_tk")
-  router.push('/', { scroll: false })
+    }
+    deleteCookie("u_tk")
+    setOpen2(false)
+    window.location.reload()
+    
 
   }
   return (
@@ -222,7 +225,7 @@ function Navbar(props) {
       <div style={{ zIndex: 9999999 }} className=" nav-background  z-50 flex items-center  justify-between h-auto w-full px-2 sm:px-10 py-2">
         <div className=" text-white">
           {['left'].map((anchor) => (
-            <React.Fragment  key={anchor}>
+            <React.Fragment key={anchor}>
               <button className=" text-white rounded-full px-2 py-2 duration-300 bg-gray-700 hover:bg-gray-600" onClick={toggleDrawer(anchor, true)}><MenuIcon /></button>
               <SwipeableDrawer
                 anchor={anchor}
@@ -262,7 +265,7 @@ function Navbar(props) {
                     </List>
                   </div>
                   <div className=" w-full justify-center items-center">
-                    <div className={noAuth ? "hidden" : " bg-orange-400 flex flex-col py-2 items-center justify-center"}>
+                    <div className={noAuth ? "hidden" : " flex flex-col py-2 items-center justify-center"}>
                       <Image
                         src={avatar1}
                         height={100}
@@ -271,7 +274,7 @@ function Navbar(props) {
                         className="    rounded-full "
                       />
                       <div>
-                        <span className=" text-white text-lg font-bold">{!username || username === "" ? "" : username}</span>
+                        <span className=" text-black text-lg font-bold">{!username || username === "" ? "" : username}</span>
                       </div>
                     </div>
                   </div>
@@ -288,7 +291,7 @@ function Navbar(props) {
                     ))}
                   </List>
                   <Divider />
-                  <ListItem className={noAuth ? "hidden" : " py-2"} disablePadding>
+                  <ListItem className={!Cookies.get("u_tk") || Cookies.get("u_tk") === ""  ? "hidden" : " py-2"} disablePadding>
                     <ListItemButton onClick={() => { setOpen2(true) }} className=" flex justify-center items-center gap-3">
                       <div className=" flex items-center w-full justify-center gap-x-3">
                         <ListItemText className=" text-red-600" primary="Sign out" />
@@ -327,10 +330,13 @@ function Navbar(props) {
             </IconButton>
           </div>
           <div className=" flex items-center gap-2 text-white">
-            <Link className=" text-sm cursor-pointer" href={"/signup"}> {noAuth ? "Sign in" : username} </Link>
-            <Stack direction="row" spacing={2}>
-              <Avatar className=" cursor-pointer" sx={{ width: 30, height: 30 }}>?</Avatar>
-            </Stack>
+            <Link className=" flex items-center justify-center gap-2 text-sm cursor-pointer" href={noAuth ? "/login": "/myprofile/me"}>
+              {noAuth ? "Sign in" : username}
+              <Stack direction="row" spacing={2}>
+                <Avatar className=" cursor-pointer" sx={{ width: 30, height: 30 }}>?</Avatar>
+              </Stack>
+            </Link>
+
           </div>
           <React.Fragment key={"right"}>
             <SwipeableDrawer
@@ -401,7 +407,6 @@ function Navbar(props) {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-
         <div className=" w-full h-full bg-transparent flex  items-center justify-center">
           <div className=" w-80 h-auto nav-background flex items-center flex-col justify-center rounded-md gap-y-3 py-10 px-5">
             <h1 className=" text-white text-center w-full">Are you sure you want Sign out ?</h1>
@@ -415,7 +420,6 @@ function Navbar(props) {
             </div>
           </div>
         </div>
-
       </Modal>
     </div>
   );

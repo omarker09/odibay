@@ -5,7 +5,7 @@ import Navbar from '@/components/Navbar';
 import Image from "next/image";
 import Footer from '@/components/footer';
 import Bottomtabs from '@/components/bottomtabs';
-import { useRouter } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
 import Link from "next/link";
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
@@ -59,8 +59,8 @@ export default function SignIn() {
                     ]
                     localStorage.setItem("u_inf", JSON.stringify(userData))
                     console.log(resp.data);
-                    setErrorType("")
                     router.replace("/")
+                   
                 })
                 .catch((e) => {
                     setErrorType(e.data)

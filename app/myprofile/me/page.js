@@ -83,7 +83,7 @@ export default function SignIn() {
     const [addressLine2, setaddressLine2] = useState("")
     const [city, setCity] = useState("")
     const [stateProvinceRegion, setstateProvinceRegion] = useState("")
-    const [zipCode, setZipcode] = useState("")
+    const [zipCode, setZipcode] = useState()
     const [country, setCountry] = useState("")
     const [turnOnAnim, setTurnOnAnim] = useState(false)
     const router = useRouter()
@@ -120,7 +120,7 @@ export default function SignIn() {
                 city: city,
                 state_province_region: stateProvinceRegion,
                 country: country,
-                zip_code: zipCode
+                zip_code: parseInt(zipCode)
             }, {
                 headers: {
                     "Authorization": 'Bearer ' + token
@@ -137,7 +137,8 @@ export default function SignIn() {
                 })
                 .catch((err) => {
                     setSeccType2("")
-                    setErrorType2(err.response.data)
+           
+                    setErrorType2(err.response.data.message_en)
                     setLoading2(false)
                 })
         }
@@ -181,12 +182,15 @@ export default function SignIn() {
     useEffect(() => {
         getUserDataStorage()
         setToken(Cookies.get("u_tk"))
-         if (Cookies.get("u_tk")) {
+        let emSt = localStorage.getItem("u_inf")
+        let tbg = JSON.parse(emSt)
+        let gl = tbg[0].email
+
             axios.post("http://localhost:3002/api/v1/auth/usr/cltk", {
-                email: email
+                email: gl
             }, {
                 headers: {
-                    "Authorization": 'Bearer ' + token
+                    "Authorization": 'Bearer ' + Cookies.get("u_tk")
                 }
             })
             .then((res) => {
@@ -196,14 +200,12 @@ export default function SignIn() {
             .catch((err) => {
                 console.log(err.response.status);
                 if (err.response.status === 403) {
-                    router.push("/login")
+                    router.replace("/login")
                 } else {
                     alert("200")
                 }
             })
-        } else if (!Cookies.get("u_tk") || Cookies.get("u_tk") === "") {
-            
-        }
+       
     }, [token])
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -393,6 +395,7 @@ export default function SignIn() {
                                 <Grid item xs={12} sm={6}>
                                     <TextField
                                         required
+                                        type='number'
                                         id="zip"
                                         name="zip"
                                         label="Zip / Postal code"
