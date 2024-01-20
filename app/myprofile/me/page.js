@@ -153,55 +153,118 @@ export default function SignIn() {
     }
 
     function getUserDataStorage() {
-        const data = localStorage.getItem("u_inf")
-        const toJson = JSON.parse(data)
-        setEmail(toJson[0].email)
-        setUsername(toJson[0].username)
-        setUserid(toJson[0].user_id)
-        const dataBilling = localStorage.getItem("u_billing")
-        const dataBillingJson = JSON.parse(dataBilling)
-        setstateProvinceRegion(dataBillingJson?.state_province_region)
-        setaddressLine1(dataBillingJson?.address_line_1)
-        setaddressLine2(dataBillingJson?.address_line_2)
-        setFirstName(dataBillingJson?.first_name)
-        setLastName(dataBillingJson?.last_name)
-        setCountry(dataBillingJson?.country)
-        setZipcode(dataBillingJson?.zip_code)
-        setCity(dataBillingJson?.city)
-    }
-
-
-
-
-
-    useEffect(() => {
-        getUserDataStorage()
-        setToken(Cookies.get("u_tk"))
-        let emSt = localStorage.getItem("u_inf")
-        let tbg = JSON.parse(emSt)
-        let gl = tbg[0].email
-
-            axios.post("http://localhost:3002/api/v1/auth/usr/cltk", {
-                email: gl
-            }, {
-                headers: {
-                    "Authorization": 'Bearer ' + Cookies.get("u_tk")
-                }
-            })
-            .then((res) => {
-                console.log(res.data);
-
-            })
-            .catch((err) => {
-                console.log(err.response.status);
-                if (err.response.status === 403) {
-                    router.replace("/login")
+        // Retrieve user information from local storage
+        const userData = localStorage.getItem("u_inf");
+    
+        // Check if "u_inf" key exists in local storage
+        if (userData) {
+            try {
+                // Parse the JSON data obtained from local storage
+                const userDataJson = JSON.parse(userData);
+    
+                // Check if the expected properties exist in the parsed data
+                if (Array.isArray(userDataJson) && userDataJson.length > 0) {
+                    setEmail(userDataJson[0]?.email);
+                    setUsername(userDataJson[0]?.username);
+                    setUserid(userDataJson[0]?.user_id);
                 } else {
-                    alert("200")
+                    // Handle the case where the expected properties are not present
+                    console.error("Invalid data structure in 'u_inf'");
                 }
-            })
-       
-    }, [token])
+            } catch (error) {
+                // Handle JSON parsing error
+                console.error("Error parsing 'u_inf' data:", error);
+            }
+        } else {
+            // Handle the case where "u_inf" key is not found
+            console.error("'u_inf' key not found in local storage");
+        }
+    
+        // Retrieve billing information from local storage
+        const billingData = localStorage.getItem("u_billing");
+    
+        // Check if "u_billing" key exists in local storage
+        if (billingData) {
+            try {
+                // Parse the JSON data obtained from local storage
+                const billingDataJson = JSON.parse(billingData);
+    
+                // Set state variables based on the parsed billing data
+                setstateProvinceRegion(billingDataJson?.state_province_region);
+                setaddressLine1(billingDataJson?.address_line_1);
+                setaddressLine2(billingDataJson?.address_line_2);
+                setFirstName(billingDataJson?.first_name);
+                setLastName(billingDataJson?.last_name);
+                setCountry(billingDataJson?.country);
+                setZipcode(billingDataJson?.zip_code);
+                setCity(billingDataJson?.city);
+            } catch (error) {
+                // Handle JSON parsing error
+                console.error("Error parsing 'u_billing' data:", error);
+            }
+        } else {
+            // Handle the case where "u_billing" key is not found
+            console.error("'u_billing' key not found in local storage");
+        }
+    }
+    
+    useEffect(() => {
+        // Get token from cookies
+        const token = Cookies.get("u_tk");
+        if (!token || token === "") {
+            router.replace("/login")
+        } 
+        setToken(token);
+    
+        // Get user data from local storage
+        const emSt = localStorage.getItem("u_inf");
+
+        // Check if "u_inf" key exists in local storage
+        if (!emSt) {
+            // If "u_inf" key is not found, redirect to the login page
+            console.log("u_inf not found");
+        } else {
+            try {
+                // Parse the JSON data obtained from local storage
+                const tbg = JSON.parse(emSt);
+    
+                // Check if the expected properties exist in the parsed data
+                if (Array.isArray(tbg) && tbg.length > 0) {
+                    const gl = tbg[0]?.email;
+    
+                    // Make API call using the email and token
+                    axios.post("http://localhost:3002/api/v1/auth/usr/cltk", {
+                        email: gl
+                    }, {
+                        headers: {
+                            "Authorization": 'Bearer ' + token
+                        }
+                    })
+                    .then((res) => {
+                        console.log(res.data);
+                        // Handle successful API response
+                    })
+                    .catch((err) => {
+                        console.log(err.response.status);
+                        if (err.response.status === 403) {
+                            // If the response status is 403, redirect to the login page
+                            router.replace("/login");
+                        } else {
+                            // Handle other error cases
+                            console.error("Error making API call:", err);
+                        }
+                    });
+                } else {
+                    // Handle the case where the expected properties are not present
+                    console.error("Invalid data structure in 'u_inf'");
+                }
+            } catch (error) {
+                // Handle JSON parsing error
+                console.error("Error parsing 'u_inf' data:", error);
+            }
+        }
+    }, [token]);
+    
     const handleChange = (event, newValue) => {
         setValue(newValue);
         

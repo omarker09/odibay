@@ -106,7 +106,7 @@ function Navbar(props) {
   const [noAuth, setoAuth] = useState(false)
   const dispatch = useDispatch()
 
-/*
+
   const totalNormal = data.reduce((acc, product) => {
     acc += product.price * product.quantity
     return acc;
@@ -135,12 +135,24 @@ function Navbar(props) {
     setBolstate(false)
   }
   function getUserinfo() {
+    try {
+      const usr_info = localStorage.getItem("u_inf")
+      const usr_info_json = JSON.parse(usr_info)
+     
+      if (!usr_info_json) {
+        console.log("usr_info_jso not found");
+        Cookies.remove("u_tk")
+      } else {
+        setUsername(usr_info_json[0].username)
+      }
+     
+    } catch {
+      console.error("usr_info not found");
+    }
 
-    const usr_info = localStorage.getItem("u_inf")
-    const usr_info_json = JSON.parse(usr_info)
-    setUsername(usr_info_json[0]?.username)
   }
   useEffect(() => {
+    console.log(username);
     const u_k = Cookies.get("u_tk")
     if (!u_k || u_k === "") {
       setoAuth(true)
@@ -175,20 +187,14 @@ function Navbar(props) {
     deleteCookie("u_tk")
     setOpen2(false)
     window.location.reload()
-    
+
 
   }
-*/
+
 
   return (
-  
- 
-       <div>
-        ghjfghj
-       </div>
 
-       /*
-        <div style={{ display: props.display, zIndex: 999 }} className="   duration-200 w-full" >
+    <div style={{ display: props.display, zIndex: 999 }} className="   duration-200 w-full" >
       <div
         style={{ display: "flex" }}
         className="py-4 h-auto  w-full  flex items-center  justify-between  text-black bg-black outline-1 outline outline-gray-700 px-2 sm:px-10">
@@ -292,7 +298,7 @@ function Navbar(props) {
                     ))}
                   </List>
                   <Divider />
-                  <ListItem className={!Cookies.get("u_tk") || Cookies.get("u_tk") === ""  ? "hidden" : " py-2"} disablePadding>
+                  <ListItem className={!Cookies.get("u_tk") || Cookies.get("u_tk") === "" ? "hidden" : " py-2"} disablePadding>
                     <ListItemButton onClick={() => { setOpen2(true) }} className=" flex justify-center items-center gap-3">
                       <div className=" flex items-center w-full justify-center gap-x-3">
                         <ListItemText className=" text-red-600" primary="Sign out" />
@@ -331,7 +337,7 @@ function Navbar(props) {
             </IconButton>
           </div>
           <div className=" flex items-center gap-2 text-white">
-            <Link className=" flex items-center justify-center gap-2 text-sm cursor-pointer" href={noAuth ? "/login": "/myprofile/me"}>
+            <Link className=" flex items-center justify-center gap-2 text-sm cursor-pointer" href={noAuth ? "/login" : "/myprofile/me"}>
               {noAuth ? "Sign in" : username}
               <Stack direction="row" spacing={2}>
                 <Avatar className=" cursor-pointer" sx={{ width: 30, height: 30 }}>?</Avatar>
@@ -423,8 +429,7 @@ function Navbar(props) {
         </div>
       </Modal>
     </div>
-  
-       */
+
   );
 
 }
