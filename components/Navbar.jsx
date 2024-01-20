@@ -1,6 +1,11 @@
 "use client";
-import axios from "axios";
+
+// application error: a client-side exception has occurred (see the browser console for more information). bug 
+// maybe here
+
 import React, { useEffect, useState } from "react";
+
+import axios from "axios";
 import { redirect, useRouter } from 'next/navigation'
 import Image from 'next/image'
 import { deleteProduct } from '@/app/redux/slices/cartSlice';
@@ -80,7 +85,9 @@ const style = {
   p: 4,
 };
 
+
 function Navbar(props) {
+
   const currentState = useSelector((state) => state.product)
   const router = useRouter();
   const [open, setOpen] = React.useState(false);
@@ -145,8 +152,7 @@ function Navbar(props) {
 
     const usr_info = localStorage.getItem("u_inf")
     const usr_info_json = JSON.parse(usr_info)
-    setUsername(usr_info_json[0].username)
-    console.log(usr_info_json);
+    setUsername(usr_info_json[0]?.username)
   }
   useEffect(() => {
     const u_k = Cookies.get("u_tk")
@@ -186,8 +192,11 @@ function Navbar(props) {
     
 
   }
+
   return (
-    <div style={{ display: props.display, zIndex: 999 }} className="   duration-200 w-full" >
+  
+ 
+        <div style={{ display: props.display, zIndex: 999 }} className="   duration-200 w-full" >
       <div
         style={{ display: "flex" }}
         className="py-4 h-auto  w-full  flex items-center  justify-between  text-black bg-black outline-1 outline outline-gray-700 px-2 sm:px-10">
@@ -422,7 +431,9 @@ function Navbar(props) {
         </div>
       </Modal>
     </div>
+  
   );
+
 }
 
 export default Navbar;

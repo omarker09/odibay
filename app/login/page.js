@@ -1,6 +1,8 @@
 "use client"
-import gixiLogo from "../../public/logo-discover.png"
+
 import React, { useState, useEffect } from 'react';
+
+ import gixiLogo from "../../public/logo-discover.png"
 import Navbar from '@/components/Navbar';
 import Image from "next/image";
 import Footer from '@/components/footer';
@@ -15,7 +17,9 @@ import GppBadIcon from '@mui/icons-material/GppBad';
 import { errorsLang } from "@/language_config";
 import Cookies from 'js-cookie';
 
+
 export default function SignIn() {
+
     const router = useRouter();
     const [password, setPassword] = useState("") 
     const [email, setEmail] = useState("")
@@ -69,8 +73,11 @@ export default function SignIn() {
                 })
         }
     };
+
     return (
-        <div className=' flex w-full flex-col justify-between h-auto'>
+  
+  
+             <div className=' flex w-full flex-col justify-between h-auto'>
             <Navbar />
             <div className=' bg-slate-100 w-full  flex py-10 items-center justify-center'>
                 <div style={{ width: 650 }} className=" bg-white flex flex-col justify-between gap-y-5 shadow-2xl p-8 h-full sm:h-auto">
@@ -127,5 +134,6 @@ export default function SignIn() {
             <Bottomtabs />
 
         </div>
+     
     );
 }

@@ -17,7 +17,7 @@ import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import "../app/globals.css"
 import ServerComp from "./serverComponent"
 
-export default function Home({ ServerComp }) {
+export default function Home() {
 /*
   useEffect(() => {
 

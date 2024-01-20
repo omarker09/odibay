@@ -1,5 +1,11 @@
 "use client"
+
+// application error: a client-side exception has occurred (see the browser console for more information). bug 
+// maybe here
+// notice the bug has been fixed because you did not set a ? in getBillingData json if you access directly without it it will threw and error
+
 import React, { useState, useEffect } from 'react';
+
 import Navbar from '@/components/Navbar';
 import Cookies from 'js-cookie';
 import Image from "next/image";
@@ -60,7 +66,9 @@ function a11yProps(index) {
     };
 }
 
+
 export default function SignIn() {
+ 
     const [dataUser, setDataUser] = useState([])
     const [value, setValue] = React.useState(0);
     const [password, setPassword] = useState("")
@@ -152,33 +160,20 @@ export default function SignIn() {
         setUserid(toJson[0].user_id)
         const dataBilling = localStorage.getItem("u_billing")
         const dataBillingJson = JSON.parse(dataBilling)
-        setstateProvinceRegion(dataBillingJson.state_province_region)
-        setaddressLine1(dataBillingJson.address_line_1)
-        setaddressLine2(dataBillingJson.address_line_2)
-        setFirstName(dataBillingJson.first_name)
-        setLastName(dataBillingJson.last_name)
-        setCountry(dataBillingJson.country)
-        setZipcode(dataBillingJson.zip_code)
-        setCity(dataBillingJson.city)
+        setstateProvinceRegion(dataBillingJson?.state_province_region)
+        setaddressLine1(dataBillingJson?.address_line_1)
+        setaddressLine2(dataBillingJson?.address_line_2)
+        setFirstName(dataBillingJson?.first_name)
+        setLastName(dataBillingJson?.last_name)
+        setCountry(dataBillingJson?.country)
+        setZipcode(dataBillingJson?.zip_code)
+        setCity(dataBillingJson?.city)
     }
-  /*
-    function getCookie(name) {
-        var cname = name + "=";
-        var decodedCookie = decodeURIComponent(document.cookie);
-        var ca = decodedCookie.split(';');
-        for (var i = 0; i < ca.length; i++) {
-            var c = ca[i];
-            while (c.charAt(0) == ' ') {
-                c = c.substring(1);
-            }
-            if (c.indexOf(cname) == 0) {
-                return c.substring(cname.length, c.length);
-            }
-        }
-        return "";
-    }
-    
-  */
+
+
+
+
+
     useEffect(() => {
         getUserDataStorage()
         setToken(Cookies.get("u_tk"))
@@ -211,16 +206,21 @@ export default function SignIn() {
         setValue(newValue);
         
     };
+
+
+
     return (
+     
+
         <div>
-            {!Cookies.get("u_tk") || Cookies.get("u_tk") === "" ? <div>
-                
+            {!token || token === "" ? <div>
+                fgjfgjfgj
             </div> :        <div className=' flex w-full flex-col justify-between h-auto'>
             <Navbar />
              <div className=' bg-slate-100 w-full px-2 sm:px-10 gap-6  flex flex-col lg:flex-row py-10 items-start justify-center'>
                 <div className=' shadow-2xl bg-white w-full lg:w-96 p-4 gap-y-4 flex flex-col items-center justify-center'>
                     <div className=' w-full text-center'>
-                        <h1> {username} </h1>
+                        <h1> username </h1>
                     </div>
                     <div className=' w-full flex gap-y-3 items-center justify-center flex-col'>
                         <Image
@@ -446,5 +446,6 @@ export default function SignIn() {
             <Bottomtabs />
         </div>}
         </div>
+
     );
 }
