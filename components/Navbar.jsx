@@ -106,6 +106,7 @@ function Navbar(props) {
   const [noAuth, setoAuth] = useState(false)
   const dispatch = useDispatch()
 
+/*
   const totalNormal = data.reduce((acc, product) => {
     acc += product.price * product.quantity
     return acc;
@@ -117,21 +118,6 @@ function Navbar(props) {
   const handleClose = () => {
     setOpen(false);
   };
-  function getCookie(name) {
-    var cname = name + "=";
-    var decodedCookie = decodeURIComponent(document.cookie);
-    var ca = decodedCookie.split(';');
-    for (var i = 0; i < ca.length; i++) {
-      var c = ca[i];
-      while (c.charAt(0) == ' ') {
-        c = c.substring(1);
-      }
-      if (c.indexOf(cname) == 0) {
-        return c.substring(cname.length, c.length);
-      }
-    }
-    return "";
-  }
   const StyledBadge = styled(Badge)(({ theme }) => ({
     '& .MuiBadge-badge': {
       right: -3,
@@ -192,10 +178,16 @@ function Navbar(props) {
     
 
   }
+*/
 
   return (
   
  
+       <div>
+        ghjfghj
+       </div>
+
+       /*
         <div style={{ display: props.display, zIndex: 999 }} className="   duration-200 w-full" >
       <div
         style={{ display: "flex" }}
@@ -432,6 +424,7 @@ function Navbar(props) {
       </Modal>
     </div>
   
+       */
   );
 
 }
