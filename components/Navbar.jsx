@@ -4,6 +4,7 @@
 // maybe here
 
 import React, { useEffect, useState } from "react";
+import avatartest from '../public/avatars/avatar-03.png'
 
 import axios from "axios";
 import { redirect, useRouter } from 'next/navigation'
@@ -104,6 +105,7 @@ function Navbar(props) {
   const handleOpen2 = () => setOpen(true);
   const handleClose2 = () => setOpen(false);
   const [noAuth, setoAuth] = useState(false)
+  const [avatarPath,setAvatarPath] = useState("")
   const dispatch = useDispatch()
 
 
@@ -149,7 +151,36 @@ function Navbar(props) {
     } catch {
       console.error("usr_info not found");
     }
+  }
+  async function getAvatar() {
+    let email_str;
+    let user_id_str;
+    let token = Cookies.get("u_tk")
 
+    try {
+      let storageMail = localStorage.getItem("u_inf")
+      let storageMailJson = JSON.parse(storageMail)
+      email_str = storageMailJson[0].email
+      user_id_str = storageMailJson[0].user_id
+
+    } catch {
+      console.error("error");
+    }
+  
+    axios.post("http://localhost:3002/api/v1/auth/usr/avats", {
+      email: email_str,
+      user_id: user_id_str
+    }, {
+      headers: {
+        "Authorization": 'Bearer ' + Cookies.get("u_tk")
+      }
+    }).then((resp) => {
+
+      setAvatarPath(resp.data[0]?.avatar_path)
+    })
+    .catch((err) => {
+      console.log(err);
+    })
   }
   useEffect(() => {
     console.log(username);
@@ -162,6 +193,7 @@ function Navbar(props) {
     }
     CatHovLeave()
     getUserinfo()
+    getAvatar()
   }, [])
 
   const toggleDrawer = (anchor, open) => (event) => {
@@ -272,16 +304,17 @@ function Navbar(props) {
                     </List>
                   </div>
                   <div className=" w-full justify-center items-center">
-                    <div className={noAuth ? "hidden" : " flex flex-col py-2 items-center justify-center"}>
+                    <div className={noAuth ? "hidden" : " flex  flex-col py-2 items-center gap-2 justify-center px-3"}>
                       <Image
-                        src={avatar1}
+                        src={avatarPath}
                         height={100}
                         width={100}
-                        style={{ border: "solid 3px yellow" }}
-                        className="    rounded-full "
+                        className="    rounded-full p-1 border-1 bg-orange-400 border-gray-600 "
                       />
-                      <div>
-                        <span className=" text-black text-lg font-bold">{!username || username === "" ? "" : username}</span>
+                      <div className=" w-full flex justify-center gap-1 items-center flex-col">
+                        <span style={{color: "#6f6f6f"}} className="  text-base">{!username || username === "" ? "" : username}</span>
+                        <span style={{color: "#6f6f6f", fontSize: 15}} className="  font-medium">Balance : 0.00 DZD</span>
+                        <span style={{color: "#6f6f6f", fontSize: 17}} className="  font-medium">Points : 0 Point</span>
                       </div>
                     </div>
                   </div>
@@ -340,7 +373,7 @@ function Navbar(props) {
             <Link className=" flex items-center justify-center gap-2 text-sm cursor-pointer" href={noAuth ? "/login" : "/myprofile/me"}>
               {noAuth ? "Sign in" : username}
               <Stack direction="row" spacing={2}>
-                <Avatar className=" cursor-pointer" sx={{ width: 30, height: 30 }}>?</Avatar>
+                <Image height={40} width={40} className="cursor-pointer rounded-full" src={avatarPath} alt="Remy Sharp" />
               </Stack>
             </Link>
 

@@ -58,13 +58,12 @@ export default function SignIn() {
                         {
                             username: resp.data.data.username,
                             user_id: resp.data.data.user_id,
-                            email: resp.data.data.email
+                            email: resp.data.data.email,
+                            created_at: resp.data.data.created_at
                         }
                     ]
                     localStorage.setItem("u_inf", JSON.stringify(userData))
-                    console.log(resp.data);
                     router.replace("/")
-                   
                 })
                 .catch((e) => {
                     setErrorType(e.data)

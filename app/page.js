@@ -18,41 +18,6 @@ import "../app/globals.css"
 import ServerComp from "./serverComponent"
 
 export default function Home() {
-/*
-  useEffect(() => {
-
-
-    axios.post("http://localhost:3002/api/v1/auth/lg", {
-      email: email,
-      password: password
-    }, {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-      .then((resp) => {
-        setLoading(false)
-        setCookie("u_tk", resp.data.data.token, 30)
-        const userData = [
-          {
-            username: resp.data.data.username,
-            user_id: resp.data.data.user_id,
-            email: resp.data.data.email
-          }
-        ]
-        localStorage.setItem("u_inf", JSON.stringify(userData))
-        console.log(resp.data);
-        setErrorType("")
-        router.replace("/").refresh()
-      })
-      .catch((e) => {
-        setErrorType(e.data)
-        console.log(e);
-        setLoading(false)
-      })
-
-  }, [])
-*/
   return (
     <div className=' h-full flex flex-col gap-0 w-full bg-white '>
       <Navbar />

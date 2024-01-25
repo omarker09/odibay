@@ -205,8 +205,8 @@ function Bottomtabs() {
                                             </List>))}
                                     </div>)}
                             </div>
-                            <List className=" flex items-center flex-col gap-3  px-3 justify-center">
-                                {data.length === 0 ? "" : <div className=" w-full items-center   justify-center flex flex-col gap-2">
+                            <div className=" flex w-full  items-center flex-col gap-3  px-3 justify-center">
+                                {data.length === 0 ? "" : <div className="  items-center w-full justify-center flex flex-col gap-2">
                                     <div className="flex items-center w-full justify-between">
                                         <span>total: </span>
                                         <span>{totalNormal + " DZD"}</span>
@@ -216,7 +216,7 @@ function Bottomtabs() {
                                     </button>
                                 </div>}
                                 <span className=" text-gray-400 text-xs text-center">Copyright © 2023 Gixify.com , All rights reserved</span>
-                            </List>
+                            </div>
                         </Box>
                     </SwipeableDrawer>
                 </React.Fragment>
