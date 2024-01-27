@@ -62,7 +62,7 @@ import cartEmpty from "../public/collectble/add-to-cart.png"
 import Categoryitems from "@/data/categoryitems";
 import LogoutIcon from '@mui/icons-material/Logout';
 import Cookies from 'js-cookie';
-
+import nouser_image from "../public/avatars/no_user.jpg"
 import avatar1 from "../public/avatars/team-01.jpg"
 
 
@@ -89,7 +89,7 @@ const style = {
 
 function Navbar(props) {
 
-  const currentState = useSelector((state) => state.product)
+
   const router = useRouter();
   const [open, setOpen] = React.useState(false);
   const [iscat, setIscat] = React.useState(false)
@@ -101,13 +101,14 @@ function Navbar(props) {
   const [state, setState] = React.useState(false);
   const [username, setUsername] = useState('')
   const data = useSelector((e) => e.cart)
+  const [dataStorage,setdataStorage] = useState([])
   const [open2, setOpen2] = React.useState(false);
   const handleOpen2 = () => setOpen(true);
   const handleClose2 = () => setOpen(false);
   const [noAuth, setoAuth] = useState(false)
-  const [avatarPath,setAvatarPath] = useState("")
+  const [avatarPath, setAvatarPath] = useState("")
   const dispatch = useDispatch()
-
+  const currentState = useSelector((state) => state.getCart)
 
   const totalNormal = data.reduce((acc, product) => {
     acc += product.price * product.quantity
@@ -140,14 +141,14 @@ function Navbar(props) {
     try {
       const usr_info = localStorage.getItem("u_inf")
       const usr_info_json = JSON.parse(usr_info)
-     
+
       if (!usr_info_json) {
         console.log("usr_info_jso not found");
         Cookies.remove("u_tk")
       } else {
         setUsername(usr_info_json[0].username)
       }
-     
+
     } catch {
       console.error("usr_info not found");
     }
@@ -166,7 +167,7 @@ function Navbar(props) {
     } catch {
       console.error("error");
     }
-  
+
     axios.post("http://localhost:3002/api/v1/auth/usr/avats", {
       email: email_str,
       user_id: user_id_str
@@ -178,11 +179,23 @@ function Navbar(props) {
 
       setAvatarPath(resp.data[0]?.avatar_path)
     })
-    .catch((err) => {
-      console.log(err);
-    })
+      .catch((err) => {
+        console.log(err);
+      })
+  }
+
+  async function getCartStateStorage() {
+    try {
+      const storageData = localStorage.getItem("cartState");
+      const storageDataJson = JSON.parse(storageData)
+      setdataStorage(storageDataJson)
+      console.log(storageDataJson);
+    } catch {
+      console.log("error while trying getting data from local storage ");
+    }
   }
   useEffect(() => {
+
     console.log(username);
     const u_k = Cookies.get("u_tk")
     if (!u_k || u_k === "") {
@@ -194,6 +207,7 @@ function Navbar(props) {
     CatHovLeave()
     getUserinfo()
     getAvatar()
+    getCartStateStorage()
   }, [])
 
   const toggleDrawer = (anchor, open) => (event) => {
@@ -217,12 +231,10 @@ function Navbar(props) {
       document.cookie = name + "=;" + expires + ";path=/";
     }
     deleteCookie("u_tk")
+    localStorage.removeItem("u_billing")
     setOpen2(false)
     window.location.reload()
-
-
   }
-
 
   return (
 
@@ -230,6 +242,7 @@ function Navbar(props) {
       <div
         style={{ display: "flex" }}
         className="py-4 h-auto  w-full  flex items-center  justify-between  text-black bg-black outline-1 outline outline-gray-700 px-2 sm:px-10">
+
         <div className=" flex justify-center text-white items-center">
           <a href={"/"} className=" flex items-center p-1 ">
             <Image
@@ -241,15 +254,15 @@ function Navbar(props) {
             />
           </a>
         </div>
-        <div className=" flex items-center w-6/12 gap-1">
+        <div className=" hidden sm:flex items-center w-6/12 gap-1">
           <div onMouseEnter={() => { setSearchBtnH(true) }} onMouseLeave={() => { setSearchBtnH(false) }} className={searchBtnH === true ? " hidden sm:flex items-center justify-between w-full search-background outline outline-1 outline-gray-400  p-1 pr-2 pl-3 rounded-md gap-2" : " hidden sm:flex items-center w-full justify-between search-background outline outline-1 p-1 px-2   pl-3 rounded-md gap-2"}>
             <input style={{ border: "none", outline: "none" }} placeholder="Search..." className=" text-white w-full search-background " />
-            <button className=" p-1 px-4  bg-orange-500 rounded-md shadow-2xl text-white">
+            <button className=" p-2 px-4  bg-orange-500 rounded-md shadow-2xl text-white">
               <SearchOutlinedIcon fontSize="small" />
             </button>
           </div>
         </div>
-        <div className=" flex  sm:flex justify-center items-center gap-3 ">
+        <div className=" hidden  sm:flex justify-center items-center gap-3 ">
           <Link href={"https://www.google.com"} className=" text-gray-400 text-sm" target="_blank">
             Home
           </Link>
@@ -260,12 +273,23 @@ function Navbar(props) {
             Contact
           </Link>
         </div>
+        <div className=" flex sm:hidden items-center gap-2 text-white">
+          <Link className=" flex items-center justify-center gap-2 text-sm cursor-pointer" href={noAuth ? "/login" : "/myprofile/me"}>
+            {noAuth ? "Sign in" : username}
+            <Stack direction="row" spacing={2}>
+              <Image height={30} width={30} className="cursor-pointer rounded-full" src={!avatarPath ? nouser_image : avatarPath} alt="Remy Sharp" />
+            </Stack>
+          </Link>
+        </div>
       </div>
-      <div style={{ zIndex: 9999999 }} className=" nav-background  z-50 flex items-center  justify-between h-auto w-full px-2 sm:px-10 py-2">
+      <div style={{ zIndex: 9999999 }} className=" nav-background gap-0  z-50 flex items-center  justify-between h-auto w-full px-2 sm:px-10 py-2">
         <div className=" text-white">
           {['left'].map((anchor) => (
             <React.Fragment key={anchor}>
-              <button className=" text-white rounded-full px-2 py-2 duration-300 bg-gray-700 hover:bg-gray-600" onClick={toggleDrawer(anchor, true)}><MenuIcon /></button>
+              <div className=" flex items-center justify-center text-md gap-1">
+                <button className=" text-white rounded-full mr-2 px-2 py-2 duration-300 bg-gray-700 hover:bg-gray-600" onClick={toggleDrawer(anchor, true)}><MenuIcon /></button>
+                <span className=" hidden sm:flex">Menu</span>
+              </div>
               <SwipeableDrawer
                 anchor={anchor}
                 open={state[anchor]}
@@ -312,9 +336,9 @@ function Navbar(props) {
                         className="    rounded-full p-1 border-1 bg-orange-400 border-gray-600 "
                       />
                       <div className=" w-full flex justify-center gap-1 items-center flex-col">
-                        <span style={{color: "#6f6f6f"}} className="  text-base">{!username || username === "" ? "" : username}</span>
-                        <span style={{color: "#6f6f6f", fontSize: 15}} className="  font-medium">Balance : 0.00 DZD</span>
-                        <span style={{color: "#6f6f6f", fontSize: 17}} className="  font-medium">Points : 0 Point</span>
+                        <span style={{ color: "#6f6f6f" }} className="  text-base">{!username || username === "" ? "" : username}</span>
+                        <span style={{ color: "#6f6f6f", fontSize: 15 }} className="  font-medium">Balance : 0.00 DZD</span>
+                        <span style={{ color: "#6f6f6f", fontSize: 17 }} className="  font-medium">Points : 0 Point</span>
                       </div>
                     </div>
                   </div>
@@ -361,7 +385,17 @@ function Navbar(props) {
           <button className="nav-buttons-bg text-xs sm:text-sm px-6 outline outline-1 outline-gray-700 py-2">Playstation</button>
           <button className="nav-buttons-bg text-xs sm:text-sm px-6 outline outline-1 outline-gray-700 py-2">XBOX</button>
         </div>
-        <div className=" flex items-center gap-2">
+
+        <div className=" flex sm:hidden items-center w-full gap-1">
+          <div onMouseEnter={() => { setSearchBtnH(true) }} onMouseLeave={() => { setSearchBtnH(false) }} className={searchBtnH === true ? "  flex items-center justify-between w-full search-background outline outline-1 outline-gray-400  p-1 pr-2 pl-3 rounded-md gap-2" : "  flex items-center w-full justify-between search-background outline outline-1 p-1 px-2   pl-3 rounded-md gap-2"}>
+            <input style={{ border: "none", outline: "none" }} placeholder="Search..." className=" text-white w-full search-background " />
+            <button className=" p-1 px-4  bg-orange-500 rounded-md shadow-2xl text-white">
+              <SearchOutlinedIcon fontSize="small" />
+            </button>
+          </div>
+        </div>
+
+        <div className=" flex  items-center gap-2">
           <div className=" hidden sm:flex items-center gap-2 text-sm text-white">
             <IconButton onClick={toggleDrawer('right', true)} aria-label="cart">
               <StyledBadge badgeContent={data.length} style={{ color: "white" }} color="secondary">
@@ -369,15 +403,16 @@ function Navbar(props) {
               </StyledBadge>
             </IconButton>
           </div>
-          <div className=" flex items-center gap-2 text-white">
+
+          <div className=" hidden sm:flex items-center gap-2 text-white">
             <Link className=" flex items-center justify-center gap-2 text-sm cursor-pointer" href={noAuth ? "/login" : "/myprofile/me"}>
               {noAuth ? "Sign in" : username}
               <Stack direction="row" spacing={2}>
-                <Image height={40} width={40} className="cursor-pointer rounded-full" src={avatarPath} alt="Remy Sharp" />
+                <Image height={30} width={30} className="cursor-pointer rounded-full" src={!avatarPath ? nouser_image : avatarPath} alt="Remy Sharp" />
               </Stack>
             </Link>
-
           </div>
+
           <React.Fragment key={"right"}>
             <SwipeableDrawer
               anchor={"right"}
@@ -419,11 +454,10 @@ function Navbar(props) {
                               <CloseIcon fontSize="small" />
                             </button>
                           </div>
-                        </List>
-                      ))}
-                    </div>
-                  )}
+                        </List>))}
+                    </div>)}
                 </div>
+          
                 <List className=" flex items-center flex-col gap-3  px-3 justify-center">
                   {data.length === 0 ? "" : <div className=" w-full items-center   justify-center flex flex-col gap-2">
                     <div className="flex items-center w-full justify-between">

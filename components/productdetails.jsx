@@ -388,8 +388,8 @@ function Productdetails() {
                             </div>
                         </div>
                         <div className=' flex flex-col sm:flex-row gap-3'>
-                            <button className=' p-2 outline outline-1 outline-orange-500 text-black w-full rounded-md'>Add to cart</button>
-                            <button className=' p-2 bg-orange-500 text-white w-full  rounded-md'>Buy</button>
+                            <button className=' p-2 outline outline-1 outline-orange-500 text-black w-full sm:w-40 rounded-md'>Add to cart</button>
+                            <button className=' p-2 bg-orange-500 text-white w-full sm:w-40  rounded-md'>Buy</button>
                         </div>
                     </div>
                 </div>

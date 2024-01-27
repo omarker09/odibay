@@ -37,7 +37,6 @@ function Product(props) {
   const oldprice = props.oldprice
   const perc = props.discount
   const datas = useSelector((e) => e.cart)
-  console.log(datas);
   const dispatch = useDispatch()
   function handleAdd() {
     const data = {

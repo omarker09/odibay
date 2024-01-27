@@ -41,6 +41,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Lottie from "lottie-react";
 import SentAnim from "../../../public/animation/SentAnim.json"
 import Modal from '@mui/material/Modal';
+import nouser_image from "../../../public/avatars/no_user.jpg"
 
 function CustomTabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -434,10 +435,10 @@ export default function SignIn() {
                         </div>
                         <div className=' w-full flex gap-y-3 items-center justify-center flex-col'>
                             <Image
-                                src={avatarPath}
+                                src={!avatarPath ? nouser_image : avatarPath}
                                 height={100}
                                 width={100}
-                                className=' rounded-full'
+                                className=' rounded-full outline outline-1 outline-gray-300'
                             />
                             <div>
                                 <button onClick={() => { handleOpen2() }} className=' bg-orange-500 py-2 rounded-md px-4 text-white'>Change Avatar</button>
