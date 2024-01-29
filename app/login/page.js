@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 
-import gixiLogo from "../../public/logo-discover.png"
+import gixiLogo from "../../public/Odibay-black.png"
 import Navbar from '@/components/Navbar';
 import Image from "next/image";
 import Footer from '@/components/footer';

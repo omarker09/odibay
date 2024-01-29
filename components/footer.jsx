@@ -1,7 +1,7 @@
 import React from 'react'
 import Image from 'next/image'
 import img1 from "../public/collectble/ouadkniss.svg"
-import ProjectLogo from "../public/project-logo.png"
+import ProjectLogo from "../public/Odibay.png"
 import "../app/globals.css"
 import Divider from '@mui/material/Divider';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';

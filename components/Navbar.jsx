@@ -36,7 +36,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import ProjectLogo from "../public/project-logo.png"
+import ProjectLogo from "../public/Odibay.png"
 import "../app/globals.css"
 import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
@@ -248,8 +248,8 @@ function Navbar(props) {
             <Image
               className="  object-cover"
               src={ProjectLogo}
-              width={115}
-              height={115}
+              width={145}
+              height={145}
               alt="Picture of the author"
             />
           </a>
