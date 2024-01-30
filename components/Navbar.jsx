@@ -3,9 +3,9 @@
 // application error: a client-side exception has occurred (see the browser console for more information). bug 
 // maybe here
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import avatartest from '../public/avatars/avatar-03.png'
-
+import { themeProvider } from "@/app/page";
 import axios from "axios";
 import { redirect, useRouter } from 'next/navigation'
 import Image from 'next/image'
@@ -37,6 +37,8 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import ProjectLogo from "../public/Odibay.png"
+import ProjectLogoDark from "../public/Odibay-black.png"
+
 import "../app/globals.css"
 import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
@@ -64,6 +66,59 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import Cookies from 'js-cookie';
 import nouser_image from "../public/avatars/no_user.jpg"
 import avatar1 from "../public/avatars/team-01.jpg"
+import { changeTheme } from "@/app/redux/slices/themeSlice";
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import FormGroup from '@mui/material/FormGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Switch from '@mui/material/Switch';
+import ThemeSwitcher from "@/app/appComponent/themeSwitcher";
+import { useTheme } from "next-themes";
+const MaterialUISwitch = styled(Switch)(({ theme }) => ({
+  width: 62,
+  height: 34,
+  padding: 7,
+  '& .MuiSwitch-switchBase': {
+    margin: 1,
+    padding: 0,
+    transform: 'translateX(6px)',
+    '&.Mui-checked': {
+      color: '#fff',
+      transform: 'translateX(22px)',
+      '& .MuiSwitch-thumb:before': {
+        backgroundImage: `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 0 20 20"><path fill="${encodeURIComponent(
+          '#fff',
+        )}" d="M4.2 2.5l-.7 1.8-1.8.7 1.8.7.7 1.8.6-1.8L6.7 5l-1.9-.7-.6-1.8zm15 8.3a6.7 6.7 0 11-6.6-6.6 5.8 5.8 0 006.6 6.6z"/></svg>')`,
+      },
+      '& + .MuiSwitch-track': {
+        opacity: 1,
+        backgroundColor: theme.palette.mode === 'dark' ? '#8796A5' : '#aab4be',
+      },
+    },
+  },
+  '& .MuiSwitch-thumb': {
+    backgroundColor: theme.palette.mode === 'dark' ? '#003892' : '#001e3c',
+    width: 32,
+    height: 32,
+    '&::before': {
+      content: "''",
+      position: 'absolute',
+      width: '100%',
+      height: '100%',
+      left: 0,
+      top: 0,
+      backgroundRepeat: 'no-repeat',
+      backgroundPosition: 'center',
+      backgroundImage: `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 0 20 20"><path fill="${encodeURIComponent(
+        '#fff',
+      )}" d="M9.305 1.667V3.75h1.389V1.667h-1.39zm-4.707 1.95l-.982.982L5.09 6.072l.982-.982-1.473-1.473zm10.802 0L13.927 5.09l.982.982 1.473-1.473-.982-.982zM10 5.139a4.872 4.872 0 00-4.862 4.86A4.872 4.872 0 0010 14.862 4.872 4.872 0 0014.86 10 4.872 4.872 0 0010 5.139zm0 1.389A3.462 3.462 0 0113.471 10a3.462 3.462 0 01-3.473 3.472A3.462 3.462 0 016.527 10 3.462 3.462 0 0110 6.528zM1.665 9.305v1.39h2.083v-1.39H1.666zm14.583 0v1.39h2.084v-1.39h-2.084zM5.09 13.928L3.616 15.4l.982.982 1.473-1.473-.982-.982zm9.82 0l-.982.982 1.473 1.473.982-.982-1.473-1.473zM9.305 16.25v2.083h1.389V16.25h-1.39z"/></svg>')`,
+    },
+  },
+  '& .MuiSwitch-track': {
+    opacity: 1,
+    backgroundColor: theme.palette.mode === 'dark' ? '#8796A5' : '#aab4be',
+    borderRadius: 20 / 2,
+  },
+}));
 
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -101,7 +156,7 @@ function Navbar(props) {
   const [state, setState] = React.useState(false);
   const [username, setUsername] = useState('')
   const data = useSelector((e) => e.cart)
-  const [dataStorage,setdataStorage] = useState([])
+  const [dataStorage, setdataStorage] = useState([])
   const [open2, setOpen2] = React.useState(false);
   const handleOpen2 = () => setOpen(true);
   const handleClose2 = () => setOpen(false);
@@ -109,7 +164,23 @@ function Navbar(props) {
   const [avatarPath, setAvatarPath] = useState("")
   const dispatch = useDispatch()
   const currentState = useSelector((state) => state.getCart)
+  const [isLightStr, setIslight] = useState()
+  const isLight = useSelector(state => state.darkMode.mode);
+  const [tb, setTb] = useState(null)
+  // const isLight = useSelector(state => state.themeSlice.isLight);
+  const [mounted, setIsMounted] = useState(null)
+  const { theme, setTheme } = useTheme()
 
+  
+  function handleChache() {
+    dispatch(changeTheme());
+
+    console.log(isLight);
+  }
+  useEffect(() => {
+    setIsMounted(true)
+    const loc = JSON.parse(localStorage.getItem("darkMode"))
+  }, [])
   const totalNormal = data.reduce((acc, product) => {
     acc += product.price * product.quantity
     return acc;
@@ -195,7 +266,7 @@ function Navbar(props) {
     }
   }
   useEffect(() => {
-
+    console.log("from nav", props.isLight);
     console.log(username);
     const u_k = Cookies.get("u_tk")
     if (!u_k || u_k === "") {
@@ -235,44 +306,36 @@ function Navbar(props) {
     setOpen2(false)
     window.location.reload()
   }
-
+  const bgColorClassTheme = theme === 'dark' ? 'nav-background' : 'bg-white';
   return (
 
-    <div style={{ display: props.display, zIndex: 999 }} className="   duration-200 w-full" >
+    <div style={{ zIndex: 999 }} className="   duration-200 w-full" >
+      {/* top navbar start here */}
       <div
         style={{ display: "flex" }}
-        className="py-4 h-auto  w-full  flex items-center  justify-between  text-black bg-black outline-1 outline outline-gray-700 px-2 sm:px-10">
+        className={`py-4 h-auto  w-full  flex items-center duration-300 justify-between  text-black ${bgColorClassTheme}  px-2 sm:px-10 md:px-16 lg:px-20`} >
 
         <div className=" flex justify-center text-white items-center">
-          <a href={"/"} className=" flex items-center p-1 ">
+          <Link href={"/"} className=" flex items-center p-1 ">
             <Image
               className="  object-cover"
-              src={ProjectLogo}
+              src={theme === "dark" ? ProjectLogo  : ProjectLogoDark}
               width={145}
               height={145}
               alt="Picture of the author"
             />
-          </a>
+          </Link>
         </div>
         <div className=" hidden sm:flex items-center w-6/12 gap-1">
-          <div onMouseEnter={() => { setSearchBtnH(true) }} onMouseLeave={() => { setSearchBtnH(false) }} className={searchBtnH === true ? " hidden sm:flex items-center justify-between w-full search-background outline outline-1 outline-gray-400  p-1 pr-2 pl-3 rounded-md gap-2" : " hidden sm:flex items-center w-full justify-between search-background outline outline-1 p-1 px-2   pl-3 rounded-md gap-2"}>
-            <input style={{ border: "none", outline: "none" }} placeholder="Search..." className=" text-white w-full search-background " />
+          <div onMouseEnter={() => { setSearchBtnH(true) }} onMouseLeave={() => { setSearchBtnH(false) }} className={searchBtnH === true ? " hidden sm:flex items-center justify-between w-full search-background outline outline-1 outline-gray-300  p-1 pr-2 pl-3 rounded-md gap-2" : " hidden sm:flex items-center w-full justify-between search-background outline outline-1 outline-gray-300 p-1 px-2   pl-3 rounded-md gap-2"}>
+            <input style={{ border: "none", outline: "none" }} placeholder="Search..." className=" text-black w-full search-background " />
             <button className=" p-2 px-4  bg-orange-500 rounded-md shadow-2xl text-white">
               <SearchOutlinedIcon fontSize="small" />
             </button>
           </div>
         </div>
-        <div className=" hidden  sm:flex justify-center items-center gap-3 ">
-          <Link href={"https://www.google.com"} className=" text-gray-400 text-sm" target="_blank">
-            Home
-          </Link>
-          <Link href={"https://www.google.com"} className=" text-gray-400 text-sm" target="_blank">
-            About
-          </Link>
-          <Link href={"https://www.google.com"} className=" text-gray-400 text-sm" target="_blank">
-            Contact
-          </Link>
-        </div>
+
+        {/*
         <div className=" flex sm:hidden items-center gap-2 text-white">
           <Link className=" flex items-center justify-center gap-2 text-sm cursor-pointer" href={noAuth ? "/login" : "/myprofile/me"}>
             {noAuth ? "Sign in" : username}
@@ -281,12 +344,38 @@ function Navbar(props) {
             </Stack>
           </Link>
         </div>
+
+*/}
+
+        <div className=" flex justify-center items-center gap-3 ">
+          <div className=" flex items-center">
+            <button className=" text-orange-400">SIGN IN</button>
+          </div>
+          <div className=" flex">
+            {/* <button onClick={() => {handleChache()}}>dark mod</button> */}
+            <ThemeSwitcher />
+          </div>
+          <div className="cart-box relative duration-250 px-3 rounded-md">
+            <div style={{ backgroundColor: "yellow", marginTop: -10, marginRight: -10 }} className=" absolute rounded-full  flex items-center text-center justify-center  top-1 right-1 bg-yellow-300">
+              <span style={{ color: "black" }} className="text-yellow-400 w-5 text-base flex items-center justify-center h-5 text-center">{data.length}</span>
+            </div>
+            <IconButton onClick={toggleDrawer('right', true)} aria-label="cart">
+              <StyledBadge style={{ color: "white" }} color="secondary">
+                <ShoppingCartIcon />
+              </StyledBadge>
+            </IconButton>
+          </div>
+        </div>
+
       </div>
-      <div style={{ zIndex: 9999999 }} className=" nav-background gap-0  z-50 flex items-center  justify-between h-auto w-full px-2 sm:px-10 py-2">
+      {/* top navbar end here */}
+
+      {/* bottom navbar start here */}
+      <div style={{ zIndex: 9999999 }} className={` ${bgColorClassTheme} boxsh2 gap-0 duration-300 z-50 flex items-center  justify-between h-auto w-full px-2 sm:px-10 md:px-16 lg:px-20 py-2`}>
         <div className=" text-white">
           {['left'].map((anchor) => (
             <React.Fragment key={anchor}>
-              <div className=" flex items-center justify-center text-md gap-1">
+              <div className=" flex lg:hidden items-center justify-center text-md gap-1">
                 <button className=" text-white rounded-full mr-2 px-2 py-2 duration-300 bg-gray-700 hover:bg-gray-600" onClick={toggleDrawer(anchor, true)}><MenuIcon /></button>
                 <span className=" hidden sm:flex">Menu</span>
               </div>
@@ -379,11 +468,13 @@ function Navbar(props) {
             </React.Fragment>
           ))}
         </div>
-        <div className="hidden md:flex  items-center gap-2">
-          <button className="nav-buttons-bg text-xs sm:text-sm px-6 outline outline-1 outline-gray-700 py-2">IPTV</button>
-          <button className="nav-buttons-bg text-xs sm:text-sm px-6 outline outline-1 outline-gray-700 py-2">PC Games</button>
-          <button className="nav-buttons-bg text-xs sm:text-sm px-6 outline outline-1 outline-gray-700 py-2">Playstation</button>
-          <button className="nav-buttons-bg text-xs sm:text-sm px-6 outline outline-1 outline-gray-700 py-2">XBOX</button>
+        <div className="hidden lg:flex  w-full items-center gap-2">
+          <button className="nav-buttons-bg text-xs sm:text-sm px-2 outline outline-1 outline-gray-700 py-2">Global <ArrowDropDownIcon /></button>
+          <button className="nav-buttons-bg text-xs sm:text-sm px-2 outline outline-1 outline-gray-700 py-2">Popular <ArrowDropDownIcon /></button>
+          <button className="nav-buttons-bg text-xs sm:text-sm px-2 outline outline-1 outline-gray-700 py-2">Category <ArrowDropDownIcon /></button>
+          <button className="nav-buttons-bg text-xs sm:text-sm px-2 outline outline-1 outline-gray-700 py-2">New Release <ArrowDropDownIcon /></button>
+          <button className="nav-buttons-bg text-xs sm:text-sm px-2 outline outline-1 outline-gray-700 py-2">Upcoming Games <ArrowDropDownIcon /></button>
+          <button className="nav-buttons-bg text-xs sm:text-sm px-2 outline outline-1 outline-gray-700 py-2">Premium<ArrowDropDownIcon /></button>
         </div>
 
         <div className=" flex sm:hidden items-center w-full gap-1">
@@ -396,13 +487,8 @@ function Navbar(props) {
         </div>
 
         <div className=" flex  items-center gap-2">
-          <div className=" hidden sm:flex items-center gap-2 text-sm text-white">
-            <IconButton onClick={toggleDrawer('right', true)} aria-label="cart">
-              <StyledBadge badgeContent={data.length} style={{ color: "white" }} color="secondary">
-                <ShoppingCartIcon />
-              </StyledBadge>
-            </IconButton>
-          </div>
+
+          {/*
 
           <div className=" hidden sm:flex items-center gap-2 text-white">
             <Link className=" flex items-center justify-center gap-2 text-sm cursor-pointer" href={noAuth ? "/login" : "/myprofile/me"}>
@@ -410,6 +496,18 @@ function Navbar(props) {
               <Stack direction="row" spacing={2}>
                 <Image height={30} width={30} className="cursor-pointer rounded-full" src={!avatarPath ? nouser_image : avatarPath} alt="Remy Sharp" />
               </Stack>
+            </Link>
+          </div>
+*/}
+          <div className=" hidden  sm:flex justify-center items-center gap-3 ">
+            <Link href={"https://www.google.com"} className=" text-white text-sm" target="_blank">
+              Home
+            </Link>
+            <Link href={"https://www.google.com"} className=" text-white text-sm" target="_blank">
+              About
+            </Link>
+            <Link href={"https://www.google.com"} className=" text-white text-sm" target="_blank">
+              Contact
             </Link>
           </div>
 
@@ -457,7 +555,7 @@ function Navbar(props) {
                         </List>))}
                     </div>)}
                 </div>
-          
+
                 <List className=" flex items-center flex-col gap-3  px-3 justify-center">
                   {data.length === 0 ? "" : <div className=" w-full items-center   justify-center flex flex-col gap-2">
                     <div className="flex items-center w-full justify-between">
@@ -475,6 +573,8 @@ function Navbar(props) {
           </React.Fragment>
         </div>
       </div>
+      {/* bottom navbar end here */}
+
       <Modal
         open={open2}
         onClose={handleClose2}
@@ -495,6 +595,7 @@ function Navbar(props) {
           </div>
         </div>
       </Modal>
+
     </div>
 
   );

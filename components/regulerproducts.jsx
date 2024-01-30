@@ -22,11 +22,8 @@ const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-async function Regulerproducts() {
-  const res = await fetch("https://fakestoreapi.com/products?limit=5");
-  const data = await res.json()
+ function Regulerproducts() {
 
-  const m = 'https://images.unsplash.com/photo-1703842184292-578efd933bbd?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw5fHx8ZW58MHx8fHx8'
   return (
     <div className=' flex flex-col gap-3 px-2 sm:px-10 py-2 bg-slate-100 '>
       <div className='flex flex-col gap-0 justify-start'>

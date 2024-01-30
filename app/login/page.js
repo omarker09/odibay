@@ -1,8 +1,9 @@
 "use client"
 
-import React, { useState, useEffect } from 'react';
-
-import gixiLogo from "../../public/Odibay-black.png"
+import React, { useState, useEffect, useContext } from 'react';
+import { themeProvider } from '../page';
+import Prpjectlogo from "../../public/Odibay.png"
+import PrpjectlogoDark from "../../public/Odibay-black.png"
 import Navbar from '@/components/Navbar';
 import Image from "next/image";
 import Footer from '@/components/footer';
@@ -16,7 +17,7 @@ import axios from "axios";
 import GppBadIcon from '@mui/icons-material/GppBad';
 import { errorsLang } from "@/language_config";
 import Cookies from 'js-cookie';
-
+import { useSelector } from 'react-redux';
 
 export default function SignIn() {
 
@@ -36,6 +37,7 @@ export default function SignIn() {
     const [loading, setLoading] = useState(false)
     const [hideEye, setHideEye] = useState(false)
     const [errorType, setErrorType] = useState("")
+    const isLight = true
     const route = "/api/usr";
     const dt = {
         email,
@@ -126,19 +128,19 @@ export default function SignIn() {
         <div>
             {token || token > 0 ? <div></div> : <div className=' flex w-full flex-col justify-between h-auto'>
                 <Navbar />
-                <div className=' bg-slate-100 w-full  flex py-10 items-center justify-center'>
-                    <div style={{ width: 650 }} className=" bg-white flex flex-col justify-between gap-y-5 shadow-2xl p-8 h-full sm:h-auto">
+                <div className={isLight ? ' bg-slate-100 w-full  flex py-10 items-center justify-center' : ' cart-parent w-full  flex py-10 items-center justify-center'}>
+                    <div style={{ width: 650 }} className={isLight ? " bg-white flex flex-col rounded-lg justify-between gap-y-5 shadow-2xl p-8 h-full sm:h-auto" : " cart-box rounded-lg flex flex-col justify-between gap-y-5 shadow-2xl p-8 h-full sm:h-auto"}>
                         <div>
                             <Image
-                                src={gixiLogo}
+                                src={isLight ? PrpjectlogoDark : Prpjectlogo}
                                 height={150}
                                 width={150}
                                 className="   object-contain"
                             />
                         </div>
                         <div>
-                            <h1 className=" text-2xl font-bold">Login</h1>
-                            <p>Continue your journey with Gixify.com</p>
+                            <h1 className={isLight ? " text-black text-2xl font-bold" : " text-2xl text-white font-bold"}>Login</h1>
+                            <p className={isLight ? " text-black" : "text-white"}>Continue your journey with Gixify.com</p>
                         </div>
                         <div className={errorType === "" ? "hidden" : " w-full rounded-md flex items-center justify-start px-3  outline outline-1 bg-red-100 outline-red-300"}>
                             <div className=" h-full flex items-center justify-center gap-x-3 py-3">
@@ -148,15 +150,15 @@ export default function SignIn() {
                         </div>
                         <div className=" flex flex-col gap-y-4 w-full">
                             <div className=" flex flex-col gap-y-3 w-full">
-                                <label>Email</label>
+                                <label className={isLight ? " text-black" : "text-white"}>Email</label>
                                 <input value={email} onChange={(e) => { setEmail(e.target.value) }} className=" p-3 border-none outline outline-1  outline-gray-300 rounded-md" type="text" placeholder="Your email address" />
                             </div>
                             <div className=" flex flex-col gap-y-3 w-full">
                                 <div className=" w-full flex items-center justify-between">
-                                    <label>Password</label>
-                                    <Link className=" text-xs" href={"/"}>Forgot password</Link>
+                                    <label className={isLight ? " text-black" : "text-white"}>Password</label>
+                                    <Link className={isLight ? " text-xs text-black" : "text-white text-xs"} href={"/"}>Forgot password</Link>
                                 </div>
-                                <div className="outline outline-1 px-3 flex focus:focus:outline-gray-700 justify-between items-center outline-gray-300 rounded-md">
+                                <div className="outline outline-1 px-3 flex focus:focus:outline-gray-700 bg-white justify-between items-center outline-gray-300 rounded-md">
                                     <input value={password} onChange={(e) => { setPassword(e.target.value) }} className=" py-3 border-none outline-none  w-full" type={hideEye ? "text" : "password"} placeholder="Your password" />
                                     <span onClick={() => { hideEye ? setHideEye(false) : setHideEye(true) }}>
                                         {hideEye === true ? <VisibilityOffIcon style={{ fontSize: 20, cursor: "pointer" }} /> : <VisibilityIcon style={{ fontSize: 20, cursor: "pointer" }} />}
@@ -165,7 +167,7 @@ export default function SignIn() {
                             </div>
                             <div className=" flex items-center gap-x-2 justify-start">
                                 <input className=" text-black bg-black" type="checkbox" />
-                                <span>Remember me for 30 day</span>
+                                <span className={isLight ? " text-black" : "text-white"}>Remember me for 30 day</span>
                             </div>
                         </div>
                         <div className="w-full flex items-center">
