@@ -12,7 +12,7 @@ import Bannersm from '@/componnent-sm/bannersm'
 import Smgroups from '@/components/smgroups'
 import Footer from '@/components/footer'
 import Bottomtabs from '@/components/bottomtabs';
-import { NextUIProvider } from "@nextui-org/react";
+
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import "../app/globals.css"
 import ServerComp from "./serverComponent"
@@ -24,23 +24,34 @@ import Mainpage from './mainComponent/main';
 import { Provider } from 'react-redux';
 import store from './redux/store';
 export const themeProvider = createContext()
-
+import Carousel from './mainComponent/carousel';
+import { Carouseldata } from '@/data/carouselData';
+import { NextUIProvider } from "@nextui-org/react";
+import { useTheme } from 'next-themes';
+import Sectionads2 from './mainComponent/Sectionads2';
+import Offere1 from './mainComponent/offere1';
 
 export default function App() {
   const [isLights, setIsLight] = useState(true);
-
+  const {theme,setTheme} = useTheme()
   const toggleTheme = () => {
     setIsLight(prevState => !prevState);
   };
   return (
     <Provider store={store}>
-      <div className=' h-full flex flex-col  gap-0 w-full cart-parent '>
-        <Navbar />
-        <Mainpage />
-        <Footer />
-      </div>
-    </Provider>
+      <NextUIProvider>
+        <div className=' h-auto flex flex-col  gap-0 w-full cart-parent '>
+          <Navbar />
+          <Mainpage />
+          <Mainproducts />
+          <Sectionads2/>
+          <Offere1/>
+          <Fastcategory/>
 
+          <Footer />
+        </div>
+      </NextUIProvider>
+    </Provider>
   )
 }
 

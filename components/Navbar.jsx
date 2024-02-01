@@ -1,8 +1,6 @@
 "use client";
 
-// application error: a client-side exception has occurred (see the browser console for more information). bug 
-// maybe here
-
+// Main
 import React, { useEffect, useState, useContext } from "react";
 import avatartest from '../public/avatars/avatar-03.png'
 import { themeProvider } from "@/app/page";
@@ -16,7 +14,6 @@ import Link from "next/link";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import SearchIcon from '@mui/icons-material/Search';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
-import whiteLogo from "../public/white-logo.png"
 import Avatar from '@mui/material/Avatar';
 import Stack from '@mui/material/Stack';
 import Badge from '@mui/material/Badge';
@@ -36,8 +33,8 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import ProjectLogo from "../public/Odibay.png"
-import ProjectLogoDark from "../public/Odibay-black.png"
+import ProjectLogo from "../public/imgs/Odibay.png"
+import ProjectLogoDark from "../public/imgs/Odibay-black.png"
 
 import "../app/globals.css"
 import CloseIcon from '@mui/icons-material/Close';
@@ -238,7 +235,6 @@ function Navbar(props) {
     } catch {
       console.error("error");
     }
-
     axios.post("http://localhost:3002/api/v1/auth/usr/avats", {
       email: email_str,
       user_id: user_id_str
@@ -317,13 +313,14 @@ function Navbar(props) {
 
         <div className=" flex justify-center text-white items-center">
           <Link href={"/"} className=" flex items-center p-1 ">
-            <Image
+          Don't forget to handle the event
+            {/*             <Image
               className="  object-cover"
               src={theme === "dark" ? ProjectLogo  : ProjectLogoDark}
               width={145}
               height={145}
               alt="Picture of the author"
-            />
+            /> */}
           </Link>
         </div>
         <div className=" hidden sm:flex items-center w-6/12 gap-1">

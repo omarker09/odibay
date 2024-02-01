@@ -1,20 +1,26 @@
 "use client"
+
+// main
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector, useStore } from 'react-redux'
 import CartDrawer from '@/components/cartDrawer'
 import Image from 'next/image'
 import img1 from "../public/collectble/discord.png"
 import Link from "next/link";
+
+// redux toolkit
+import { addProduct } from '@/app/redux/slices/cartSlice'
+
+// Material ui
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import Box from '@mui/material/Box';
 import Rating from '@mui/material/Rating';
-import { addProduct } from '@/app/redux/slices/cartSlice'
-
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 
+// alert mui
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
@@ -111,8 +117,7 @@ function Product(props) {
               < Box
                 sx={{
                   '& > legend': { mt: 1 },
-                }}
-              >
+                }}>
                 <Rating name="read-only" size="small" value={props.rating} readOnly />
               </Box >
             </div>

@@ -1,5 +1,6 @@
 "use client"
 
+// main
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector, useStore } from 'react-redux'
 import { deleteProduct } from '@/app/redux/slices/cartSlice';
@@ -7,6 +8,9 @@ import Image from 'next/image';
 import { button } from '@mui/material'
 import Link from 'next/link'
 import "../app/globals.css"
+import { usePathname } from 'next/navigation'
+
+// Material UI
 import SearchIcon from '@mui/icons-material/Search';
 import Modal from '@mui/material/Modal';
 import CloseIcon from '@mui/icons-material/Close';
@@ -45,60 +49,25 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import HomeIcon from '@mui/icons-material/Home';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
-import { usePathname } from 'next/navigation'
 
+// Bottomtab Component
 function Bottomtabs() {
+
+    // States
     const [isHomePage, setIsHomepage] = React.useState(false)
     const [isProfilePage, setIsProfilepage] = React.useState(false)
     const [isSettingsPage, setIsSettingspage] = React.useState(false)
-    const pathname = usePathname()
     const [openModal, setOpenModal] = React.useState(false);
-    const handleOpenModal = () => setOpen(true);
-    const handleCloseModal = () => setOpen(false);
     const [searchBtnH, setSearchBtnH] = useState(false)
     const [open, setOpen] = React.useState(true);
     const [state, setState] = React.useState(false);
+    const handleOpenModal = () => setOpen(true);
+    const handleCloseModal = () => setOpen(false);
 
+    // hooks 
     const data = useSelector((e) => e.cart)
     const dispatch = useDispatch()
-
-    const totalNormal = data.reduce((acc, product) => {
-        acc += product.price * product.quantity
-        return acc;
-    }, 0)
-
-    const handleClose = () => {
-        setOpen(false);
-    };
-
-    const toggleDrawer = (anchor, open) => (event) => {
-        if (
-            event &&
-            event.type === 'keydown' &&
-            (event.key === 'Tab' || event.key === 'Shift')
-        ) {
-            return;
-        }
-
-        if (anchor === 'left' && open === false) {
-            setState(state.left = true);
-        }
-        setState({ ...state, [anchor]: open });
-    };
-
-    const StyledBadge = styled(Badge)(({ theme }) => ({
-        '& .MuiBadge-badge': {
-            right: -3,
-            top: 13,
-            border: `2px solid ${theme.palette.background.paper}`,
-            padding: '0 4px',
-        },
-    }));
-
-    const handleClick = () => {
-        setOpen(!open);
-    };
-
+    const pathname = usePathname()
     useEffect(() => {
         // method 1 is better 
         if (pathname === "/") {
@@ -114,8 +83,40 @@ function Bottomtabs() {
         }
     }, [])
 
+    // Toggels
+    const toggleDrawer = (anchor, open) => (event) => {
+        if (
+            event &&
+            event.type === 'keydown' &&
+            (event.key === 'Tab' || event.key === 'Shift')
+        ) {
+            return;
+        }
+        if (anchor === 'left' && open === false) {
+            setState(state.left = true);
+        }
+        setState({ ...state, [anchor]: open });
+    };
+    const StyledBadge = styled(Badge)(({ theme }) => ({
+        '& .MuiBadge-badge': {
+            right: -3,
+            top: 13,
+            border: `2px solid ${theme.palette.background.paper}`,
+            padding: '0 4px',
+        },
+    }));
+    const handleClick = () => {
+        setOpen(!open);
+    };
+
+    // loops
+    const totalNormal = data.reduce((acc, product) => {
+        acc += product.price * product.quantity
+        return acc;
+    }, 0)
+
     return (
-        <div style={{ zIndex: 1000 }} className=' w-full h-12  fixed sm:hidden bottom-0 search-background '>
+        <div style={{ zIndex: 1000 }} className='w-full h-12 fixed sm:hidden bottom-0 search-background '>
             <Modal
                 open={openModal}
                 onClose={handleCloseModal}
@@ -134,14 +135,14 @@ function Bottomtabs() {
                             <input style={{ border: "none", outline: "none" }} placeholder="Search..." className=" text-white w-full py-2 search-background " />
                             <SearchOutlinedIcon className=" text-white" fontSize="small" />
                         </div>
-                        <button className=" p-1 px-4  bg-orange-500 py-2 rounded-md w-full flex items-center justify-center gap-3 shadow-2xl text-white">
+                        <button className=" p-1 px-4 bg-orange-500 py-2 rounded-md w-full flex items-center justify-center gap-3 shadow-2xl text-white">
                             <span>Search</span>
                         </button>
                     </div>
                 </div>
             </Modal>
             <div className=' w-full flex h-full search-background px-20  items-center justify-center'>
-                <ListItemButton onClick={() => { window.location.href = '/' }} className='text-white duration-300 hover:bg-gray-600  h-full w-7 flex text-center items-center justify-center'>
+                <ListItemButton onClick={() => { window.location.href = '/' }} className='text-white duration-300 hover:bg-gray-600 h-full w-7 flex text-center items-center justify-center'>
                     <div className='flex flex-col justify-center items-center gap-0'>
                         <HomeIcon className=" text-md  cursor-pointer text-white" />
                         <span className='text-xs text-white'>Home</span>

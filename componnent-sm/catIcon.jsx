@@ -2,22 +2,15 @@ import React from 'react'
 import Image from 'next/image'
 import img1 from "../public/collectble/discord.png"
 import Link from "next/link";
+import { useTheme } from 'next-themes';
 import { useSelector } from 'react-redux';
 function CatIcon(props) {
-  const isLight = useSelector(state => state.themeSlice.isLight);
+  const {theme} = useTheme()
   return (
-    <div className={isLight ? ' flex items-center   p-2 outline w-full h-auto outline-1  outline-gray-200 justify-between ' : ' flex items-center   p-2 outline w-full h-auto outline-1  outline-gray-400 justify-between '}>
-        <div className=' flex  flex-col justify-start  items-start'>
-            <Link href={props.path} className='orange-text-colo'>{props.title}</Link>
-            <span className=' text-gray-400 text-sm'>{props.smtitle}</span>
-        </div>
-        <div>
-            <Image 
-             src={props.img}
-             height={35}
-             width={35}
-
-            />
+    <div className={theme !== "dark" ? ' flex items-center  cart-light-box p-2 rounded-md cursor-pointer duration-300 hover:opacity-70 text-black w-full h-auto justify-center ' : ' flex items-center duration-300 hover:opacity-70 cursor-pointer rounded-md text-white p-2 w-full h-auto cart-box justify-center '}>
+        <div className=' flex  flex-col justify-center  items-center'>
+            <Link href={props.path} className={theme !== "dark" ? ' text-black font-medium' : ' text-white font-medium'}>{props.title}</Link>
+            <span className={theme !== "dark" ? ' text-black font-medium text-sm' : ' text-white font-medium text-sm'}>{props.smtitle}</span>
         </div>
     </div>
   )

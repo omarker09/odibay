@@ -18,7 +18,6 @@ function Colorradio(props) {
                 setIsColor3(false)
                 if (iscolor1 === true) {
                     setIsColor1(false)
-
                 }
             }} style={{ backgroundColor: `blue`, fontSize: 0 }} className={iscolor1 == true ? ' p-4 rounded-full cursor-pointer  border-none outline-none   outline outline-2 outline-gray-400 border border-spacing-3 border-white ' : "p-4 rounded-full cursor-pointer  border-none outline-none   outline outline-2"} />
             <input type='text' onClick={() => {

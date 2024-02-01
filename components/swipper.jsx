@@ -7,11 +7,11 @@ import '../app/globals.css';
 
 
 import Image from 'next/image'
-import img1 from "../public/banner1.jpg"
-import img2 from "../public/banner2.jpg"
-import img3 from "../public/Black Minimalist Motivation Quote LinkedIn Banner.png"
-import img4 from "../public/Photo Modern New Collection Banner.jpg"
-import discordtest from "../public/iptv1080.png"
+import img1 from "../public/imgs/banner1.jpg"
+import img2 from "../public/imgs/banner2.jpg"
+import img3 from "../public/imgs/Black Minimalist Motivation Quote LinkedIn Banner.png"
+import img4 from "../public/imgs/Photo Modern New Collection Banner.jpg"
+import discordtest from "../public/imgs/iptv1080.png"
 function MyswipperApp(props) {
 // notice the size should be only 6912 * 3456 in (canvas its called Banner landscape 72 * 36)
     return (

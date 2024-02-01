@@ -1,18 +1,18 @@
 'use client'
 import React from 'react'
-import iml from "../public/Black and Pink Modern Black Friday Sale Banner.png"
+import iml from "../public/imgs/Black and Pink Modern Black Friday Sale Banner.png"
 import Image from 'next/image'
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import Link from "next/link";
 import rdr2 from "../public/collectble/red-dead2.jpg"
 import gtv from "../public/collectble/gtv.png"
 import gtav from "../public/collectble/red-dead.jpg"
-import discordtest from "../public/iptv1080.png"
-import grey from "../public/Grey Minimalist Product Advertising Instagram Post.png"
+import discordtest from "../public/imgs/iptv1080.png"
+import grey from "../public/imgs/Grey Minimalist Product Advertising Instagram Post.png"
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import "../app/globals.css"
-import iml3 from "../public/Black and Pink Modern Black Friday Sale Banner 2.png"
+import iml3 from "../public/imgs/Black and Pink Modern Black Friday Sale Banner 2.png"
 import { useSelector } from 'react-redux';
 // Import Swiper styles
 import 'swiper/css';
@@ -28,7 +28,6 @@ import Product from '@/componnent-sm/product';
 // notice the size should be only 6912 * 3456 in (canvas its called Banner landscape 72 * 36)
 function Mainproducts() {
     const [value, setValue] = React.useState(4);
-    const isLight = useSelector(state => state.themeSlice.isLight);
     const responsive = {
         superLargeDesktop: {
             // the naming can be any, depends on you.
@@ -71,14 +70,14 @@ function Mainproducts() {
     }
 
     return (
-        <div className={isLight ? ' bg-white flex flex-col ' : ' cart-parent flex flex-col '}>
+        <div className=' bg-white flex flex-col '>
             <div className=' w-full flex flex-col px-2 sm:px-10 py-2 gap-3 justify-between items-start'>
                 <div className=' w-full flex items-center justify-between'>
-                    <h1 className={isLight ? 'nav-background-text text-2xl font-bold' : ' text-white text-2xl font-bold'}>Events</h1>
+                    <h1 className='nav-background-text text-2xl font-bold'>Events</h1>
                     <Link className=' nav-background py-1 px-2 rounded text-xs  underline text-white ' href={"/"}>Discover all</Link>
                 </div>
                 <div className='flex flex-col gap-0 justify-start'>
-                    <p className={isLight ? 'text-gray-500' : 'text-white'}>Explore exclusive programs and projects designed to enhance your experience</p>
+                    <p className='text-gray-500' >Explore exclusive programs and projects designed to enhance your experience</p>
                 </div>
             </div>
             <div className='px-2 sm:px-10'>

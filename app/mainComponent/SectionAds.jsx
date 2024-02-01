@@ -1,6 +1,6 @@
 'use client'
 import React from 'react'
-import ads from "../../public/ads.avif"
+import ads from "../../public/imgs/ads.avif"
 import Test from "../../public/test.avif"
 import Image from 'next/image'
 import "../globals.css"

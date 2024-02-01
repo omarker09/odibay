@@ -243,7 +243,12 @@ body {
   box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
 }
 .adsbackground {
-  background-image: url("../public/ads.avif");
+  background-image: url("../public/imgs/ads.avif");
+  background-position: center;
+  background-size: cover;
+}
+.adsbackground2 {
+  background-image: url("../public/imgs/product-finder-background.avif");
   background-position: center;
   background-size: cover;
 }
@@ -251,5 +256,8 @@ body {
   background-color: #504b4b;
 }
 .badgeslash {
-  transform:  rotate(120deg);
+  transform:  rotate(120deg)
+}
+.cart-light-box {
+  background-color: #E0E0E0;
 }

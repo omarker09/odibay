@@ -1,7 +1,12 @@
+"use client"
+
+// main
 import React, { useState, useEffect } from 'react'
 import { deleteProduct } from '@/app/redux/slices/cartSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import Image from 'next/image';
+
+// Material UI
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import Button from '@mui/material/Button';
@@ -16,6 +21,7 @@ import MailIcon from '@mui/icons-material/Mail';
 import CloseIcon from '@mui/icons-material/Close';
 import { SwipeableDrawer } from '@mui/material';
 
+// Material UI Configs
 function CartDrawer(props) {
     const [state, setState] = React.useState({
         top: false,
@@ -23,7 +29,6 @@ function CartDrawer(props) {
         bottom: false,
         right: false,
     });
-
     const data = useSelector((e) => e.cart)
     const dispatch = useDispatch()
 
@@ -31,12 +36,10 @@ function CartDrawer(props) {
         acc += product.price * product.quantity
         return acc;
     }, 0)
-
     const toggleDrawer = (anchor, open) => (event) => {
         if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
             return;
         }
-
         setState({ ...state, [anchor]: open });
     };
 
@@ -97,6 +100,5 @@ function CartDrawer(props) {
                 </Box>
             </SwipeableDrawer>
         </React.Fragment>)}
-
 
 export default CartDrawer

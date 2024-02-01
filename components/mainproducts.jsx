@@ -1,32 +1,46 @@
 'use client'
+
+// Main
 import React from 'react'
-import iml from "../public/Black and Pink Modern Black Friday Sale Banner.png"
-import Image from 'next/image'
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import Carousel from 'react-multi-carousel';
+import 'react-multi-carousel/lib/styles.css';
+import "../app/globals.css"
 import Link from "next/link";
+import Image from 'next/image';
+
+// Images
 import rdr2 from "../public/collectble/red-dead2.jpg"
+import iml from "../public/imgs/Black and Pink Modern Black Friday Sale Banner.png"
 import gtv from "../public/collectble/gtv.png"
 import gtav from "../public/collectble/red-dead.jpg"
 import discord from "../public/collectble/discord.png"
 import iptbcard from "../public/collectble/iptvcard.png"
-import grey from "../public/Grey Minimalist Product Advertising Instagram Post.png"
-import Carousel from 'react-multi-carousel';
-import 'react-multi-carousel/lib/styles.css';
+import grey from "../public/imgs/Grey Minimalist Product Advertising Instagram Post.png"
+import Steamdarkmode from "../public/imgs/steam.svg"
 
-import "../app/globals.css"
+// Material UI
 import Box from '@mui/material/Box';
 import Rating from '@mui/material/Rating';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
-
+// next ui
+import { Card, CardHeader, CardBody } from "@nextui-org/react";
 
 // Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/pagination';
 
 
+// darkmode
+import { useTheme } from 'next-themes';
+
 // The promotion must has only 2 link updated use what you want
 function Mainproducts() {
+    const {theme,setTheme} = useTheme()
+    // States
     const [value, setValue] = React.useState(4);
+
+    // Responsive proop
     const responsive = {
         superLargeDesktop: {
             // the naming can be any, depends on you.
@@ -55,7 +69,7 @@ function Mainproducts() {
         }
     };
 
-
+    // Data
     const arr = [
         { title: "GTA 5", price: 1000, category: "XBOX Games", image: gtv },
         { title: "Red dead 2", price: 2500, category: "PS5 Games", image: gtav },
@@ -65,18 +79,19 @@ function Mainproducts() {
         { title: "IPTV", price: 2500, category: "PS5 Games", image: iptbcard },
         { title: "Discord", price: 1000, category: "XBOX Games", image: discord },
     ]
+    const bgColorClassTheme = theme === 'dark' ? 'cart-parent' : 'bg-white';
     return (
-        <div className=' flex flex-col gap-3 bg-white '>
-            <div className=' w-full flex flex-col px-2 sm:px-10 py-2 gap-3 justify-between items-start'>
+        <div className={theme !== "dark" ? ' flex py-2 flex-col gap-3 bg-white ' : ' flex py-2 flex-col gap-3 cart-parent '}>
+            <div className=' w-full flex flex-col px-2 sm:px-10 md:px-16 lg:px-20 py-2 gap-3 justify-between items-start'>
                 <div className=' w-full flex items-center justify-between'>
-                    <h1 className='nav-background-text text-2xl font-bold'>Popular</h1>
-                    <Link className=' nav-background py-1 px-2 rounded text-xs  underline text-white ' href={"/"}>Discover all</Link>
+                    <h1 className={theme !== "dark" ? ' text-black text-2xl font-bold' : ' text-white p-2 rounded-lg cart-box text-md '}>Popular</h1>
+                    <Link className={theme !== 'dark' ? ' cart-light-box py-1 px-2 rounded text-xs text-black ' : ' cart-box py-1 px-2 rounded text-xs  text-white '} href={"/"}>Discover all</Link>
                 </div>
                 <div className='flex flex-col gap-0 justify-start'>
-                    <p className='text-gray-500'>Explore exclusive programs and projects designed to enhance your experience</p>
+                    <p className={theme !== "dark" ? 'text-gray-500' : 'text-gray-200'}>Explore exclusive programs and projects designed to enhance your experience</p>
                 </div>
             </div>
-            <div className='px-2 sm:px-10 '>
+            <div className=' px-2 sm:px-10 md:px-16 lg:px-20 '>
                 <Carousel
                     responsive={responsive}
                     additionalTransfrom={2}
@@ -100,10 +115,9 @@ function Mainproducts() {
                     className=' bg-white'
                     partialVisible={false}
                 >
-
-                    {/*Notice image size must be at least  512 * 512 px*/}
+                    {/*Notice image size must be at least 512 * 512 px */}
                     {arr.map((e) => {
-                        return <div key={e.title} className=' border border-1 mr-2  border-gray-300  rounded-lg' >
+                        return <div key={e.title} className={theme !== "dark" ? ' mr-2 border border-gray-200 rounded-lg' : ' mr-2 cart-box rounded-lg'} >
                             <Image
                                 height={290}
                                 width={290}
@@ -114,23 +128,21 @@ function Mainproducts() {
                             />
                             <div className=' flex flex-col gap-1 select-none nodrag p-2 w-full justify-start items-start'>
                                 <div className=' flex items-center justify-between w-full'>
-                                    <p className=' text-xs lg:text-sm text-gray-400'>{e.category}</p>
-                                    <Link className=' p-1 text-xs lg:text-sm text-black' href={"/"}>Details <ArrowForwardIosIcon className=' text-xs text-black  ' fontSize='small' /></Link>
+                                    <p className={theme !== "dark" ? ' text-xs lg:text-sm text-gray-400' : ' text-xs lg:text-sm text-white'}>{e.category}</p>
+                                    <Link className={theme !== "dark" ? 'p-1 text-xs lg:text-sm text-black' : 'p-1 text-xs lg:text-sm text-white'} href={"/"}>Details <ArrowForwardIosIcon className=' text-xs text-black  ' fontSize='small' /></Link>
                                 </div>
-                                <h1 className=' text-bold text-md'>{e.title}</h1>
+                                <h1 className={theme !== "dark" ? ' text-bold text-md' : ' text-bold text-gray-200 text-md'}>{e.title}</h1>
                                 <div className=' flex flex-col gap-2 items-start w-full justify-between'>
                                     <div className=' w-full items-center flex justify-between'>
-                                        <span className=' text-blue-950 font-bold text-xs sm:text-sm'>{e.price} DZD</span>
+                                        <span className={theme !== "dark" ? 'font-bold text-black text-xs sm:text-sm' : 'font-bold text-orange-400 text-xs sm:text-sm'}>{e.price} DZD</span>
                                         < Box
                                             sx={{
                                                 '& > legend': { mt: 2 },
-                                            }}
-                                        >
+                                            }}>
                                             <Rating name="read-only" size="small" value={value} readOnly />
-
                                         </Box >
                                     </div>
-                                    <button className=' w-full nav-top-background text-xs lg:text-sm  px-1 md:px-3 lg:px-5 py-1 text-white rounded'>add to cart</button>
+                                    <button className={theme !== "dark" ? ' w-full duration-300 hover:opacity-70 orange-background text-xs lg:text-sm  px-1 md:px-3 lg:px-5 py-2 text-black rounded' : ' w-full duration-300 hover:opacity-70 orange-background text-xs lg:text-sm  px-1 md:px-3 lg:px-5 py-2 text-black rounded'}>add to cart</button>
                                 </div>
                             </div>
                         </div>
@@ -145,9 +157,32 @@ function Mainproducts() {
 export default Mainproducts
 
 
+/*
+        <Card className="py-0 cart-box rounded-md">
+     
+                        <CardBody className="overflow-visible pt-0 px-0 flex flex-col gap-2 ">
+                            <Image
+                                alt="Card background"
+                                className="object-cover rounded"
+                                src="https://cdn.mos.cms.futurecdn.net/3D9dh6TgNMUXwC7kYD5rP-1200-80.jpg"
+                                width={270}
+                            />
+                            <div className=' flex px-2 items-center justify-between'>
+                                <Image
+                                    src="https://media.zenfs.com/en/gamerevolution_126/a01f17a082c1360f9d9d554d6bbec3d8"
+                                    height={45}
+                                    width={45}
+                                />
+                                <span className=' text-gray-300 text-xs'>20$</span>
+                            </div>
+                            <div className=' w-full px-2'>
+                                <button className=' bg-orange-400 text-black rounded-md w-full p-1'>add</button>
+                            </div>
+                        </CardBody>
+                    </Card>
 
-
-
+                </Carousel>
+*/
 
 
 

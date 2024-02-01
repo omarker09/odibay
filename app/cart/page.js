@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Divider from '@mui/material/Divider';
-import gixiLogo from "../../public/Odibay-black.png"
+import gixiLogo from "../../public/imgs/Odibay-black.png"
 import Navbar from '@/components/Navbar';
 import Image from "next/image";
 import Footer from '@/components/footer';
@@ -22,8 +22,8 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import CustomizedTooltips from '@/components/muicomponent/tooltip';
 import CardGiftcardIcon from '@mui/icons-material/CardGiftcard';
 import imgTest from "../../public/collectble/netflix.png"
-import Steamicon from "../../public/steam.svg"
-import SteamiconDark from "../../public/steam-black.svg"
+import Steamicon from "../../public/imgs/steam.svg"
+import SteamiconDark from "../../public/imgs/steam-black.svg"
 import CloseIcon from '@mui/icons-material/Close';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
@@ -35,8 +35,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useTheme } from 'next-themes';
 export default function SignIn() {
     const dispatch = useDispatch();
-
-    const { theme, setTheme } = useTheme()
+    const {theme,setTheme} = useTheme()
     function handleTheme() {
         dispatch(changeTheme());
     }
