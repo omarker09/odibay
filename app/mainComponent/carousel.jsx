@@ -50,7 +50,7 @@ function Carousel({ data }) {
               <ArrowLeftIcon className=' absolute text-white text-4xl' />
             </button>
             {data.map((item, index) => {
-              return <img src={item.src} alt={item.alt} className={`absolute  w-full h-full object-cover duration-1000 ${slide !== index ? 'opacity-0' : 'opacity-100'}`}
+              return <img src={item.src} key={index} alt={item.alt} className={`absolute  w-full h-full object-cover duration-1000 ${slide !== index ? 'opacity-0' : 'opacity-100'}`}
                 style={{ transition: 'opacity 0.2s ease-in-out' }} />
             })}
             <button onClick={() => nextSlide()} className="  p-1  right-0 z-10">

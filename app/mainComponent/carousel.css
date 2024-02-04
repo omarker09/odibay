@@ -1,0 +1,36 @@
+.carousel {
+    background-color: aquamarine;
+    overflow: hidden;
+    cursor: grab;
+}
+.inner-carousel {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    gap: 20px;
+    position: relative;
+}
+.item {
+    border-radius: 20px;
+    min-width: 100%;
+    min-height: 20rem;
+    padding: 40px 20px;
+    background-color: brown;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.no-drag-text {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  .no-drag-img {
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+  }
+  .height-rec {
+    height: 600px;
+  }

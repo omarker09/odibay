@@ -1,6 +1,4 @@
 'use client'
-
-// Main
 import React from 'react'
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
@@ -35,7 +33,7 @@ import 'swiper/css/pagination';
 import { useTheme } from 'next-themes';
 
 // The promotion must has only 2 link updated use what you want
-function Mainproducts() {
+function Mainproducts({data}) {
     const {theme,setTheme} = useTheme()
     // States
     const [value, setValue] = React.useState(4);
@@ -80,11 +78,33 @@ function Mainproducts() {
         { title: "Discord", price: 1000, category: "XBOX Games", image: discord },
     ]
     const bgColorClassTheme = theme === 'dark' ? 'cart-parent' : 'bg-white';
+
+    // Custom dot indicator
+    const CustomDot = ({ onClick, ...rest }) => {
+        const {
+            onMove,
+            index,
+            active,
+            carouselState: { currentSlide, deviceType }
+        } = rest;
+        const handleClick = () => {
+            onClick();
+            onMove(index);
+        };
+        return (
+            <button
+                className={active ? 'active' : 'inactive'}
+                onClick={handleClick}
+                style={{ background: active ? 'blue' : 'grey' }}
+            ></button>
+        );
+    };
+
     return (
         <div className={theme !== "dark" ? ' flex py-2 flex-col gap-3 bg-white ' : ' flex py-2 flex-col gap-3 cart-parent '}>
             <div className=' w-full flex flex-col px-2 sm:px-10 md:px-16 lg:px-20 py-2 gap-3 justify-between items-start'>
                 <div className=' w-full flex items-center justify-between'>
-                    <h1 className={theme !== "dark" ? ' text-black text-2xl font-bold' : ' text-white p-2 rounded-lg cart-box text-md '}>Popular</h1>
+                    <h1 className={theme !== "dark" ? ' text-black text-2xl font-bold' : ' text-white text-2xl rounded-lg  text-md '}>Popular</h1>
                     <Link className={theme !== 'dark' ? ' cart-light-box py-1 px-2 rounded text-xs text-black ' : ' cart-box py-1 px-2 rounded text-xs  text-white '} href={"/"}>Discover all</Link>
                 </div>
                 <div className='flex flex-col gap-0 justify-start'>
@@ -107,7 +127,8 @@ function Mainproducts() {
                     minimumTouchDrag={2}
                     renderButtonGroupOutside={true}
                     renderDotsOutside={false}
-                    showDots={false}
+                    showDots={true} // Set showDots to true
+                    customDot={<CustomDot />} // Pass the custom dot component
                     pauseOnHover={true}
                     slidesToSlide={2}
                     swipeable
@@ -155,7 +176,6 @@ function Mainproducts() {
 }
 
 export default Mainproducts
-
 
 /*
         <Card className="py-0 cart-box rounded-md">

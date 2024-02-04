@@ -1,5 +1,5 @@
 "use client"
-import gixiLogo from "../../public/logo-discover.png"
+import gixiLogo from "../../public/imgs/Odibay.png"
 import axios from "axios";
 import React, { useState, useEffect } from 'react';
 import Navbar from '../../components/Navbar';

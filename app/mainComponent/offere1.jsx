@@ -38,7 +38,7 @@ function Offere1() {
                             <span className=' text-white'><DoneIcon className=' text-base' /> Safe and secure browser extension</span>
                         </div>
                     </div>
-                    <div className=' w-full flex justify-center sm:justify-start lg:justify-end items-end'>
+                    <div className=' w-full flex justify-start sm:justify-start lg:justify-end items-end'>
                         <button className='orange-background duration-300 hover:opacity-70 text-black p-2 px-10 rounded-lg'>Get the Fanatical Extension</button>
                     </div>
                 </div>

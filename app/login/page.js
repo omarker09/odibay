@@ -2,8 +2,8 @@
 
 import React, { useState, useEffect, useContext } from 'react';
 import { themeProvider } from '../page';
-import Prpjectlogo from "../../public/Odibay.png"
-import PrpjectlogoDark from "../../public/Odibay-black.png"
+import Prpjectlogo from "../../public/imgs/Odibay.png"
+import PrpjectlogoDark from "../../public/imgs/Odibay-black.png"
 import Navbar from '@/components/Navbar';
 import Image from "next/image";
 import Footer from '@/components/footer';

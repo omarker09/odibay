@@ -5,7 +5,7 @@
 // notice the bug has been fixed because you did not set a ? in getBillingData json if you access directly without it it will threw and error
 
 import React, { useState, useEffect } from 'react';
-import { avatars } from '@/public/avatar-path';
+import { avatars } from '@/public/imgs/avatar-path';
 import Navbar from '@/components/Navbar';
 import Cookies from 'js-cookie';
 import Image from "next/image";

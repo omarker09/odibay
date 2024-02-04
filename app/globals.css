@@ -252,6 +252,11 @@ body {
   background-position: center;
   background-size: cover;
 }
+.adsbackground3 {
+  background-image: url("../public/imgs/banner-gaming.jpg");
+  background-position: center;
+  background-size: cover;
+}
 .tags-theme {
   background-color: #504b4b;
 }
@@ -260,4 +265,50 @@ body {
 }
 .cart-light-box {
   background-color: #E0E0E0;
+}
+/* components/CustomSlider.module.css */
+.slider {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.slideWrapper {
+  display: flex;
+  transition: transform 0.5s ease;
+}
+
+.slide {
+  flex: 0 0 100%;
+  width: 100%;
+}
+
+.prevButton,
+.nextButton {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.prevButton {
+  left: 0;
+}
+
+.nextButton {
+  right: 0;
+}
+.transform-to-left {
+  transform: translateX(-2500px);
+  animation-duration: 100ms;
+}
+.transform-to-center {
+  transform: translateX(0px);
+  animation-duration: 300ms;
+}
+.height-rec {
+  height: 600px;
 }

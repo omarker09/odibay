@@ -9,10 +9,10 @@ import winimgz from "../public/collectble/netflix.png"
 import winimgs from "../public/collectble/nordvpn.png"
 import rdr2 from "../public/collectble/gtv.png"
 import rd2 from "../public/collectble/red-dead.jpg"
-import Tesla from "../public/tesla.png"
+
 import soft from "../public/collectble/app-development.png"
 import Link  from "next/link";
-import big from '../public/big.jpg'
+
 import Box from '@mui/material/Box';
 import Rating from '@mui/material/Rating';
 import InputLabel from '@mui/material/InputLabel';
@@ -115,7 +115,7 @@ function Productdetails() {
     const [age2, setAge2] = React.useState('');
     const [value, setValue] = React.useState(0);
     const [imgSrc, setImgsrc] = useState("")
-    const [imagePath, setImagePath] = useState(Tesla);
+    const [imagePath, setImagePath] = useState();
     const [bolState, setBolstate] = useState(false)
     const [color1, setColor1] = useState("")
     const [color2, setColor2] = useState("")

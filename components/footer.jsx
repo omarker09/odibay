@@ -24,7 +24,7 @@ function Footer() {
   const isLight = useSelector(state => state.darkMode.mode);
   const { theme, setTheme } = useTheme()
   return (
-    <div style={{borderTop: "soild 2px rgb(209 213 219)"}} className={theme !== "dark" ? 'flex flex-col duration-300 pb-12 h-auto bg-white p-6  sm:pb-0 border-t-2 border-gray-200' : 'flex duration-300 flex-col pb-12 h-auto border-t-2 border-transparent cart-box p-6  sm:pb-0'}>
+    <div style={{borderTop: "soild 2px rgb(209 213 219)"}} className={theme !== "dark" ? 'flex flex-col duration-300  h-auto bg-white p-6  pb-0 border-t-2 border-gray-200' : 'flex duration-300 flex-col  h-auto border-t-2 border-transparent cart-box p-6 pb-0'}>
       <div className=' w-full flex flex-col gap-4 items-center sm:items-start px-2 sm:px-10'>
         {/*
           <Image

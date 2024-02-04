@@ -12,7 +12,8 @@ import Bannersm from '@/componnent-sm/bannersm'
 import Smgroups from '@/components/smgroups'
 import Footer from '@/components/footer'
 import Bottomtabs from '@/components/bottomtabs';
-
+import FastSlider from '@/components/fastSlider';
+import MainproductsGroup from '@/components/productsgroup';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import "../app/globals.css"
 import ServerComp from "./serverComponent"
@@ -30,24 +31,38 @@ import { NextUIProvider } from "@nextui-org/react";
 import { useTheme } from 'next-themes';
 import Sectionads2 from './mainComponent/Sectionads2';
 import Offere1 from './mainComponent/offere1';
+import Sectionads3 from './mainComponent/Sectionads3';
+
 
 export default function App() {
   const [isLights, setIsLight] = useState(true);
-  const {theme,setTheme} = useTheme()
+  const { theme, setTheme } = useTheme()
   const toggleTheme = () => {
     setIsLight(prevState => !prevState);
   };
+  const slides = [
+    "slide 1",
+    "slide 2",
+    "slide 3",
+    "slide 4",
+  ];
+
+
   return (
     <Provider store={store}>
       <NextUIProvider>
-        <div className=' h-auto flex flex-col  gap-0 w-full cart-parent '>
+        <div className=' h-auto flex flex-col duration-300  gap-0 w-full cart-parent '>
           <Navbar />
           <Mainpage />
           <Mainproducts />
-          <Sectionads2/>
-          <Offere1/>
-          <Fastcategory/>
-
+          <Sectionads2 />
+          <Offere1 />
+          <FastSlider />
+          <Fastcategory />
+          <Regulerproducts/>
+          <MainproductsGroup/>
+          <Mainproducts />
+          <Sectionads3/>
           <Footer />
         </div>
       </NextUIProvider>

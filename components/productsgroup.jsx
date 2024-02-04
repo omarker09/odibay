@@ -24,10 +24,11 @@ import img2 from "../public/collectble/app-development.png"
 import img3 from "../public/collectble/gift-card.png"
 import img4 from "../public/collectble/playstation.png"
 import Product from '@/componnent-sm/product';
-
+import { useTheme } from 'next-themes';
 // notice the size should be only 6912 * 3456 in (canvas its called Banner landscape 72 * 36)
 function Mainproducts() {
     const [value, setValue] = React.useState(4);
+    const {theme,setTheme} = useTheme()
     const responsive = {
         superLargeDesktop: {
             // the naming can be any, depends on you.
@@ -70,17 +71,17 @@ function Mainproducts() {
     }
 
     return (
-        <div className=' bg-white flex flex-col '>
-            <div className=' w-full flex flex-col px-2 sm:px-10 py-2 gap-3 justify-between items-start'>
+        <div className={theme !== "dark" ? ' flex bg-white flex-col gap-3 px-2 sm:px-10 md:px-16 lg:px-20 py-4 ' : ' flex flex-col gap-3 px-2 sm:px-10 md:px-16 lg:px-20 py-4 cart-parent '}>
+            <div className=' w-full flex flex-col  py-2 gap-3 justify-between items-start'>
                 <div className=' w-full flex items-center justify-between'>
-                    <h1 className='nav-background-text text-2xl font-bold'>Events</h1>
-                    <Link className=' nav-background py-1 px-2 rounded text-xs  underline text-white ' href={"/"}>Discover all</Link>
+                    <h1 className={theme !== "dark" ? ' text-black text-2xl font-bold' : ' text-white text-2xl rounded-lg  text-md '}>Events</h1>
+                    <Link className={theme !== 'dark' ? ' cart-light-box py-1 px-2 rounded text-xs text-black ' : ' cart-box py-1 px-2 rounded text-xs  text-white '} href={"/"}>Discover all</Link>
                 </div>
                 <div className='flex flex-col gap-0 justify-start'>
-                    <p className='text-gray-500' >Explore exclusive programs and projects designed to enhance your experience</p>
+                    <p className={theme !== "dark" ? 'text-gray-500' : 'text-gray-200'}>Explore exclusive events and gifts </p>
                 </div>
             </div>
-            <div className='px-2 sm:px-10'>
+            <div className=''>
                 <Carousel
                     responsive={responsive}
                     additionalTransfrom={2}
