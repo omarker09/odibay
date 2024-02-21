@@ -1,6 +1,8 @@
 "use client";
 
 // Main
+
+import { MegaMenu } from 'primereact/megamenu';
 import React, { useEffect, useState, useContext } from "react";
 import avatartest from '../public/avatars/avatar-03.png'
 import { themeProvider } from "@/app/page";
@@ -64,12 +66,17 @@ import Cookies from 'js-cookie';
 import nouser_image from "../public/avatars/no_user.jpg"
 import avatar1 from "../public/avatars/team-01.jpg"
 import { changeTheme } from "@/app/redux/slices/themeSlice";
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+//import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import ArrowDropDownIcon from '@mui/icons-material/ExpandMoreOutlined';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import ThemeSwitcher from "@/app/appComponent/themeSwitcher";
 import { useTheme } from "next-themes";
+
+// mega menus
+import { MegaMenu1, MegaMenu2, MegaMenu3, MegaMenu4, MegaMenu5 } from './megamenus/megas';
+
 const MaterialUISwitch = styled(Switch)(({ theme }) => ({
   width: 62,
   height: 34,
@@ -139,8 +146,8 @@ const style = {
 };
 
 
-function Navbar(props) {
 
+function Navbar(props) {
 
   const router = useRouter();
   const [open, setOpen] = React.useState(false);
@@ -167,8 +174,13 @@ function Navbar(props) {
   // const isLight = useSelector(state => state.themeSlice.isLight);
   const [mounted, setIsMounted] = useState(null)
   const { theme, setTheme } = useTheme()
+  // mega-menu hovers
+  const [ishover1, setIsHover1] = useState(false)
+  const [ishover2, setIsHover2] = useState(false)
+  const [ishover3, setIsHover3] = useState(false)
+  const [ishover4, setIsHover4] = useState(false)
+  const [ishover5, setIsHover5] = useState(false)
 
-  
   function handleChache() {
     dispatch(changeTheme());
 
@@ -308,22 +320,29 @@ function Navbar(props) {
     <div style={{ zIndex: 999 }} className="   duration-200 w-full" >
       {/* top navbar start here */}
       <div
+        onMouseOver={() => {
+          setIsHover1(false)
+          setIsHover2(false)
+          setIsHover3(false)
+          setIsHover4(false)
+          setIsHover5(false)
+        }}
         style={{ display: "flex" }}
         className={`py-4 h-auto  w-full  flex items-center duration-300 justify-between  text-black ${bgColorClassTheme}  px-2 sm:px-10 md:px-16 lg:px-20`} >
 
         <div className=" flex justify-center text-white items-center">
           <Link href={"/"} className=" flex items-center p-1 ">
-          Don't forget to handle the event
-            {/*             <Image
+            <Image
               className="  object-cover"
-              src={theme === "dark" ? ProjectLogo  : ProjectLogoDark}
+              src={theme === "dark" ? ProjectLogo : ProjectLogoDark}
               width={145}
               height={145}
               alt="Picture of the author"
-            /> */}
+            />
           </Link>
         </div>
-        <div className=" hidden sm:flex items-center w-6/12 gap-1">
+
+        <div className=" hidden md:flex items-center w-6/12 gap-1">
           <div onMouseEnter={() => { setSearchBtnH(true) }} onMouseLeave={() => { setSearchBtnH(false) }} className={searchBtnH === true ? " hidden sm:flex items-center justify-between w-full search-background outline outline-1 outline-gray-300  p-1 pr-2 pl-3 rounded-md gap-2" : " hidden sm:flex items-center w-full justify-between search-background outline outline-1 outline-gray-300 p-1 px-2   pl-3 rounded-md gap-2"}>
             <input style={{ border: "none", outline: "none" }} placeholder="Search..." className=" text-black w-full search-background " />
             <button className=" p-2 px-4  bg-orange-500 rounded-md shadow-2xl text-white">
@@ -332,43 +351,36 @@ function Navbar(props) {
           </div>
         </div>
 
-        {/*
-        <div className=" flex sm:hidden items-center gap-2 text-white">
-          <Link className=" flex items-center justify-center gap-2 text-sm cursor-pointer" href={noAuth ? "/login" : "/myprofile/me"}>
-            {noAuth ? "Sign in" : username}
-            <Stack direction="row" spacing={2}>
-              <Image height={30} width={30} className="cursor-pointer rounded-full" src={!avatarPath ? nouser_image : avatarPath} alt="Remy Sharp" />
-            </Stack>
-          </Link>
-        </div>
-
-*/}
 
         <div className=" flex justify-center items-center gap-3 ">
           <div className=" flex items-center">
-            <button className=" text-orange-400">SIGN IN</button>
+            <button className=" orange-text-colo">SIGN IN</button>
           </div>
-          <div className=" flex">
+          <div className=" hidden">
             {/* <button onClick={() => {handleChache()}}>dark mod</button> */}
             <ThemeSwitcher />
           </div>
-          <div className="cart-box relative duration-250 px-3 rounded-md">
+
+          <Link href={'/cart'} className="cart-box relative duration-250 px-3 rounded-md">
             <div style={{ backgroundColor: "yellow", marginTop: -10, marginRight: -10 }} className=" absolute rounded-full  flex items-center text-center justify-center  top-1 right-1 bg-yellow-300">
               <span style={{ color: "black" }} className="text-yellow-400 w-5 text-base flex items-center justify-center h-5 text-center">{data.length}</span>
             </div>
-            <IconButton onClick={toggleDrawer('right', true)} aria-label="cart">
+            <IconButton>
               <StyledBadge style={{ color: "white" }} color="secondary">
                 <ShoppingCartIcon />
               </StyledBadge>
             </IconButton>
-          </div>
+          </Link>
+          <button className=" text-black text-xl rounded-full mr-2 duration-300 " onClick={toggleDrawer('left', true)} aria-label="cart">
+            <MenuIcon />
+          </button>
         </div>
 
       </div>
       {/* top navbar end here */}
 
       {/* bottom navbar start here */}
-      <div style={{ zIndex: 9999999 }} className={` ${bgColorClassTheme} boxsh2 gap-0 duration-300 z-50 flex items-center  justify-between h-auto w-full px-2 sm:px-10 md:px-16 lg:px-20 py-2`}>
+      <div style={{ zIndex: 9999999 }} className={` ${bgColorClassTheme} boxsh2 gap-0 duration-300 z-50 hidden lg:flex items-center  justify-between h-auto w-full `}>
         <div className=" text-white">
           {['left'].map((anchor) => (
             <React.Fragment key={anchor}>
@@ -465,13 +477,57 @@ function Navbar(props) {
             </React.Fragment>
           ))}
         </div>
-        <div className="hidden lg:flex  w-full items-center gap-2">
-          <button className="nav-buttons-bg text-xs sm:text-sm px-2 outline outline-1 outline-gray-700 py-2">Global <ArrowDropDownIcon /></button>
-          <button className="nav-buttons-bg text-xs sm:text-sm px-2 outline outline-1 outline-gray-700 py-2">Popular <ArrowDropDownIcon /></button>
-          <button className="nav-buttons-bg text-xs sm:text-sm px-2 outline outline-1 outline-gray-700 py-2">Category <ArrowDropDownIcon /></button>
-          <button className="nav-buttons-bg text-xs sm:text-sm px-2 outline outline-1 outline-gray-700 py-2">New Release <ArrowDropDownIcon /></button>
-          <button className="nav-buttons-bg text-xs sm:text-sm px-2 outline outline-1 outline-gray-700 py-2">Upcoming Games <ArrowDropDownIcon /></button>
-          <button className="nav-buttons-bg text-xs sm:text-sm px-2 outline outline-1 outline-gray-700 py-2">Premium<ArrowDropDownIcon /></button>
+        <div className="hidden lg:flex w-full justify-start items-center cart-parent  px-2 sm:px-10 md:px-16 lg:px-20 ">
+          <div className=" relative w-auto text-5xl mega-menu-btn  h-full">
+            <span onMouseEnter={() => {
+              setIsHover1(!ishover1);
+              setIsHover2(false)
+              setIsHover3(false)
+              setIsHover4(false)
+              setIsHover5(false)
+            }} className=" menubtn cursor-pointer p-4 sm:text-xl px-2 w-full  flex items-center justify-center text-white  py-2 ">Global <ArrowDropDownIcon /></span>
+          </div>
+
+          <div className=" relative w-auto text-5xl mega-menu-btn  h-full">
+            <span onMouseEnter={() => {
+              setIsHover2(!ishover2);
+              setIsHover1(false)
+              setIsHover3(false)
+              setIsHover4(false)
+              setIsHover5(false)
+            }} className=" menubtn cursor-pointer p-4 sm:text-xl px-2 w-full  flex items-center justify-center text-white  py-2 text-4xl">Top Rated Games <ArrowDropDownIcon /></span>
+          </div>
+
+          <div className=" relative w-auto text-5xl mega-menu-btn  h-full">
+            <span onMouseEnter={() => {
+              setIsHover3(!ishover3);
+              setIsHover1(false)
+              setIsHover2(false)
+              setIsHover4(false)
+              setIsHover5(false)
+            }} className=" menubtn cursor-pointer p-4 sm:text-xl px-2 w-full  flex items-center justify-center text-white  py-2 text-4xl">Gift Cards <ArrowDropDownIcon /></span>
+          </div>
+
+          <div className=" relative w-auto text-5xl mega-menu-btn  h-full">
+            <span onMouseEnter={() => {
+              setIsHover4(!ishover4);
+              setIsHover1(false)
+              setIsHover2(false)
+              setIsHover3(false)
+              setIsHover5(false)
+            }} className=" menubtn cursor-pointer p-4 sm:text-xl px-2 w-full  flex items-center justify-center text-white  py-2 text-4xl">Xbox <ArrowDropDownIcon /></span>
+          </div>
+
+          <div className=" relative w-auto text-5xl mega-menu-btn  h-full">
+            <span onMouseEnter={() => {
+              setIsHover5(!ishover5);
+              setIsHover1(false)
+              setIsHover2(false)
+              setIsHover3(false)
+              setIsHover4(false)
+            }} className=" menubtn cursor-pointer p-4 sm:text-xl px-2 w-full  flex items-center justify-center text-white  py-2 text-4xl">New Promo <ArrowDropDownIcon /></span>
+          </div>
+
         </div>
 
         <div className=" flex sm:hidden items-center w-full gap-1">
@@ -484,29 +540,6 @@ function Navbar(props) {
         </div>
 
         <div className=" flex  items-center gap-2">
-
-          {/*
-
-          <div className=" hidden sm:flex items-center gap-2 text-white">
-            <Link className=" flex items-center justify-center gap-2 text-sm cursor-pointer" href={noAuth ? "/login" : "/myprofile/me"}>
-              {noAuth ? "Sign in" : username}
-              <Stack direction="row" spacing={2}>
-                <Image height={30} width={30} className="cursor-pointer rounded-full" src={!avatarPath ? nouser_image : avatarPath} alt="Remy Sharp" />
-              </Stack>
-            </Link>
-          </div>
-*/}
-          <div className=" hidden  sm:flex justify-center items-center gap-3 ">
-            <Link href={"https://www.google.com"} className=" text-white text-sm" target="_blank">
-              Home
-            </Link>
-            <Link href={"https://www.google.com"} className=" text-white text-sm" target="_blank">
-              About
-            </Link>
-            <Link href={"https://www.google.com"} className=" text-white text-sm" target="_blank">
-              Contact
-            </Link>
-          </div>
 
           <React.Fragment key={"right"}>
             <SwipeableDrawer
@@ -568,6 +601,104 @@ function Navbar(props) {
               </Box>
             </SwipeableDrawer>
           </React.Fragment>
+        </div>
+      </div>
+      <div
+        onMouseLeave={() => {
+          setIsHover1(false)
+          setIsHover2(false)
+        }}
+        onMouseEnter={() => {
+          setIsHover1(true)
+          setIsHover2(false)
+        }}
+        className={ishover1 ? `px-2 sm:px-10 md:px-16 lg:px-20  duration-300  w-full z-0 absolute ` : `px-2 sm:px-10 md:px-16 lg:px-20 w-full hidden `}>
+        <div  className='cart-box  h-auto mt-4 relative p-8 rounded-md'>
+          <span style={{ transform: "rotate(45deg)", marginTop: -8 }} className=' absolute top-0 left-7 p-2 cart-box'>
+          </span>
+          <MegaMenu1 />
+        </div>
+      </div>
+
+      <div
+        onMouseLeave={() => {
+          setIsHover1(false)
+          setIsHover2(false)
+        }}
+        onMouseEnter={() => {
+          setIsHover2(true)
+          setIsHover1(false)
+        }}
+        className={ishover2 ? `px-2 sm:px-10 md:px-16 lg:px-20  duration-300  w-full z-0 absolute ` : `px-2 sm:px-10 md:px-16 lg:px-20 w-full hidden `}>
+        <div className='cart-box  h-auto mt-4 relative p-8 rounded-md'>
+          <span style={{ transform: "rotate(45deg)", marginTop: -8 }} className=' absolute top-0 left-7 p-2 cart-box'>
+          </span>
+          <MegaMenu2 />
+        </div>
+      </div>
+
+      <div
+        onMouseLeave={() => {
+          setIsHover1(false)
+          setIsHover2(false)
+          setIsHover3(false)
+        }}
+        onMouseEnter={() => {
+          setIsHover3(true)
+          setIsHover1(false)
+          setIsHover2(false)
+        }}
+        className={ishover3 ? `px-2 sm:px-10 md:px-16 lg:px-20  duration-300  w-full z-0 absolute ` : `px-2 sm:px-10 md:px-16 lg:px-20 w-full hidden `}>
+        <div  className='cart-box  h-auto mt-4 relative p-8 rounded-md'>
+          <span style={{ transform: "rotate(45deg)", marginTop: -8 }} className=' absolute top-0 left-7 p-2 cart-box'>
+          </span>
+          <MegaMenu3 />
+        </div>
+      </div>
+
+      <div
+        onMouseLeave={() => {
+          setIsHover1(false)
+          setIsHover2(false)
+          setIsHover3(false)
+          setIsHover4(false)
+          setIsHover5(false)
+        }}
+        onMouseEnter={() => {
+          setIsHover4(true)
+          setIsHover1(false)
+          setIsHover2(false)
+          setIsHover3(false)
+          setIsHover5(false)
+        }}
+        className={ishover4 ? `px-2 sm:px-10 md:px-16 lg:px-20  duration-300  w-full z-0 absolute ` : `px-2 sm:px-10 md:px-16 lg:px-20 w-full hidden `}>
+        <div  className='cart-box  h-auto mt-4 relative p-8 rounded-md'>
+          <span style={{ transform: "rotate(45deg)", marginTop: -8 }} className=' absolute top-0 left-7 p-2 cart-box'>
+          </span>
+          <MegaMenu4 />
+        </div>
+      </div>
+
+      <div
+        onMouseLeave={() => {
+          setIsHover1(false)
+          setIsHover2(false)
+          setIsHover3(false)
+          setIsHover4(false)
+          setIsHover5(false)
+        }}
+        onMouseEnter={() => {
+          setIsHover5(true)
+          setIsHover1(false)
+          setIsHover2(false)
+          setIsHover3(false)
+          setIsHover4(false)
+        }}
+        className={ishover5 ? `px-2 sm:px-10 md:px-16 lg:px-20  duration-300  w-full z-0 absolute ` : `px-2 sm:px-10 md:px-16 lg:px-20 w-full hidden `}>
+        <div  className='cart-box  h-auto mt-4 relative p-8 rounded-md'>
+          <span style={{ transform: "rotate(45deg)", marginTop: -8 }} className=' absolute top-0 left-7 p-2 cart-box'>
+          </span>
+          <MegaMenu5 />
         </div>
       </div>
       {/* bottom navbar end here */}
