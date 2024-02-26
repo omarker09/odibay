@@ -228,14 +228,6 @@ body {
 .orange-text-colo{
   color: #FF9800;
 }
-.mega-menu-btn {
-  background-color: #1f1f1f;
-  animation-duration: 300ms;
-}
-.mega-menu-btn:hover {
-  background-color: #3a3a3a;
-  animation-duration: 300ms;
-}
 .boxcart-resp {
   width: 100%;
 }
@@ -335,4 +327,30 @@ body {
 .mega-menu-animation:hover {
   margin-top: 20px;
   transition-duration: 300ms;
+}
+
+/* Megas Buttons  */
+
+.mega-menu-btn {
+  background-color: #1f1f1f;
+  animation-duration: 300ms;
+}
+.mega-menu-btn:hover {
+  background-color: #3a3a3a;
+  animation-duration: 300ms;
+}
+.mega-nested-card {
+  cursor: pointer;
+  animation-duration: 300ms;
+}
+.mega-nested-card:hover {
+  animation-duration: 300ms;
+  cursor: pointer;
+  background-color: #1f1f1f;
+}
+.mega-nested-card-text {
+  color: white;
+}
+.mega-nested-card-text:hover{
+  color: #FF9800;
 }

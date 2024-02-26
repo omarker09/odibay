@@ -1,0 +1,30 @@
+.parent-hov:hover .background-transparent-black {
+    background-color: rgba(0, 0, 0, 0.9);
+    visibility: visible;
+    opacity: 1;
+    display: flex;
+    flex-direction: column;
+
+    transition-duration: 300ms;
+}
+.parent-hov:hover:hover .promor-perc{
+    background-color: #504b4b;
+    transition-duration: 300ms;
+}
+.parent-hov:hover:hover .hide-btns{
+    display: flex;
+}
+.parent-hov .background-transparent-black {
+    background-color: rgba(0, 0, 0, 0.9);
+    visibility: hidden;
+    opacity: 0;
+    transition: ease-in-out, opacity 300ms;
+    transition-duration: 300ms;
+}
+.promor-perc {
+    background-color: black;
+    transition-duration: 300ms;
+}
+.hide-btns {
+    display: none;
+}

@@ -356,7 +356,7 @@ function Navbar(props) {
           <div className=" flex items-center">
             <button className=" orange-text-colo">SIGN IN</button>
           </div>
-          <div className=" hidden">
+          <div className=" flex">
             {/* <button onClick={() => {handleChache()}}>dark mod</button> */}
             <ThemeSwitcher />
           </div>
@@ -477,8 +477,8 @@ function Navbar(props) {
             </React.Fragment>
           ))}
         </div>
-        <div className="hidden lg:flex w-full justify-start items-center cart-parent  px-2 sm:px-10 md:px-16 lg:px-20 ">
-          <div className=" relative w-auto text-5xl mega-menu-btn  h-full">
+        <div className="hidden lg:flex w-full justify-start items-center cart-parent shadow-2xl px-2 sm:px-10 md:px-16 lg:px-20 ">
+          <div className={ishover1 ? " relative w-auto text-5xl cart-box  h-full" : " relative w-auto text-5xl   h-full"}>
             <span onMouseEnter={() => {
               setIsHover1(!ishover1);
               setIsHover2(false)
@@ -488,7 +488,7 @@ function Navbar(props) {
             }} className=" menubtn cursor-pointer p-4 sm:text-xl px-2 w-full  flex items-center justify-center text-white  py-2 ">Global <ArrowDropDownIcon /></span>
           </div>
 
-          <div className=" relative w-auto text-5xl mega-menu-btn  h-full">
+          <div className={ishover2 ? " relative w-auto text-5xl cart-box  h-full" : " relative w-auto text-5xl   h-full"}>
             <span onMouseEnter={() => {
               setIsHover2(!ishover2);
               setIsHover1(false)
@@ -498,7 +498,7 @@ function Navbar(props) {
             }} className=" menubtn cursor-pointer p-4 sm:text-xl px-2 w-full  flex items-center justify-center text-white  py-2 text-4xl">Top Rated Games <ArrowDropDownIcon /></span>
           </div>
 
-          <div className=" relative w-auto text-5xl mega-menu-btn  h-full">
+          <div className={ishover3 ? " relative w-auto text-5xl cart-box  h-full" : " relative w-auto text-5xl   h-full"}>
             <span onMouseEnter={() => {
               setIsHover3(!ishover3);
               setIsHover1(false)
@@ -508,7 +508,7 @@ function Navbar(props) {
             }} className=" menubtn cursor-pointer p-4 sm:text-xl px-2 w-full  flex items-center justify-center text-white  py-2 text-4xl">Gift Cards <ArrowDropDownIcon /></span>
           </div>
 
-          <div className=" relative w-auto text-5xl mega-menu-btn  h-full">
+          <div className={ishover4 ? " relative w-auto text-5xl cart-box  h-full" : " relative w-auto text-5xl   h-full"}>
             <span onMouseEnter={() => {
               setIsHover4(!ishover4);
               setIsHover1(false)
@@ -518,7 +518,7 @@ function Navbar(props) {
             }} className=" menubtn cursor-pointer p-4 sm:text-xl px-2 w-full  flex items-center justify-center text-white  py-2 text-4xl">Xbox <ArrowDropDownIcon /></span>
           </div>
 
-          <div className=" relative w-auto text-5xl mega-menu-btn  h-full">
+          <div className={ishover5 ? " relative w-auto text-5xl cart-box  h-full" : " relative w-auto text-5xl   h-full"}>
             <span onMouseEnter={() => {
               setIsHover5(!ishover5);
               setIsHover1(false)
@@ -613,9 +613,8 @@ function Navbar(props) {
           setIsHover2(false)
         }}
         className={ishover1 ? `px-2 sm:px-10 md:px-16 lg:px-20  duration-300  w-full z-0 absolute ` : `px-2 sm:px-10 md:px-16 lg:px-20 w-full hidden `}>
-        <div  className='cart-box  h-auto mt-4 relative p-8 rounded-md'>
-          <span style={{ transform: "rotate(45deg)", marginTop: -8 }} className=' absolute top-0 left-7 p-2 cart-box'>
-          </span>
+        <div  className='cart-box  h-auto relative p-8 rounded-md'>
+
           <MegaMenu1 />
         </div>
       </div>
@@ -630,9 +629,7 @@ function Navbar(props) {
           setIsHover1(false)
         }}
         className={ishover2 ? `px-2 sm:px-10 md:px-16 lg:px-20  duration-300  w-full z-0 absolute ` : `px-2 sm:px-10 md:px-16 lg:px-20 w-full hidden `}>
-        <div className='cart-box  h-auto mt-4 relative p-8 rounded-md'>
-          <span style={{ transform: "rotate(45deg)", marginTop: -8 }} className=' absolute top-0 left-7 p-2 cart-box'>
-          </span>
+        <div className='cart-box  h-auto relative p-8 rounded-md '>
           <MegaMenu2 />
         </div>
       </div>
@@ -649,9 +646,8 @@ function Navbar(props) {
           setIsHover2(false)
         }}
         className={ishover3 ? `px-2 sm:px-10 md:px-16 lg:px-20  duration-300  w-full z-0 absolute ` : `px-2 sm:px-10 md:px-16 lg:px-20 w-full hidden `}>
-        <div  className='cart-box  h-auto mt-4 relative p-8 rounded-md'>
-          <span style={{ transform: "rotate(45deg)", marginTop: -8 }} className=' absolute top-0 left-7 p-2 cart-box'>
-          </span>
+        <div  className='cart-box  h-auto relative p-8 rounded-md'>
+        
           <MegaMenu3 />
         </div>
       </div>
@@ -672,9 +668,7 @@ function Navbar(props) {
           setIsHover5(false)
         }}
         className={ishover4 ? `px-2 sm:px-10 md:px-16 lg:px-20  duration-300  w-full z-0 absolute ` : `px-2 sm:px-10 md:px-16 lg:px-20 w-full hidden `}>
-        <div  className='cart-box  h-auto mt-4 relative p-8 rounded-md'>
-          <span style={{ transform: "rotate(45deg)", marginTop: -8 }} className=' absolute top-0 left-7 p-2 cart-box'>
-          </span>
+        <div  className='cart-box  h-auto  relative p-8 rounded-md'>
           <MegaMenu4 />
         </div>
       </div>
@@ -695,9 +689,7 @@ function Navbar(props) {
           setIsHover4(false)
         }}
         className={ishover5 ? `px-2 sm:px-10 md:px-16 lg:px-20  duration-300  w-full z-0 absolute ` : `px-2 sm:px-10 md:px-16 lg:px-20 w-full hidden `}>
-        <div  className='cart-box  h-auto mt-4 relative p-8 rounded-md'>
-          <span style={{ transform: "rotate(45deg)", marginTop: -8 }} className=' absolute top-0 left-7 p-2 cart-box'>
-          </span>
+        <div  className='cart-box  h-auto  relative p-8 rounded-md'>
           <MegaMenu5 />
         </div>
       </div>
