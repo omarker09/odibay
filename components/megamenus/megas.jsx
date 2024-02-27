@@ -1,35 +1,22 @@
 import "../../app/globals.css"
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-
+import Link from "next/link";
 export const MegaMenu1 = () => {
+  const MegaArr1 = [
+    { href: "http://localhost:3000/categories/Popular-Games", title: "Popular Games", Desc: "lorem yhgj hgj  jkkkdghjdghj ghj dghj " },
+    { href: "http://localhost:3000/categories/Cd-Keys-bulk", title: "Cd Keys bulk", Desc: "lorem yhgj hgj  jkkkdghjdghj ghj dghj " },
+    { href: "http://localhost:3000/categories/Extra-price", title: "Extra price", Desc: "lorem yhgj hgj  jkkkdghjdghj ghj dghj " },
+    { href: "http://localhost:3000/categories/Fortinte-VDX", title: "Fortinte VDX", Desc: "lorem yhgj hgj  jkkkdghjdghj ghj dghj " },
+    { href: "http://localhost:3000/categories/Summer-Package", title: "Summer Package", Desc: "lorem yhgj hgj  jkkkdghjdghj ghj dghj " }
+  ]
   return (
     <div className=' w-full gap-4 h-full grid grid-cols-4 row-span-2'>
-
-      <div className=' flex mega-nested-card-text mega-nested-card duration-400 p-3 flex-col gap-2'>
-        <h1 className='  text-lg'>Popular Games</h1>
-        <p className=' text-gray-400 text-sm'>lorem yhgj hgj  jkkkdghjdghj ghj dghj </p>
-      </div>
-
-      <div className=' flex mega-nested-card-text mega-nested-card duration-400 p-3 flex-col gap-2'>
-        <h1 className='  text-lg'>Cd Keys bulk</h1>
-        <p className=' text-gray-400 text-sm'>lorem yhgj hgj  jkkkdghjdghj ghj dghj </p>
-      </div>
-
-      <div className=' flex mega-nested-card-text mega-nested-card duration-400 p-3 flex-col gap-2'>
-        <h1 className='  text-lg'>Extra price</h1>
-        <p className=' text-gray-400 text-sm'>lorem yhgj hgj  jkkkdghjdghj ghj dghj </p>
-      </div>
-
-      <div className=' flex mega-nested-card-text mega-nested-card duration-400 p-3 flex-col gap-2'>
-        <h1 className=' text-lg'>Fortinte VDX</h1>
-        <p className=' text-gray-400 text-sm'>lorem yhgj hgj  jkkkdghjdghj ghj dghj </p>
-      </div>
-
-      <div className=' flex mega-nested-card-text mega-nested-card duration-400 p-3 flex-col gap-2'>
-        <h1 className=' text-lg'>Summer Package</h1>
-        <p className=' text-gray-400 text-sm'>lorem yhgj hgj  jkkkdghjdghj ghj dghj </p>
-      </div>
-
+      {MegaArr1.map((el, index) => (
+        <Link href={el.href} className=' flex mega-nested-card-text mega-nested-card duration-400 p-3 flex-col gap-2'>
+          <h1 className='  text-lg'>{el.title}</h1>
+          <p className=' text-gray-400 text-sm'>{el.Desc}</p>
+        </Link>
+      ))}
     </div>
   )
 }

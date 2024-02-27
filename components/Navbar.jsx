@@ -453,7 +453,7 @@ function Navbar(props) {
                     ))}
                   </List>
                   <Divider />
-                  <ListItem className={!Cookies.get("u_tk") || Cookies.get("u_tk") === "" ? "hidden" : " py-2"} disablePadding>
+                  <ListItem className={!Cookies.get("u_tk") || Cookies.get("u_tk") === "" ? "hidden" : " flex py-2"} disablePadding>
                     <ListItemButton onClick={() => { setOpen2(true) }} className=" flex justify-center items-center gap-3">
                       <div className=" flex items-center w-full justify-center gap-x-3">
                         <ListItemText className=" text-red-600" primary="Sign out" />
@@ -477,7 +477,7 @@ function Navbar(props) {
             </React.Fragment>
           ))}
         </div>
-        <div className="hidden lg:flex w-full justify-start items-center cart-parent shadow-2xl px-2 sm:px-10 md:px-16 lg:px-20 ">
+        <div className="hidden lg:flex w-full justify-start items-center nav-background shadow-2xl px-2 sm:px-10 md:px-16 lg:px-20  z-50">
           <div className={ishover1 ? " relative w-auto text-5xl cart-box  h-full" : " relative w-auto text-5xl   h-full"}>
             <span onMouseEnter={() => {
               setIsHover1(!ishover1);
@@ -485,7 +485,7 @@ function Navbar(props) {
               setIsHover3(false)
               setIsHover4(false)
               setIsHover5(false)
-            }} className=" menubtn cursor-pointer p-4 sm:text-xl px-2 w-full  flex items-center justify-center text-white  py-2 ">Global <ArrowDropDownIcon /></span>
+            }} className=" menubtn cursor-pointer p-4  py-3 sm:text-base px-2 w-full  flex items-center justify-center text-white">Global <ArrowDropDownIcon /></span>
           </div>
 
           <div className={ishover2 ? " relative w-auto text-5xl cart-box  h-full" : " relative w-auto text-5xl   h-full"}>
@@ -495,7 +495,7 @@ function Navbar(props) {
               setIsHover3(false)
               setIsHover4(false)
               setIsHover5(false)
-            }} className=" menubtn cursor-pointer p-4 sm:text-xl px-2 w-full  flex items-center justify-center text-white  py-2 text-4xl">Top Rated Games <ArrowDropDownIcon /></span>
+            }} className=" menubtn cursor-pointer p-4  py-3 sm:text-base px-2 w-full  flex items-center justify-center text-white">Top Rated Games <ArrowDropDownIcon /></span>
           </div>
 
           <div className={ishover3 ? " relative w-auto text-5xl cart-box  h-full" : " relative w-auto text-5xl   h-full"}>
@@ -505,7 +505,7 @@ function Navbar(props) {
               setIsHover2(false)
               setIsHover4(false)
               setIsHover5(false)
-            }} className=" menubtn cursor-pointer p-4 sm:text-xl px-2 w-full  flex items-center justify-center text-white  py-2 text-4xl">Gift Cards <ArrowDropDownIcon /></span>
+            }} className=" menubtn cursor-pointer p-4  py-3 sm:text-base px-2 w-full  flex items-center justify-center text-white">Gift Cards <ArrowDropDownIcon /></span>
           </div>
 
           <div className={ishover4 ? " relative w-auto text-5xl cart-box  h-full" : " relative w-auto text-5xl   h-full"}>
@@ -515,7 +515,7 @@ function Navbar(props) {
               setIsHover2(false)
               setIsHover3(false)
               setIsHover5(false)
-            }} className=" menubtn cursor-pointer p-4 sm:text-xl px-2 w-full  flex items-center justify-center text-white  py-2 text-4xl">Xbox <ArrowDropDownIcon /></span>
+            }} className=" menubtn cursor-pointer p-4  py-3 sm:text-base px-2 w-full  flex items-center justify-center text-white">Xbox <ArrowDropDownIcon /></span>
           </div>
 
           <div className={ishover5 ? " relative w-auto text-5xl cart-box  h-full" : " relative w-auto text-5xl   h-full"}>
@@ -525,7 +525,7 @@ function Navbar(props) {
               setIsHover2(false)
               setIsHover3(false)
               setIsHover4(false)
-            }} className=" menubtn cursor-pointer p-4 sm:text-xl px-2 w-full  flex items-center justify-center text-white  py-2 text-4xl">New Promo <ArrowDropDownIcon /></span>
+            }} className=" menubtn cursor-pointer p-4  py-3 sm:text-base px-2 w-full  flex items-center justify-center text-white">New Promo <ArrowDropDownIcon /></span>
           </div>
 
         </div>
@@ -612,8 +612,8 @@ function Navbar(props) {
           setIsHover1(true)
           setIsHover2(false)
         }}
-        className={ishover1 ? `px-2 sm:px-10 md:px-16 lg:px-20  duration-300  w-full z-0 absolute ` : `px-2 sm:px-10 md:px-16 lg:px-20 w-full hidden `}>
-        <div  className='cart-box  h-auto relative p-8 rounded-md'>
+        className={ishover1 ? `px-2 sm:px-10 md:px-16 lg:px-20  duration-300  w-full z-50 absolute ` : `px-2 sm:px-10 md:px-16 lg:px-20 w-full hidden `}>
+        <div style={{borderBottomRightRadius: 6,borderBottomLeftRadius: 6 }} className='cart-box  h-auto relative p-8'>
 
           <MegaMenu1 />
         </div>
@@ -628,8 +628,8 @@ function Navbar(props) {
           setIsHover2(true)
           setIsHover1(false)
         }}
-        className={ishover2 ? `px-2 sm:px-10 md:px-16 lg:px-20  duration-300  w-full z-0 absolute ` : `px-2 sm:px-10 md:px-16 lg:px-20 w-full hidden `}>
-        <div className='cart-box  h-auto relative p-8 rounded-md '>
+        className={ishover2 ? `px-2 sm:px-10 md:px-16 lg:px-20  duration-300  w-full z-50 absolute ` : `px-2 sm:px-10 md:px-16 lg:px-20 w-full hidden `}>
+        <div style={{borderBottomRightRadius: 6,borderBottomLeftRadius: 6 }} className='cart-box  h-auto relative p-8'>
           <MegaMenu2 />
         </div>
       </div>
@@ -645,8 +645,8 @@ function Navbar(props) {
           setIsHover1(false)
           setIsHover2(false)
         }}
-        className={ishover3 ? `px-2 sm:px-10 md:px-16 lg:px-20  duration-300  w-full z-0 absolute ` : `px-2 sm:px-10 md:px-16 lg:px-20 w-full hidden `}>
-        <div  className='cart-box  h-auto relative p-8 rounded-md'>
+        className={ishover3 ? `px-2 sm:px-10 md:px-16 lg:px-20  duration-300  w-full z-50 absolute ` : `px-2 sm:px-10 md:px-16 lg:px-20 w-full hidden `}>
+        <div style={{borderBottomRightRadius: 6,borderBottomLeftRadius: 6 }} className='cart-box  h-auto relative p-8'>
         
           <MegaMenu3 />
         </div>
@@ -667,8 +667,8 @@ function Navbar(props) {
           setIsHover3(false)
           setIsHover5(false)
         }}
-        className={ishover4 ? `px-2 sm:px-10 md:px-16 lg:px-20  duration-300  w-full z-0 absolute ` : `px-2 sm:px-10 md:px-16 lg:px-20 w-full hidden `}>
-        <div  className='cart-box  h-auto  relative p-8 rounded-md'>
+        className={ishover4 ? `px-2 sm:px-10 md:px-16 lg:px-20  duration-300  w-full z-50 absolute ` : `px-2 sm:px-10 md:px-16 lg:px-20 w-full hidden `}>
+        <div style={{borderBottomRightRadius: 6,borderBottomLeftRadius: 6 }} className='cart-box  h-auto  relative p-8'>
           <MegaMenu4 />
         </div>
       </div>
@@ -688,8 +688,8 @@ function Navbar(props) {
           setIsHover3(false)
           setIsHover4(false)
         }}
-        className={ishover5 ? `px-2 sm:px-10 md:px-16 lg:px-20  duration-300  w-full z-0 absolute ` : `px-2 sm:px-10 md:px-16 lg:px-20 w-full hidden `}>
-        <div  className='cart-box  h-auto  relative p-8 rounded-md'>
+        className={ishover5 ? `px-2 sm:px-10 md:px-16 lg:px-20  duration-300  w-full z-50 absolute ` : `px-2 sm:px-10 md:px-16 lg:px-20 w-full hidden `}>
+        <div style={{borderBottomRightRadius: 6,borderBottomLeftRadius: 6 }}  className='cart-box  h-auto  relative p-8 '>
           <MegaMenu5 />
         </div>
       </div>

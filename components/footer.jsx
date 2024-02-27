@@ -26,13 +26,13 @@ function Footer() {
   return (
     <div style={{borderTop: "soild 2px rgb(209 213 219)"}} className={theme !== "dark" ? 'flex flex-col duration-300  h-auto bg-white p-6  pb-0 border-t-2 border-gray-200' : 'flex duration-300 flex-col  h-auto border-t-2 border-transparent cart-box p-6 pb-0'}>
       <div className=' w-full flex flex-col gap-4 items-center sm:items-start px-2 sm:px-10'>
-        {/*
+   
           <Image
           src={theme !== "dark" ? ProjectLogoBlack : ProjectLogo}
           width={205}
           height={205}
         />
-        */}
+  
         <span className={theme !== "dark" ? ' text-black text-center text-xs sm:text-start' : ' text-white text-center text-xs sm:text-start'}>
           A specialized company offering digital gift cards and games, we have been in operation for more than 3 years. Our commitment to delivering the best services and products extends primarily to Algeria and the Arab region.
         </span>

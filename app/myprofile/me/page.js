@@ -219,16 +219,10 @@ export default function SignIn() {
                     const formattedDate = originalDate.toLocaleDateString("en-US", options);
                     setCreatedAt(formattedDate)
                 } else {
-                    // Handle the case where the expected properties are not present
-                    console.error("Invalid data structure in 'u_inf'");
                 }
             } catch (error) {
-                // Handle JSON parsing error
-                console.error("Error parsing 'u_inf' data:", error);
             }
         } else {
-            // Handle the case where "u_inf" key is not found
-            console.error("'u_inf' key not found in local storage");
         }
 
         // Retrieve billing information from local storage
@@ -250,12 +244,8 @@ export default function SignIn() {
                 setZipcode(billingDataJson?.zip_code);
                 setCity(billingDataJson?.city);
             } catch (error) {
-                // Handle JSON parsing error
-                console.error("Error parsing 'u_billing' data:", error);
             }
         } else {
-            // Handle the case where "u_billing" key is not found
-            console.error("'u_billing' key not found in local storage");
         }
     }
     async function getAvatar() {
@@ -268,9 +258,7 @@ export default function SignIn() {
             let storageMailJson = JSON.parse(storageMail);
             email_str = storageMailJson[0].email;
             user_id_str = storageMailJson[0].user_id;
-            console.log({ user_id_str, email_str, test: "fghjfgj" });
         } catch (error) {
-            console.error("Error parsing localStorage:", error);
         }
 
         axios.post("http://localhost:3002/api/v1/auth/usr/avats", {
@@ -281,15 +269,46 @@ export default function SignIn() {
                 "Authorization": 'Bearer ' + token
             }
         }).then((resp) => {
-            console.log("Avatar response:", resp);
             setAvatarPath(resp.data[0]?.avatar_path);
         }).catch((err) => {
-            console.error("Error fetching avatar:", err);
         });
     }
+    function getUserBilling() {
+        let email_str;
+        let user_id_str;
+        let token = Cookies.get("u_tk");
 
+        try {
+            let storageMail = localStorage.getItem("u_inf");
+            let storageMailJson = JSON.parse(storageMail);
+            email_str = storageMailJson[0].email;
+            user_id_str = storageMailJson[0].user_id;
+        } catch (error) {
+        }
+        axios.post("http://localhost:3002/api/v1/auth/usr/inf/address", {
+            email: email_str,
+            user_id: user_id_str
+        }, {
+            headers: {
+                "Authorization": 'Bearer ' + token
+            }
+        }).then((resp) => {
+            const respData = resp.data.address
+            const respDataString = JSON.stringify(respData)
+            localStorage.setItem("u_billing", respDataString)
+        }).catch((err) => {
+        });
+    }
     useEffect(() => {
         getAvatar();
+        const emSt = localStorage.getItem("u_billing");
+        const u_inf = localStorage.getItem("u_inf");
+        if (!emSt) {
+            getUserBilling()
+        }
+        if (!u_inf) {
+            Cookies.remove("u_tk")
+        }
     }, []);
     useEffect(() => {
         // Get token from cookies
@@ -305,7 +324,6 @@ export default function SignIn() {
         // Check if "u_inf" key exists in local storage
         if (!emSt) {
             // If "u_inf" key is not found, redirect to the login page
-            console.log("u_inf not found");
         } else {
             try {
                 // Parse the JSON data obtained from local storage
@@ -328,18 +346,15 @@ export default function SignIn() {
                             // Handle successful API response
                         })
                         .catch((err) => {
-                            console.log(err.response.status);
                             if (err.response.status === 403) {
                                 // If the response status is 403, redirect to the login page
                                 router.replace("/login");
                             } else {
                                 // Handle other error cases
-                                console.error("Error making API call:", err);
                             }
                         });
                 } else {
                     // Handle the case where the expected properties are not present
-                    console.error("Invalid data structure in 'u_inf'");
                 }
             } catch (error) {
                 // Handle JSON parsing error
@@ -356,7 +371,6 @@ export default function SignIn() {
         let email_str;
         let user_id_str;
         let token = Cookies.get("u_tk")
-        console.log(token);
         try {
             let storageMail = localStorage.getItem("u_inf")
             let storageMailJson = JSON.parse(storageMail)
@@ -376,7 +390,6 @@ export default function SignIn() {
                 "Authorization": 'Bearer ' + Cookies.get("u_tk")
             }
         }).then((resp) => {
-            console.log(resp.data);
             setOpen2(false)
             setAvatarPath(tempavatarPath)
         })
@@ -392,7 +405,6 @@ export default function SignIn() {
             let email_str;
             let user_id_str;
             let token = Cookies.get("u_tk")
-            console.log(token);
             try {
                 let storageMail = localStorage.getItem("u_inf")
                 let storageMailJson = JSON.parse(storageMail)
@@ -412,12 +424,10 @@ export default function SignIn() {
                     "Authorization": 'Bearer ' + Cookies.get("u_tk")
                 }
             }).then((resp) => {
-             console.log(resp.data);
              setErrorType("")
              setSeccType(resp.data.message)
             })
                 .catch((err) => {
-                    console.log(err);
                     setErrorType(err.response.data.message)
                     setSeccType("")
                 })

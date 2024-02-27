@@ -1,12 +1,4 @@
-.parent-hov:hover .background-transparent-black {
-    background-color: rgba(0, 0, 0, 0.9);
-    visibility: visible;
-    opacity: 1;
-    display: flex;
-    flex-direction: column;
 
-    transition-duration: 300ms;
-}
 .parent-hov:hover:hover .promor-perc{
     background-color: #504b4b;
     transition-duration: 300ms;
@@ -27,4 +19,32 @@
 }
 .hide-btns {
     display: none;
+}
+
+/*
+Responsive
+*/
+
+.extralarge {
+    display: grid;
+
+}
+
+@media screen and (min-width: 1500px) {
+    .extralarge {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+
+    }
+}
+
+@media screen and (min-width: 640px) {
+    .parent-hov:hover .background-transparent-black {
+        background-color: rgba(0, 0, 0, 0.9);
+        visibility: visible;
+        opacity: 1;
+        display: flex;
+        flex-direction: column;
+        transition-duration: 300ms;
+    }
 }
