@@ -3,11 +3,11 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import Link from "next/link";
 export const MegaMenu1 = () => {
   const MegaArr1 = [
-    { href: "http://localhost:3000/categories/Popular-Games", title: "Popular Games", Desc: "lorem yhgj hgj  jkkkdghjdghj ghj dghj " },
-    { href: "http://localhost:3000/categories/Cd-Keys-bulk", title: "Cd Keys bulk", Desc: "lorem yhgj hgj  jkkkdghjdghj ghj dghj " },
-    { href: "http://localhost:3000/categories/Extra-price", title: "Extra price", Desc: "lorem yhgj hgj  jkkkdghjdghj ghj dghj " },
-    { href: "http://localhost:3000/categories/Fortinte-VDX", title: "Fortinte VDX", Desc: "lorem yhgj hgj  jkkkdghjdghj ghj dghj " },
-    { href: "http://localhost:3000/categories/Summer-Package", title: "Summer Package", Desc: "lorem yhgj hgj  jkkkdghjdghj ghj dghj " }
+    { href: "/categories/Popular-Games", title: "Popular Games", Desc: "lorem yhgj hgj  jkkkdghjdghj ghj dghj " },
+    { href: "/categories/Cd-Keys-bulk", title: "Cd Keys bulk", Desc: "lorem yhgj hgj  jkkkdghjdghj ghj dghj " },
+    { href: "/categories/Extra-price", title: "Extra price", Desc: "lorem yhgj hgj  jkkkdghjdghj ghj dghj " },
+    { href: "/categories/Fortinte-VDX", title: "Fortinte VDX", Desc: "lorem yhgj hgj  jkkkdghjdghj ghj dghj " },
+    { href: "/categories/Summer-Package", title: "Summer Package", Desc: "lorem yhgj hgj  jkkkdghjdghj ghj dghj " }
   ]
   return (
     <div className=' w-full gap-4 h-full grid grid-cols-4 row-span-2'>
