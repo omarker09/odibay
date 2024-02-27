@@ -11,7 +11,7 @@ export const ProviderTheme = ({children}) => {
         return <>{children}</>
     }
     return (
-        <ThemeProvider attribute="class">
+        <ThemeProvider defaultTheme="dark" disableTransitionOnChange={false} enableSystem={false} attribute="class">
             {children}
         </ThemeProvider>
     )

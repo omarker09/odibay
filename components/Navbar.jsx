@@ -219,6 +219,10 @@ function Navbar(props) {
     },
   }));
 
+  const handleChangeThemes = () => {
+    console.log(theme);
+  }
+
   function CatHoveEnter() {
     setBolstate(true)
   }
@@ -337,8 +341,8 @@ function Navbar(props) {
           setIsHover5(false)
         }}
 
-        style={{ display: "flex" }}
-        className={`py-4 h-auto  w-full  flex items-center duration-300 justify-between  text-black ${bgColorClassTheme}  px-2 sm:px-10 md:px-16 lg:px-20`} >
+        style={{ display: "flex", zIndex: 9999 }}
+        className={`py-4 h-auto  w-full  flex items-center duration-300 z-50 justify-between  text-black ${bgColorClassTheme}  px-2 sm:px-10 md:px-16 lg:px-20`} >
 
         <div className=" flex justify-center text-white items-center">
           <Link href={"/"} className=" flex items-center p-1 ">
@@ -362,13 +366,13 @@ function Navbar(props) {
         </div>
 
 
-        <div on className=" flex justify-center relative items-center gap-3 ">
+        <div on className=" z-50 flex justify-center relative items-center gap-3 ">
           <Link href={"/login"} className={!Cookies.get("u_tk") || Cookies.get("u_tk") === "" ? "  items-center hidden lg:flex" : " hidden"}>
             <button className=" orange-text-colo text-large">SIGN IN</button>
           </Link>
           <div className={Cookies.get("u_tk") ? " items-center relative hidden lg:flex " : " hidden"}>
-            <button onMouseEnter={() => { setAccountMenu(true) }} className=" orange-text-colo text-large flex items-center gap-1 cursor-pointer">My Account <ArrowDropDownIcon className='orange-text-colo' /></button>
-            <div onMouseOver={() => { setAccountMenu(true) }} onMouseOut={() => { setAccountMenu(false) }} style={{ marginTop: 340 }} className={accountMenu ? ' bg-white flex gap-2 flex-col h-auto zed-index w-auto rounded-md shadow-2xl py-2 absolute' : "hidden"}>
+            <button onMouseOver={() => { setAccountMenu(true) }} className=" orange-text-colo text-large flex items-center gap-1 cursor-pointer">My Account <ArrowDropDownIcon className='orange-text-colo' /></button>
+            <div onMouseOver={() => { setAccountMenu(true) }} onMouseOut={() => { setAccountMenu(false) }} style={{ marginTop: 340 }} className={accountMenu ? ' bg-white outline outline-1 outline-gray-300 flex gap-2 flex-col h-auto zed-index w-auto rounded-md shadow-2xl py-2 absolute' : "hidden"}>
               <div className=' px-3'>
                 <p style={{ fontSize: 10 }} className=' text-gray-400'>
                   LOGGED IN AS
@@ -386,8 +390,15 @@ function Navbar(props) {
                 <div className=' py-1 px-3 w-full duration-300 hover:bg-gray-200 cursor-pointer'>
                   <span className=' text-gray-600 w-full flex text-base items-center gap-2'> <FaBookmark /> Boobmarks</span>
                 </div>
-                <div className=' py-1 px-3 w-full duration-300 hover:bg-gray-200 cursor-pointer'>
-                  <span className=' text-gray-600 w-full flex text-base items-center gap-2'> <MdLightMode /> Light Mode</span>
+                <div onClick={() => {
+                  if (theme === "dark") {
+                    setTheme("light")
+                  } else if (theme === "light") {
+                    setTheme("dark")
+                  }
+                  console.log(theme)
+                }} className=' py-1 px-3 w-full duration-300 hover:bg-gray-200 cursor-pointer'>
+                {theme === "dark" ? <span className=' text-gray-600 w-full flex text-base items-center gap-2'> <MdLightMode /> Light Mode</span> : <span className=' text-gray-600 w-full flex text-base items-center gap-2'> <MdDarkMode /> Dark Mode</span>}
                 </div>
               </div>
               <span className='divider'></span>
@@ -418,8 +429,11 @@ function Navbar(props) {
       </div>
       {/* top navbar end here */}
 
-      {/* bottom navbar start here */}
-      <div onMouseOut={() => { setAccountMenu(false) }} onMouseOver={() => { setAccountMenu(false) }} style={{ zIndex: 9999 }} className={` ${bgColorClassTheme} relative gap-0 duration-300 z-50 hidden lg:flex items-center  justify-between h-auto w-full `}>
+      {/* bottom navbar start here 
+      
+      
+      */}
+      <div onMouseOut={() => { setAccountMenu(false) }} onMouseOver={() => { setAccountMenu(false) }} className={` ${bgColorClassTheme} relative gap-0 duration-300  hidden lg:flex items-center  justify-between h-auto w-full `}>
         <div className=" text-white">
           {['left'].map((anchor) => (
             <React.Fragment key={anchor}>
@@ -516,7 +530,7 @@ function Navbar(props) {
             </React.Fragment>
           ))}
         </div>
-        <div className="hidden lg:flex w-full justify-start items-center nav-background px-2 sm:px-10 md:px-16 lg:px-20  z-50">
+        <div className="hidden lg:flex w-full justify-start items-center nav-background px-2 sm:px-10 md:px-16 lg:px-20">
           <div className={ishover1 ? " relative w-auto text-5xl cart-box  h-full" : " relative w-auto text-5xl   h-full"}>
             <span onMouseEnter={() => {
               setIsHover1(!ishover1);

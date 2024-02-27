@@ -35,7 +35,7 @@ import Sectionads3 from './mainComponent/Sectionads3';
 
 
 export default function App() {
-  /*
+ 
     const [isLights, setIsLight] = useState(true);
   const { theme, setTheme } = useTheme()
   const toggleTheme = () => {
@@ -48,7 +48,6 @@ export default function App() {
     "slide 4",
   ];
 
-  */
   return (
     <Provider store={store}>
       <NextUIProvider>
