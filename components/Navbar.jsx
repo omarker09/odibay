@@ -38,6 +38,13 @@ import DialogTitle from '@mui/material/DialogTitle';
 import ProjectLogo from "../public/imgs/Odibay.png"
 import ProjectLogoDark from "../public/imgs/Odibay-black.png"
 
+import { FaUser } from "react-icons/fa";
+import { FaKey } from "react-icons/fa";
+import { FaBookmark } from "react-icons/fa6";
+import { MdLightMode } from "react-icons/md";
+import { MdDarkMode } from "react-icons/md";
+import { FaSignOutAlt } from "react-icons/fa";
+
 import "../app/globals.css"
 import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
@@ -181,6 +188,8 @@ function Navbar(props) {
   const [ishover4, setIsHover4] = useState(false)
   const [ishover5, setIsHover5] = useState(false)
 
+  // account meun state
+  const [accountMenu, setAccountMenu] = useState(false)
   function handleChache() {
     dispatch(changeTheme());
 
@@ -327,6 +336,7 @@ function Navbar(props) {
           setIsHover4(false)
           setIsHover5(false)
         }}
+
         style={{ display: "flex" }}
         className={`py-4 h-auto  w-full  flex items-center duration-300 justify-between  text-black ${bgColorClassTheme}  px-2 sm:px-10 md:px-16 lg:px-20`} >
 
@@ -352,13 +362,42 @@ function Navbar(props) {
         </div>
 
 
-        <div className=" flex justify-center items-center gap-3 ">
-          <div className=" flex items-center">
-            <button className=" orange-text-colo">SIGN IN</button>
+        <div on className=" flex justify-center relative items-center gap-3 ">
+          <Link href={"/login"} className={!Cookies.get("u_tk") || Cookies.get("u_tk") === "" ? "  items-center hidden lg:flex" : " hidden"}>
+            <button className=" orange-text-colo text-large">SIGN IN</button>
+          </Link>
+          <div className={Cookies.get("u_tk") ? " items-center relative hidden lg:flex " : " hidden"}>
+            <button onMouseEnter={() => { setAccountMenu(true) }} className=" orange-text-colo text-large flex items-center gap-1 cursor-pointer">My Account <ArrowDropDownIcon className='orange-text-colo' /></button>
+            <div onMouseOver={() => { setAccountMenu(true) }} onMouseOut={() => { setAccountMenu(false) }} style={{ marginTop: 340 }} className={accountMenu ? ' bg-white flex gap-2 flex-col h-auto zed-index w-auto rounded-md shadow-2xl py-2 absolute' : "hidden"}>
+              <div className=' px-3'>
+                <p style={{ fontSize: 10 }} className=' text-gray-400'>
+                  LOGGED IN AS
+                  BRIGADES.ANONY99@GMAIL.COM
+                </p>
+              </div>
+              <span className='divider'></span>
+              <div>
+                <div className=' py-1 px-3 w-full duration-300 hover:bg-gray-200 cursor-pointer'>
+                  <span className=' text-gray-600 w-full flex text-base items-center gap-2'> <FaUser /> Account Managment</span>
+                </div>
+                <div className=' py-1 px-3 w-full duration-300 hover:bg-gray-200 cursor-pointer'>
+                  <span className=' text-gray-600 w-full flex text-base items-center gap-2'> <FaKey /> History logs</span>
+                </div>
+                <div className=' py-1 px-3 w-full duration-300 hover:bg-gray-200 cursor-pointer'>
+                  <span className=' text-gray-600 w-full flex text-base items-center gap-2'> <FaBookmark /> Boobmarks</span>
+                </div>
+                <div className=' py-1 px-3 w-full duration-300 hover:bg-gray-200 cursor-pointer'>
+                  <span className=' text-gray-600 w-full flex text-base items-center gap-2'> <MdLightMode /> Light Mode</span>
+                </div>
+              </div>
+              <span className='divider'></span>
+              <div className=' py-1 px-3 w-full duration-300 hover:bg-gray-200 cursor-pointer'>
+                <span className=' text-gray-600 w-full flex text-base items-center gap-2'> <FaSignOutAlt /> SignOut</span>
+              </div>
+            </div>
           </div>
           <div className=" flex">
-            {/* <button onClick={() => {handleChache()}}>dark mod</button> */}
-            <ThemeSwitcher />
+            {/* <ThemeSwitcher /> */}
           </div>
 
           <Link href={'/cart'} className="cart-box relative duration-250 px-3 rounded-md">
@@ -371,8 +410,8 @@ function Navbar(props) {
               </StyledBadge>
             </IconButton>
           </Link>
-          <button className=" text-black text-xl rounded-full mr-2 duration-300 " onClick={toggleDrawer('left', true)} aria-label="cart">
-            <MenuIcon />
+          <button className=" text-white flex lg:hidden rounded-full duration-300 " onClick={toggleDrawer('left', true)} aria-label="cart">
+            <MenuIcon className=' text-4xl' />
           </button>
         </div>
 
@@ -380,7 +419,7 @@ function Navbar(props) {
       {/* top navbar end here */}
 
       {/* bottom navbar start here */}
-      <div style={{ zIndex: 9999999 }} className={` ${bgColorClassTheme} boxsh2 gap-0 duration-300 z-50 hidden lg:flex items-center  justify-between h-auto w-full `}>
+      <div onMouseOut={() => { setAccountMenu(false) }} onMouseOver={() => { setAccountMenu(false) }} style={{ zIndex: 9999 }} className={` ${bgColorClassTheme} relative gap-0 duration-300 z-50 hidden lg:flex items-center  justify-between h-auto w-full `}>
         <div className=" text-white">
           {['left'].map((anchor) => (
             <React.Fragment key={anchor}>
@@ -477,7 +516,7 @@ function Navbar(props) {
             </React.Fragment>
           ))}
         </div>
-        <div className="hidden lg:flex w-full justify-start items-center nav-background shadow-2xl px-2 sm:px-10 md:px-16 lg:px-20  z-50">
+        <div className="hidden lg:flex w-full justify-start items-center nav-background px-2 sm:px-10 md:px-16 lg:px-20  z-50">
           <div className={ishover1 ? " relative w-auto text-5xl cart-box  h-full" : " relative w-auto text-5xl   h-full"}>
             <span onMouseEnter={() => {
               setIsHover1(!ishover1);
@@ -613,7 +652,7 @@ function Navbar(props) {
           setIsHover2(false)
         }}
         className={ishover1 ? `px-2 sm:px-10 md:px-16 lg:px-20  duration-300  w-full z-50 absolute ` : `px-2 sm:px-10 md:px-16 lg:px-20 w-full hidden `}>
-        <div style={{borderBottomRightRadius: 6,borderBottomLeftRadius: 6 }} className='cart-box  h-auto relative p-8'>
+        <div style={{ borderBottomRightRadius: 6, borderBottomLeftRadius: 6 }} className='cart-box  h-auto relative p-8'>
 
           <MegaMenu1 />
         </div>
@@ -629,7 +668,7 @@ function Navbar(props) {
           setIsHover1(false)
         }}
         className={ishover2 ? `px-2 sm:px-10 md:px-16 lg:px-20  duration-300  w-full z-50 absolute ` : `px-2 sm:px-10 md:px-16 lg:px-20 w-full hidden `}>
-        <div style={{borderBottomRightRadius: 6,borderBottomLeftRadius: 6 }} className='cart-box  h-auto relative p-8'>
+        <div style={{ borderBottomRightRadius: 6, borderBottomLeftRadius: 6 }} className='cart-box  h-auto relative p-8'>
           <MegaMenu2 />
         </div>
       </div>
@@ -646,8 +685,8 @@ function Navbar(props) {
           setIsHover2(false)
         }}
         className={ishover3 ? `px-2 sm:px-10 md:px-16 lg:px-20  duration-300  w-full z-50 absolute ` : `px-2 sm:px-10 md:px-16 lg:px-20 w-full hidden `}>
-        <div style={{borderBottomRightRadius: 6,borderBottomLeftRadius: 6 }} className='cart-box  h-auto relative p-8'>
-        
+        <div style={{ borderBottomRightRadius: 6, borderBottomLeftRadius: 6 }} className='cart-box  h-auto relative p-8'>
+
           <MegaMenu3 />
         </div>
       </div>
@@ -668,7 +707,7 @@ function Navbar(props) {
           setIsHover5(false)
         }}
         className={ishover4 ? `px-2 sm:px-10 md:px-16 lg:px-20  duration-300  w-full z-50 absolute ` : `px-2 sm:px-10 md:px-16 lg:px-20 w-full hidden `}>
-        <div style={{borderBottomRightRadius: 6,borderBottomLeftRadius: 6 }} className='cart-box  h-auto  relative p-8'>
+        <div style={{ borderBottomRightRadius: 6, borderBottomLeftRadius: 6 }} className='cart-box  h-auto  relative p-8'>
           <MegaMenu4 />
         </div>
       </div>
@@ -689,7 +728,7 @@ function Navbar(props) {
           setIsHover4(false)
         }}
         className={ishover5 ? `px-2 sm:px-10 md:px-16 lg:px-20  duration-300  w-full z-50 absolute ` : `px-2 sm:px-10 md:px-16 lg:px-20 w-full hidden `}>
-        <div style={{borderBottomRightRadius: 6,borderBottomLeftRadius: 6 }}  className='cart-box  h-auto  relative p-8 '>
+        <div style={{ borderBottomRightRadius: 6, borderBottomLeftRadius: 6 }} className='cart-box  h-auto  relative p-8 '>
           <MegaMenu5 />
         </div>
       </div>

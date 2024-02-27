@@ -46,7 +46,8 @@
     "styled-components": "^6.1.1",
     "swiper": "^11.0.5",
     "tailwind-merge": "^2.2.1",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "terser-webpack-plugin": "^5.3.10"
   },
   "devDependencies": {
     "@types/node": "20.11.0",

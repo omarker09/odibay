@@ -48,3 +48,11 @@ Responsive
         transition-duration: 300ms;
     }
 }
+.zed-index {
+    z-index: 999999999999;
+}
+.divider {
+    height: 1px;
+    width: 100%;
+    background-color: rgb(212, 210, 210);
+}
