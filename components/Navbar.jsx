@@ -382,7 +382,7 @@ function Navbar(props) {
               <span className='divider'></span>
               <div>
                 <div className=' py-1 px-3 w-full duration-300 hover:bg-gray-200 cursor-pointer'>
-                  <span className=' text-gray-600 w-full flex text-base items-center gap-2'> <FaUser /> Account Managment</span>
+                  <Link href={"/myprofile/me"} className=' text-gray-600 w-full flex text-base items-center gap-2'> <FaUser /> Account Managment</Link>
                 </div>
                 <div className=' py-1 px-3 w-full duration-300 hover:bg-gray-200 cursor-pointer'>
                   <span className=' text-gray-600 w-full flex text-base items-center gap-2'> <FaKey /> History logs</span>
@@ -398,11 +398,11 @@ function Navbar(props) {
                   }
                   console.log(theme)
                 }} className=' py-1 px-3 w-full duration-300 hover:bg-gray-200 cursor-pointer'>
-                {theme === "dark" ? <span className=' text-gray-600 w-full flex text-base items-center gap-2'> <MdLightMode /> Light Mode</span> : <span className=' text-gray-600 w-full flex text-base items-center gap-2'> <MdDarkMode /> Dark Mode</span>}
+                  {theme === "dark" ? <span className=' text-gray-600 w-full flex text-base items-center gap-2'> <MdLightMode /> Light Mode</span> : <span className=' text-gray-600 w-full flex text-base items-center gap-2'> <MdDarkMode /> Dark Mode</span>}
                 </div>
               </div>
               <span className='divider'></span>
-              <div className=' py-1 px-3 w-full duration-300 hover:bg-gray-200 cursor-pointer'>
+              <div onClick={() => { setOpen2(true) }} className=' py-1 px-3 w-full duration-300 hover:bg-gray-200 cursor-pointer'>
                 <span className=' text-gray-600 w-full flex text-base items-center gap-2'> <FaSignOutAlt /> SignOut</span>
               </div>
             </div>
@@ -421,7 +421,7 @@ function Navbar(props) {
               </StyledBadge>
             </IconButton>
           </Link>
-          <button className=" text-white flex lg:hidden rounded-full duration-300 " onClick={toggleDrawer('left', true)} aria-label="cart">
+          <button className={theme === "dark" ? " text-white flex lg:hidden rounded-full duration-300 " : " text-black flex lg:hidden rounded-full duration-300 "} onClick={toggleDrawer('left', true)} aria-label="cart">
             <MenuIcon className=' text-4xl' />
           </button>
         </div>
@@ -494,6 +494,17 @@ function Navbar(props) {
                     </div>
                   </div>
                   <Divider />
+                  <List className=' w-full'>
+                    <p className=" ml-4 py-1">Account</p>
+                    <ListItem className=" flex" disablePadding>
+                      <ListItemButton className=" flex justify-center items-center gap-3">
+                        <ListItemText>
+                          <Link href={"/myprofile/me"} className=' text-gray-600 w-full flex text-base items-center gap-2'> <FaUser /> Account Managment</Link>
+                        </ListItemText>
+                      </ListItemButton>
+                    </ListItem>
+                  </List>
+                  <Divider />
                   <List className=" w-full">
                     <p className=" ml-4 py-2">Categories</p>
                     {Categoryitems.map((text, index) => (
@@ -504,6 +515,30 @@ function Navbar(props) {
                         </ListItemButton>
                       </ListItem>
                     ))}
+                  </List>
+                  <Divider />
+                  <List>
+                    <p className=" ml-4 py-1">Theme</p>
+                    <ListItem className=" flex py-2" disablePadding>
+                      <ListItemButton className=" flex justify-center items-center gap-3">
+                        <div onClick={() => {
+                          if (theme === "dark") {
+                            setTheme("light")
+                          } else if (theme === "light") {
+                            setTheme("dark")
+                          }
+                          console.log(theme)
+                        }} className=' w-full duration-300 flex cursor-pointer'>
+                          {theme === "dark" ? <ListItemText className=' text-gray-600 w-full flex flex-row text-base items-center gap-2'>
+                            <span className=' flex items-center gap-2'><MdLightMode /> Light Mode</span>
+                          </ListItemText> :
+                            <ListItemText className=' text-gray-600 w-full flex text-base items-center gap-2'>
+                              <span className=' flex items-center gap-2'><MdDarkMode /> Dark Mode</span>
+                            </ListItemText>}
+                        </div>
+
+                      </ListItemButton>
+                    </ListItem>
                   </List>
                   <Divider />
                   <ListItem className={!Cookies.get("u_tk") || Cookies.get("u_tk") === "" ? "hidden" : " flex py-2"} disablePadding>
@@ -593,8 +628,8 @@ function Navbar(props) {
         </div>
 
         <div className=" flex  items-center gap-2">
-
-          <React.Fragment key={"right"}>
+          {/*
+                  <React.Fragment key={"right"}>
             <SwipeableDrawer
               anchor={"right"}
               open={state["right"]}
@@ -654,6 +689,7 @@ function Navbar(props) {
               </Box>
             </SwipeableDrawer>
           </React.Fragment>
+         */}
         </div>
       </div>
       <div
@@ -755,7 +791,7 @@ function Navbar(props) {
         aria-describedby="modal-modal-description"
       >
         <div className=" w-full h-full bg-transparent flex  items-center justify-center">
-          <div className=" w-80 h-auto nav-background flex items-center flex-col justify-center rounded-md gap-y-3 py-10 px-5">
+          <div className=" w-80 h-auto cart-box flex items-center flex-col justify-center rounded-md gap-y-3 py-10 px-5">
             <h1 className=" text-white text-center w-full">Are you sure you want Sign out ?</h1>
             <div className=" flex items-center w-full  gap-x-4 justify-center">
               <button onClick={() => { setOpen2(false) }} className=" p-1 px-4  outline outline-1 outline-orange-500 py-2 rounded-md w-full flex items-center justify-center gap-3 shadow-2xl text-white">
@@ -769,7 +805,7 @@ function Navbar(props) {
         </div>
       </Modal>
 
-    </div>
+    </div >
 
   );
 
