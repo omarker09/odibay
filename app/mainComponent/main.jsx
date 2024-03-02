@@ -31,6 +31,8 @@ function Mainpage() {
             src: "https://cdn.mos.cms.futurecdn.net/3D9dh6TgNMUXwC7kYD5rP-1200-80.jpg",
             title: "GTA 6",
             alt: "Image 1 for carousel",
+            price: 99.99,
+            perc: 40,
             tags: [
                 "Open World",
                 "POP"
@@ -40,6 +42,8 @@ function Mainpage() {
             src: "https://static1.srcdn.com/wordpress/wp-content/uploads/2022/01/gta-6-infinite-endless-concept-art.jpeg",
             title: "GTA 5",
             alt: "Image 2 for carousel",
+            price: 59.99,
+            perc: 20,
             tags: [
                 "RPG",
                 "Simulation",
@@ -50,6 +54,8 @@ function Mainpage() {
             src: "https://picsum.photos/seed/img3/600/400",
             title: "Nature ",
             alt: "Image 3 for carousel",
+            price: 20.99,
+            perc: 10,
             tags: [
                 "Nature"
             ]
@@ -59,9 +65,9 @@ function Mainpage() {
     return (
         <div className='  h-auto w-full cart-parent flex flex-col'>
             <SectionAds />
+            <Carousel data={data} />
             <div className={`w-full h-auto duration-300 ${bgColorClassTheme} flex-col  flex gap-4 items-center px-2 sm:px-10 md:px-16 lg:px-20 justify-center`}>
-                <Carousel data={data} />
-                <Banner />
+              {/* leave it empty */}
             </div>
         </div>
     )

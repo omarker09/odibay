@@ -91,7 +91,7 @@ const RecommendSlider = ({ data }) => {
           className='w-full  cursor-pointer rounded-md h-auto lg:h-80   flex '>
 
           {data.map((el, index) => (
-            <div key={el.id} className={theme !== "dark" ? ' border border-gray-200 item min-w-full h-full flex flex-col lg:flex-row items-center justify-between' : '  item min-w-full h-full flex flex-col lg:flex-row items-center justify-between'}>
+            <div key={el.id} className={theme !== "dark" ? ' border border-gray-200 min-w-full h-full flex flex-col lg:flex-row items-center justify-between' : '   min-w-full h-full flex flex-col lg:flex-row items-center justify-between'}>
 
               <img
                 src={el.src}

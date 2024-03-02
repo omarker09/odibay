@@ -702,7 +702,7 @@ function Navbar(props) {
           setIsHover2(false)
         }}
         className={ishover1 ? `px-2 sm:px-10 md:px-16 lg:px-20  duration-300  w-full z-50 absolute ` : `px-2 sm:px-10 md:px-16 lg:px-20 w-full hidden `}>
-        <div style={{ borderBottomRightRadius: 6, borderBottomLeftRadius: 6 }} className='cart-box  h-auto relative p-8'>
+        <div style={{ borderBottomRightRadius: 6, borderBottomLeftRadius: 6 }} className=' glass h-auto relative p-8'>
 
           <MegaMenu1 />
         </div>
@@ -718,7 +718,7 @@ function Navbar(props) {
           setIsHover1(false)
         }}
         className={ishover2 ? `px-2 sm:px-10 md:px-16 lg:px-20  duration-300  w-full z-50 absolute ` : `px-2 sm:px-10 md:px-16 lg:px-20 w-full hidden `}>
-        <div style={{ borderBottomRightRadius: 6, borderBottomLeftRadius: 6 }} className='cart-box  h-auto relative p-8'>
+        <div style={{ borderBottomRightRadius: 6, borderBottomLeftRadius: 6 }} className='glass  h-auto relative p-8'>
           <MegaMenu2 />
         </div>
       </div>
@@ -735,7 +735,7 @@ function Navbar(props) {
           setIsHover2(false)
         }}
         className={ishover3 ? `px-2 sm:px-10 md:px-16 lg:px-20  duration-300  w-full z-50 absolute ` : `px-2 sm:px-10 md:px-16 lg:px-20 w-full hidden `}>
-        <div style={{ borderBottomRightRadius: 6, borderBottomLeftRadius: 6 }} className='cart-box  h-auto relative p-8'>
+        <div style={{ borderBottomRightRadius: 6, borderBottomLeftRadius: 6 }} className='glass  h-auto relative p-8'>
 
           <MegaMenu3 />
         </div>
@@ -757,7 +757,7 @@ function Navbar(props) {
           setIsHover5(false)
         }}
         className={ishover4 ? `px-2 sm:px-10 md:px-16 lg:px-20  duration-300  w-full z-50 absolute ` : `px-2 sm:px-10 md:px-16 lg:px-20 w-full hidden `}>
-        <div style={{ borderBottomRightRadius: 6, borderBottomLeftRadius: 6 }} className='cart-box  h-auto  relative p-8'>
+        <div style={{ borderBottomRightRadius: 6, borderBottomLeftRadius: 6 }} className='glass h-auto  relative p-8'>
           <MegaMenu4 />
         </div>
       </div>
@@ -778,7 +778,7 @@ function Navbar(props) {
           setIsHover4(false)
         }}
         className={ishover5 ? `px-2 sm:px-10 md:px-16 lg:px-20  duration-300  w-full z-50 absolute ` : `px-2 sm:px-10 md:px-16 lg:px-20 w-full hidden `}>
-        <div style={{ borderBottomRightRadius: 6, borderBottomLeftRadius: 6 }} className='cart-box  h-auto  relative p-8 '>
+        <div style={{ borderBottomRightRadius: 6, borderBottomLeftRadius: 6 }} className='glass  h-auto  relative p-8 '>
           <MegaMenu5 />
         </div>
       </div>

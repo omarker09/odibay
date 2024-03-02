@@ -6,8 +6,70 @@ import SteamLight from "../../public/imgs/steam.svg"
 import SteamDark from "../../public/imgs/steam-black.svg"
 import ArrowLeftIcon from '@mui/icons-material/ChevronLeft';
 import { useTheme } from 'next-themes'
+import FeaturedImg1 from "../../public/imgs/featured.jpg"
+import "../globals.css"
+import "./carousel.css"
+const data = [
+  {
+    src: "https://gaming-cdn.com/img/products/9575/hcover/1400x500/9575.jpg?v=1708503564",
+    title: "GTA 6",
+    alt: "Image 1 for carousel",
+    price: 99.99,
+    perc: 40,
+    tags: [
+      "Open World",
+      "POP"
+    ]
+  },
+  {
+    src: "https://static1.srcdn.com/wordpress/wp-content/uploads/2022/01/gta-6-infinite-endless-concept-art.jpeg",
+    title: "GTA 5",
+    alt: "Image 2 for carousel",
+    price: 59.99,
+    perc: 20,
+    tags: [
+      "RPG",
+      "Simulation",
+      "ACTION"
+    ]
+  },
+  {
+    src: "https://picsum.photos/seed/img3/600/400",
+    title: "Nature ",
+    alt: "Image 3 for carousel",
+    price: 20.99,
+    perc: 10,
+    tags: [
+      "Nature"
+    ]
+  }
+]
+function Carousel() {
+  const [curentIndex,setCurrentIndex] = useState(0)
+  return (
+    <div  className='  flex items-center  h-96 relative w-full '>
+        <Image
+          src={FeaturedImg1}
+          alt={"gfdh"}
+          className='h-full w-full object-cover no-drag-img'
+        />
+        <div className='absolute no-drag-text w-full flex items-center md:items-start  flex-col gap-3 px-2 sm:px-10 md:px-16 lg:px-20'>
+          <h1 className='text-white text-2xl md:text-4xl font-bold'>FQF gsdf</h1>
+          <div className='flex items-center gap-3'>
+            <button className='bg-orange-600 py-1 md:py-2 px-2 md:px-3 text-lg md:text-xl text-white rounded-lg'>
+              -30%
+            </button>
+            <h1 className='text-white text-2xl md:text-4xl font-bold'>$25.99</h1>
+          </div>
+        </div>
+      </div>
+  )
+}
+export default Carousel;
 
-function Carousel({ data }) {
+
+/*
+ function Carousel({ data }) {
   const [slide, setSlide] = useState(0)
   const [localData, setLocalData] = useState([])
   const [title, setTitle] = useState("")
@@ -120,25 +182,89 @@ function Carousel({ data }) {
   );
 }
 export default Carousel;
+*/
+
 
 
 /*
-  // Example items array
-  const items = [
-    {
-      imageUrl: 'https://via.placeholder.com/600x300',
-      title: 'Featured Item 1',
-      description: 'Description for Featured Item 1'
-    },
-    {
-      imageUrl: 'https://via.placeholder.com/600x300',
-      title: 'Featured Item 2',
-      description: 'Description for Featured Item 2'
-    },
-    {
-      imageUrl: 'https://via.placeholder.com/600x300',
-      title: 'Featured Item 3',
-      description: 'Description for Featured Item 3'
-    }
-  ];
+"use client"
+import React, { useEffect, useState, useRef } from 'react';
+import Image from 'next/image';
+import ArrowRightIcon from '@mui/icons-material/ChevronRight';
+import SteamLight from "../../public/imgs/steam.svg"
+import SteamDark from "../../public/imgs/steam-black.svg"
+import ArrowLeftIcon from '@mui/icons-material/ChevronLeft';
+import { useTheme } from 'next-themes'
+import FeaturedImg1 from "../../public/imgs/featured.jpg"
+import "../globals.css"
+import "./carousel.css"
+const data = [
+  {
+    src: "https://gaming-cdn.com/img/products/9575/hcover/1400x500/9575.jpg?v=1708503564",
+    title: "GTA 6",
+    alt: "Image 1 for carousel",
+    price: 99.99,
+    perc: 40,
+    tags: [
+      "Open World",
+      "POP"
+    ]
+  },
+  {
+    src: "https://static1.srcdn.com/wordpress/wp-content/uploads/2022/01/gta-6-infinite-endless-concept-art.jpeg",
+    title: "GTA 5",
+    alt: "Image 2 for carousel",
+    price: 59.99,
+    perc: 20,
+    tags: [
+      "RPG",
+      "Simulation",
+      "ACTION"
+    ]
+  },
+  {
+    src: "https://picsum.photos/seed/img3/600/400",
+    title: "Nature ",
+    alt: "Image 3 for carousel",
+    price: 20.99,
+    perc: 10,
+    tags: [
+      "Nature"
+    ]
+  }
+]
+function Carousel() {
+  const [curentIndex,setCurrentIndex] = useState(0)
+  return (
+    <div  className='  flex items-center h-full relative w-full '>
+    {data.map((el, index) => (
+      <div key={index}  className={index !== curentIndex ? "hidden" : ' w-full  flex items-center justify-center relative'}>
+        <img
+          src={el.src}
+          alt={el.alt}
+          layout='responsive'
+          className='h-screen w-full object-cover no-drag-img'
+        />
+        <div className='absolute no-drag-text w-full flex flex-col gap-3 px-2 sm:px-10 md:px-16 lg:px-20'>
+          <h1 className='text-white text-4xl font-bold'>{el.title}</h1>
+          <div className='flex items-center gap-3'>
+            <button className='bg-orange-600 py-2 px-3 text-xl text-white rounded-lg'>
+              -{el.perc}%
+            </button>
+            <h1 className='text-white text-4xl font-bold'>${el.price}</h1>
+          </div>
+        </div>
+        <div className=' w-full items-center justify-center absolute bottom-4 flex'>
+          <span className=' z-50  duration-300 bottom-2 flex gap-3'>
+            {data.map((_, index) => {
+              return <button onClick={() => { setCurrentIndex(index) }} className={index === curentIndex ? ' p-1 h-2 w-6 opacity-100 duration-30 bg-slate-300 cursor-pointer rounded-sm' : ' p-1 h-2 w-6 opacity-70 duration-30 bg-gray-600 cursor-pointer rounded-sm'}></button>
+            })}
+          </span>
+        </div>
+      </div>
+    ))}
+  </div>
+  )
+}
+export default Carousel;
 */

@@ -34,3 +34,8 @@
   .height-rec {
     height: 600px;
   }
+.img-parent {
+  background-color: rgb(0,0,0.5);
+  backdrop-filter: blur(35px);
+  -webkit-backdrop-filter: blur(35px);
+}

@@ -10,9 +10,9 @@ export const MegaMenu1 = () => {
     { href: "/categories/Summer-Package", title: "Summer Package", Desc: "lorem yhgj hgj  jkkkdghjdghj ghj dghj " }
   ]
   return (
-    <div className=' w-full gap-4 h-full grid grid-cols-4 row-span-2'>
+    <div className=' w-full gap-4 h-full grid  grid-cols-4 row-span-2'>
       {MegaArr1.map((el, index) => (
-        <Link href={el.href} className=' flex mega-nested-card-text mega-nested-card duration-400 p-3 flex-col gap-2'>
+        <Link href={el.href} className=' flex mega-nested-card-text mega-nested-card rounded-md duration-400 p-3 flex-col gap-2'>
           <h1 className='  text-lg'>{el.title}</h1>
           <p className=' text-gray-400 text-sm'>{el.Desc}</p>
         </Link>
