@@ -63,6 +63,7 @@ export default function App() {
           <MainproductsGroup/>
           <Mainproducts />
           <Sectionads3/>
+          <ScrollTop/>
           <Footer />
         </div>
       </NextUIProvider>
