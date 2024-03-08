@@ -71,7 +71,7 @@ const RecommendSlider = ({ data }) => {
         <ArrowLeftIcon style={{fontSize: 40}} className=' text-4xl'/>
       </button>
 
-      <div className=' flex duration-300  w-full h-auto gap-3 flex-col'>
+      <div className=' flex duration-300  w-full h-auto gap-7 flex-col'>
         <motion.div
           animate={{
             translateX: `-${currentIndex * 100}%`,

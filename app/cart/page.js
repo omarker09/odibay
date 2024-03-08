@@ -43,7 +43,7 @@ export default function SignIn() {
     return (
         <div className=' flex w-full flex-col justify-between h-auto'>
             <Navbar />
-            <div className={theme !== "dark" ? ' duration-300 bg-gray-100 w-full h-auto  px-4 sm:px-10 gap-4 flex-col  flex py-10 items-center justify-center' : 'duration-300 cart-parent w-full h-auto  px-4 sm:px-10 gap-4 flex-col  flex py-10 items-center justify-center'}>
+            <div className={theme !== "dark" ? ' duration-300 bg-gray-100 w-full h-auto  px-2 sm:px-10 md:px-16 lg:px-20 gap-4 flex-col  flex py-10 items-center justify-center' : 'duration-300 cart-parent w-full h-auto  px-2 sm:px-10 md:px-16 lg:px-20 gap-4 flex-col  flex py-10 items-center justify-center'}>
                 <div className=' w-full'>
                     <h1 className={theme !== "dark" ? ' text-black text-3xl' : ' text-white text-3xl'}><LockIcon /> Your Secure Cart </h1>
 
@@ -161,7 +161,6 @@ export default function SignIn() {
                 </div>
             </div>
             <Footer />
-            <Bottomtabs />
         </div>
     );
 }

@@ -32,7 +32,7 @@ import { useTheme } from 'next-themes';
 import Sectionads2 from './mainComponent/Sectionads2';
 import Offere1 from './mainComponent/offere1';
 import Sectionads3 from './mainComponent/Sectionads3';
-
+import Trusted from './mainComponent/trusted';
 
 export default function App() {
  
@@ -54,15 +54,14 @@ export default function App() {
         <div className=' h-auto flex flex-col duration-300  gap-0 w-full cart-parent '>
           <Navbar />
           <Mainpage />
-          <Mainproducts />
+          <FastSlider />
           <Sectionads2 />
           <Offere1 />
-          <FastSlider />
+ 
           <Fastcategory />
           <Regulerproducts/>
-          <MainproductsGroup/>
+          <Trusted/>
           <Mainproducts />
-          <Sectionads3/>
           <ScrollTop/>
           <Footer />
         </div>

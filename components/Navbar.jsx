@@ -38,12 +38,16 @@ import DialogTitle from '@mui/material/DialogTitle';
 import ProjectLogo from "../public/imgs/Odibay.png"
 import ProjectLogoDark from "../public/imgs/Odibay-black.png"
 
-import { FaUser } from "react-icons/fa";
+import { FaHeart } from "react-icons/fa";
 import { FaKey } from "react-icons/fa";
 import { FaBookmark } from "react-icons/fa6";
 import { MdLightMode } from "react-icons/md";
 import { MdDarkMode } from "react-icons/md";
 import { FaSignOutAlt } from "react-icons/fa";
+import { FaShoppingCart } from "react-icons/fa";
+import { FaSearch } from "react-icons/fa";
+import { FaUser } from "react-icons/fa";
+
 
 import "../app/globals.css"
 import CloseIcon from '@mui/icons-material/Close';
@@ -187,6 +191,7 @@ function Navbar(props) {
   const [ishover3, setIsHover3] = useState(false)
   const [ishover4, setIsHover4] = useState(false)
   const [ishover5, setIsHover5] = useState(false)
+  const [searchModal,setSearchModal] = useState(false)
 
   // account meun state
   const [accountMenu, setAccountMenu] = useState(false)
@@ -356,9 +361,9 @@ function Navbar(props) {
           </Link>
         </div>
 
-        <div className=" hidden md:flex items-center w-6/12 gap-1">
-          <div onMouseEnter={() => { setSearchBtnH(true) }} onMouseLeave={() => { setSearchBtnH(false) }} className={searchBtnH === true ? " hidden sm:flex items-center justify-between w-full search-background outline outline-1 outline-gray-300  p-1 pr-2 pl-3 rounded-md gap-2" : " hidden sm:flex items-center w-full justify-between search-background outline outline-1 outline-gray-300 p-1 px-2   pl-3 rounded-md gap-2"}>
-            <input style={{ border: "none", outline: "none" }} placeholder="Search..." className=" text-black w-full search-background " />
+        <div onMouseOver={() => { setAccountMenu(false) }} className=" hidden lg:flex items-center w-6/12 gap-1">
+          <div className=" hidden sm:flex items-center justify-between w-full search-background py-2 outline outline-1 outline-gray-300  p-1 pr-2 pl-3 rounded-md gap-2">
+            <input style={{ border: "none", outline: "none" }} placeholder="Search.. GTAV, Minecraft, Steam, PC , PS5" className=" text-black w-full text-lg search-background " />
             <button className=" p-2 px-4  bg-orange-500 rounded-md shadow-2xl text-white">
               <SearchOutlinedIcon fontSize="small" />
             </button>
@@ -371,7 +376,7 @@ function Navbar(props) {
             <button className=" orange-text-colo text-large">SIGN IN</button>
           </Link>
           <div className={Cookies.get("u_tk") ? " items-center relative hidden lg:flex " : " hidden"}>
-            <button onMouseOver={() => { setAccountMenu(true) }} className=" orange-text-colo text-large flex items-center gap-1 cursor-pointer">My Account <ArrowDropDownIcon className='orange-text-colo' /></button>
+
             <div onMouseOver={() => { setAccountMenu(true) }} onMouseOut={() => { setAccountMenu(false) }} style={{ marginTop: 340 }} className={accountMenu ? ' bg-white outline outline-1 outline-gray-300 flex gap-2 flex-col h-auto zed-index w-auto rounded-md shadow-2xl py-2 absolute' : "hidden"}>
               <div className=' px-3'>
                 <p style={{ fontSize: 10 }} className=' text-gray-400'>
@@ -411,15 +416,25 @@ function Navbar(props) {
             {/* <ThemeSwitcher /> */}
           </div>
 
-          <Link href={'/cart'} className="cart-box relative duration-250 px-3 rounded-md">
-            <div style={{ backgroundColor: "yellow", marginTop: -10, marginRight: -10 }} className=" absolute rounded-full  flex items-center text-center justify-center  top-1 right-1 bg-yellow-300">
-              <span style={{ color: "black" }} className="text-yellow-400 w-5 text-base flex items-center justify-center h-5 text-center">{data.length}</span>
+          <div onMouseOver={() => { setAccountMenu(true) }} className={Cookies.get("u_tk") ? 'cart-box flex  relative duration-250 text-xl rounded-md text-white py-2 sm:py-3 px-4 sm:px-6 cursor-pointer' : "hidden"}>
+            <FaUser />
+          </div>
+
+          <div onClick={() => {setSearchModal(!searchModal)}} onMouseOver={() => { setAccountMenu(false) }} className='cart-box flex lg:hidden relative duration-250 text-xl rounded-md text-white py-2 sm:py-3 px-4 sm:px-6 cursor-pointer'>
+            <FaSearch />
+          </div>
+
+          <div onMouseOver={() => { setAccountMenu(false) }} className='cart-box relative duration-250 text-xl rounded-md text-white py-2 sm:py-3 px-4 sm:px-6  cursor-pointer'>
+            <FaHeart />
+          </div>
+
+          <Link onMouseOver={() => { setAccountMenu(false) }} href={'/cart'} className="cart-box relative duration-250  rounded-md">
+            <div style={{ backgroundColor: "yellow", marginTop: -10, marginRight: -10 }} className=" absolute rounded-full z-50  flex items-center text-center justify-center  top-1 right-1 orange-background">
+              <span style={{ color: "black" }} className="orange-text-colo w-5 text-base flex items-center justify-center h-5 text-center">{data.length}</span>
             </div>
-            <IconButton>
-              <StyledBadge style={{ color: "white" }} color="secondary">
-                <ShoppingCartIcon />
-              </StyledBadge>
-            </IconButton>
+            <div className='cart-box relative duration-250  rounded-md" text-white py-2 sm:py-3 px-4 sm:px-6  rounded-md'>
+              <FaShoppingCart className='text-xl' />
+            </div>
           </Link>
           <button className={theme === "dark" ? " text-white flex lg:hidden rounded-full duration-300 " : " text-black flex lg:hidden rounded-full duration-300 "} onClick={toggleDrawer('left', true)} aria-label="cart">
             <MenuIcon className=' text-4xl' />
@@ -433,7 +448,7 @@ function Navbar(props) {
       
       
       */}
-      <div onMouseOut={() => { setAccountMenu(false) }} onMouseOver={() => { setAccountMenu(false) }} className={` ${bgColorClassTheme} relative gap-0 duration-300  hidden lg:flex items-center  justify-between h-auto w-full `}>
+      <div onMouseOut={() => { setAccountMenu(false) }} onMouseOver={() => { setAccountMenu(false) }} className={` ${bgColorClassTheme} relative gap-0 duration-300  hidden lg:flex items-center p-0 justify-between h-auto w-full `}>
         <div className=" text-white">
           {['left'].map((anchor) => (
             <React.Fragment key={anchor}>
@@ -565,55 +580,64 @@ function Navbar(props) {
             </React.Fragment>
           ))}
         </div>
-        <div className="hidden lg:flex w-full justify-start items-center nav-background px-2 sm:px-10 md:px-16 lg:px-20">
-          <div className={ishover1 ? " relative w-auto text-5xl cart-box  h-full" : " relative w-auto text-5xl   h-full"}>
-            <span onMouseEnter={() => {
-              setIsHover1(!ishover1);
-              setIsHover2(false)
-              setIsHover3(false)
-              setIsHover4(false)
-              setIsHover5(false)
-            }} className=" menubtn cursor-pointer p-4  py-3 sm:text-base px-2 w-full  flex items-center justify-center text-white">Global <ArrowDropDownIcon /></span>
+
+        <div className=' flex items-center nav-background justify-between w-full px-2 sm:px-10 md:px-16 lg:px-20'>
+          <div className="hidden lg:flex w-full h-full justify-start items-center ">
+            <div style={{borderTopLeftRadius: 8}} className={ishover1 ? " relative w-auto text-5xl cart-box  h-full" : " relative w-auto text-5xl   h-full"}>
+              <span onMouseEnter={() => {
+                setIsHover1(!ishover1);
+                setIsHover2(false)
+                setIsHover3(false)
+                setIsHover4(false)
+                setIsHover5(false)
+              }} className=" menubtn cursor-pointer p-4  py-3 h-full sm:text-base px-2 w-full  flex items-center justify-center text-white">Global <ArrowDropDownIcon /></span>
+            </div>
+
+            <div className={ishover2 ? " relative w-auto text-5xl cart-box  h-full" : " relative w-auto text-5xl   h-full"}>
+              <span onMouseEnter={() => {
+                setIsHover2(!ishover2);
+                setIsHover1(false)
+                setIsHover3(false)
+                setIsHover4(false)
+                setIsHover5(false)
+              }} className=" menubtn cursor-pointer p-4 py-3 sm:text-base px-2 w-full  flex items-center justify-center text-white">Top Rated Games <ArrowDropDownIcon /></span>
+            </div>
+
+            <div className={ishover3 ? " relative w-auto text-5xl cart-box  h-full" : " relative w-auto text-5xl   h-full"}>
+              <span onMouseEnter={() => {
+                setIsHover3(!ishover3);
+                setIsHover1(false)
+                setIsHover2(false)
+                setIsHover4(false)
+                setIsHover5(false)
+              }} className=" menubtn cursor-pointer p-4  py-3 sm:text-base px-2 w-full  flex items-center justify-center text-white">Gift Cards <ArrowDropDownIcon /></span>
+            </div>
+
+            <div className={ishover4 ? " relative w-auto text-5xl cart-box  h-full" : " relative w-auto text-5xl   h-full"}>
+              <span onMouseEnter={() => {
+                setIsHover4(!ishover4);
+                setIsHover1(false)
+                setIsHover2(false)
+                setIsHover3(false)
+                setIsHover5(false)
+              }} className=" menubtn cursor-pointer p-4  py-3 sm:text-base px-2 w-full  flex items-center justify-center text-white">Xbox <ArrowDropDownIcon /></span>
+            </div>
+
+            <div style={{borderTopRightRadius: 8}} className={ishover5 ? " relative w-auto text-5xl cart-box  h-full" : " relative w-auto text-5xl h-full"}>
+              <span onMouseEnter={() => {
+                setIsHover5(!ishover5);
+                setIsHover1(false)
+                setIsHover2(false)
+                setIsHover3(false)
+                setIsHover4(false)
+              }} className=" menubtn cursor-pointer p-4 h-full  py-3 sm:text-base px-2 w-full  flex items-center justify-center text-white">New Promo <ArrowDropDownIcon /></span>
+            </div>
           </div>
 
-          <div className={ishover2 ? " relative w-auto text-5xl cart-box  h-full" : " relative w-auto text-5xl   h-full"}>
-            <span onMouseEnter={() => {
-              setIsHover2(!ishover2);
-              setIsHover1(false)
-              setIsHover3(false)
-              setIsHover4(false)
-              setIsHover5(false)
-            }} className=" menubtn cursor-pointer p-4  py-3 sm:text-base px-2 w-full  flex items-center justify-center text-white">Top Rated Games <ArrowDropDownIcon /></span>
-          </div>
-
-          <div className={ishover3 ? " relative w-auto text-5xl cart-box  h-full" : " relative w-auto text-5xl   h-full"}>
-            <span onMouseEnter={() => {
-              setIsHover3(!ishover3);
-              setIsHover1(false)
-              setIsHover2(false)
-              setIsHover4(false)
-              setIsHover5(false)
-            }} className=" menubtn cursor-pointer p-4  py-3 sm:text-base px-2 w-full  flex items-center justify-center text-white">Gift Cards <ArrowDropDownIcon /></span>
-          </div>
-
-          <div className={ishover4 ? " relative w-auto text-5xl cart-box  h-full" : " relative w-auto text-5xl   h-full"}>
-            <span onMouseEnter={() => {
-              setIsHover4(!ishover4);
-              setIsHover1(false)
-              setIsHover2(false)
-              setIsHover3(false)
-              setIsHover5(false)
-            }} className=" menubtn cursor-pointer p-4  py-3 sm:text-base px-2 w-full  flex items-center justify-center text-white">Xbox <ArrowDropDownIcon /></span>
-          </div>
-
-          <div className={ishover5 ? " relative w-auto text-5xl cart-box  h-full" : " relative w-auto text-5xl   h-full"}>
-            <span onMouseEnter={() => {
-              setIsHover5(!ishover5);
-              setIsHover1(false)
-              setIsHover2(false)
-              setIsHover3(false)
-              setIsHover4(false)
-            }} className=" menubtn cursor-pointer p-4  py-3 sm:text-base px-2 w-full  flex items-center justify-center text-white">New Promo <ArrowDropDownIcon /></span>
+          <div className=' flex items-center  w-auto gap-3'>
+            <Link href={"/"} className=' text-white '>Blog</Link>
+            <Link href={"/"} className=' text-white '>About</Link>
+            <Link href={"/"} className=' text-white '>Community</Link>
           </div>
 
         </div>
@@ -692,6 +716,18 @@ function Navbar(props) {
          */}
         </div>
       </div>
+
+      <div className={searchModal ? ' w-full flex lg:hidden nav-background p-3 outline outline-1 outline-gray-600 h-16 px-2 sm:px-10 md:px-16 lg:px-20  items-center justify-center' : "hidden"}>
+      <div onMouseOver={() => { setAccountMenu(false) }} className=" flex items-center  w-full gap-1">
+          <div className=" flex lg:hidden items-center justify-between w-full search-background py-2 outline outline-1 outline-gray-300  p-1 pr-2 pl-3 rounded-md gap-2">
+            <input style={{ border: "none", outline: "none" }} placeholder="Search.. GTAV, Minecraft, Steam, PC , PS5" className=" text-black w-full text-base md:text-lg search-background " />
+            <button className=" p-2 px-4  bg-orange-500 rounded-md shadow-2xl text-white">
+              <SearchOutlinedIcon fontSize="small" />
+            </button>
+          </div>
+        </div>
+      </div>
+
       <div
         onMouseLeave={() => {
           setIsHover1(false)
