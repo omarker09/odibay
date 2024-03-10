@@ -1,38 +1,25 @@
 'use client'
-import Image from 'next/image'
 import React, { useState, useEffect, useContext, createContext } from 'react'
 import ScrollTop from './scrollTop';
 import Navbar from '../components/Navbar'
-import Banner from '@/components/banner';
 import Fastcategory from '@/components/fastcategory'
-import Productsgroup from '@/components/productsgroup'
-import Mainproducts from '@/components/mainproducts'
-import Regulerproducts from '@/components/regulerproducts'
-import Bannersm from '@/componnent-sm/bannersm'
-import Smgroups from '@/components/smgroups'
+
 import Footer from '@/components/footer'
-import Bottomtabs from '@/components/bottomtabs';
+
 import FastSlider from '@/components/fastSlider';
-import MainproductsGroup from '@/components/productsgroup';
-import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+
 import "../app/globals.css"
-import ServerComp from "./serverComponent"
-import { Providers } from './redux/provider';
-import { useRouter } from 'next/navigation';
-import { redirect } from 'next/navigation';
-import { useSelector } from 'react-redux';
+
 import Mainpage from './mainComponent/main';
 import { Provider } from 'react-redux';
 import store from './redux/store';
 export const themeProvider = createContext()
-import Carousel from './mainComponent/carousel';
-import { Carouseldata } from '@/data/carouselData';
 import { NextUIProvider } from "@nextui-org/react";
 import { useTheme } from 'next-themes';
 import Sectionads2 from './mainComponent/Sectionads2';
 import Offere1 from './mainComponent/offere1';
-import Sectionads3 from './mainComponent/Sectionads3';
 import Trusted from './mainComponent/trusted';
+import ProductsCards from './categories/[categories]/component/productsCards';
 
 export default function App() {
  
@@ -54,14 +41,14 @@ export default function App() {
         <div className=' h-auto flex flex-col duration-300  gap-0 w-full cart-parent '>
           <Navbar />
           <Mainpage />
-          <FastSlider />
-          <Sectionads2 />
+          <ProductsCards />
           <Offere1 />
- 
           <Fastcategory />
-          <Regulerproducts/>
+          <ProductsCards />
+          <Sectionads2 />
+          <ProductsCards />
+          <FastSlider />
           <Trusted/>
-          <Mainproducts />
           <ScrollTop/>
           <Footer />
         </div>

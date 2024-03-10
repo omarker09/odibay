@@ -568,7 +568,7 @@ function Categorypage() {
                                 </ToggleButtonGroup>
                             </div>
                         </div>
-                        <div className={grd == "true" ? ' w-full h-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 items-center gap-4 ' : ' w-full h-auto grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 items-center gap-4 '}>
+                        <div className={grd == "true" ? ' w-full h-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 items-center gap-4 ' : ' w-full h-auto grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 items-center gap-4 '}>
                             {grd == "true" ? <GridProducts /> : <RowProducts />}
                         </div>
                         <div className=' py-4'>
@@ -627,7 +627,6 @@ function Categorypage() {
                 </div>
             </div>
             <Footer />
-            <Bottomtabs />
         </div>
     )
 }

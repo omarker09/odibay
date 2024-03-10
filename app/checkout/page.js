@@ -8,7 +8,9 @@ import axios from 'axios';
 
 const PayPalButton = () => {
   const [isCancel, setIsCancel] = useState(false)
+  const [isError, setIsError] = useState(false)
   const [isApproved, setIsApproved] = useState(false)
+  const [products, setProducts] = useState([])
   const createOrder = async (data, actions) => {
     try {
       const response = await fetch('http://localhost:3002/process/paypal/api/orders', {
@@ -19,15 +21,13 @@ const PayPalButton = () => {
         body: JSON.stringify({
           cart: [
             {
-              product_token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9kdWN0X25hbWUiOiJGSUZBIDIzIiwicHJvZHVjdF9jYXRlZ29yeSI6IlBTNSIsInByaWNlIjoyNS41OSwicHJvZHVjdF9jdXJyZW5jeSI6IlVTRCIsInByb2R1Y3RfaWQiOjQ5LCJpYXQiOjE3MDk3NTY4NjF9.qsXpAH6A_anzlYztT6Rv58y4a6XZH59BbJW5Tmljrs4"
-            },
-            {
-              product_token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9kdWN0X25hbWUiOiJjc2dvIiwicHJvZHVjdF9jYXRlZ29yeSI6IlBDIiwicHJpY2UiOjQ1LjU5LCJwcm9kdWN0X2N1cnJlbmN5IjoiVVNEIiwicHJvZHVjdF9pZCI6NTAsImlhdCI6MTcwOTc1Njg4Mn0.RmpDIFL4is26UNLAW-8wOsHO_2d9WXfx-7A_PR-voXQ"
-            },
+              product_token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9kdWN0X25hbWUiOiJDYWxsIG9mIGR1dHkgUHJpbWUiLCJwcm9kdWN0X2NhdGVnb3J5IjoiWGJveCBTfFgiLCJwcmljZSI6NTAwLjk5LCJwcm9kdWN0X2N1cnJlbmN5IjoiVVNEIiwicHJvZHVjdF9pZCI6NjMsImlhdCI6MTcxMDA5Mjc0MH0.jSYM1FcGHR-mnOhThv1HcIqCdAhawNkXb4Lg4OlVyWA"
+            }
           ],
         }),
       });
       const orderData = await response.json();
+      console.log(orderData.id);
       if (orderData.id) {
         return orderData.id
       } else {
@@ -42,25 +42,9 @@ const PayPalButton = () => {
     }
   };
 
-  const onApprove = async (data, actions) => {
-    let response; // Move the declaration outside the try block
-    const orderID = data.id
-    try {
-      response = await fetch(`http://localhost:3002/process/paypal/api/orders/capture`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          orderID
-        })
-      });
-    } catch (error) {
-      console.log(error.message);
-    }
+  const onApproveFun = async (data) => {
 
-    const orderData = await response.json();
-  };
+  }
 
   const initialOptions = {
     currency: "USD",
@@ -75,9 +59,63 @@ const PayPalButton = () => {
       <div className={isCancel ? ' w-full  bg-red-600 flex items-center justify-center p-4' : "hidden"}>
         <h1 className=' text-white text-xl text-center f'>your order has been canceld</h1>
       </div>
+      <div className={isError ? ' w-full  bg-red-600 flex items-center justify-center p-4' : "hidden"}>
+        <h1 className=' text-white text-xl text-center f'>your order has error something happend</h1>
+      </div>
       <div className=' h-52 flex items-center justify-center p-8'>
         <PayPalScriptProvider options={initialOptions}>
-          <PayPalButtons style={{color: "blue", label: "pay"}} onApprove={async (data) => {
+          <PayPalButtons style={{ color: "blue", label: "pay" }} onApprove={async (data) => {
+            try {
+            const cart = [
+              {
+                product_token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9kdWN0X25hbWUiOiJDYWxsIG9mIGR1dHkgUHJpbWUiLCJwcm9kdWN0X2NhdGVnb3J5IjoiWGJveCBTfFgiLCJwcmljZSI6NTAwLjk5LCJwcm9kdWN0X2N1cnJlbmN5IjoiVVNEIiwicHJvZHVjdF9pZCI6NjMsImlhdCI6MTcxMDA5Mjc0MH0.jSYM1FcGHR-mnOhThv1HcIqCdAhawNkXb4Lg4OlVyWA"
+              }
+            ]
+            const payload = {
+              cart: cart,
+              orderID: data.orderID
+            };
+            const config = {
+              headers: {
+                'Content-Type': 'application/json',
+              }
+            };
+            axios.post("http://localhost:3002/process/paypal/api/orders/capture", payload, config)
+              .then((resp) => {
+                console.log(resp);
+                setIsApproved(true)
+                setProducts(resp.data.rest)
+              })
+              .catch((err) => {
+                console.log(err);
+                setIsError(true)
+              });
+            } catch {
+              console.log("error payment")
+            }
+          }} createOrder={createOrder} onCancel={() => { setIsCancel(true) }} />
+        </PayPalScriptProvider>
+      </div>
+      <div className={products.length === 0 ? "hidden" : ' w-full bg-blue-950 text-white flex gap-3 items-center justify-center p-3 flex-col'}>
+        <h1>Your keys</h1>
+        <div className=' flex items-center flex-col gap-5 justify-center'>
+          {products.map((e, index) => {
+            return <div className=' p-2 bg-white flex items-center w-auto justify-center gap-3 flex-col'>
+              <h1 className=' text-black'>{e.name}</h1>
+              <span className=' text-black'>{e.key}</span>
+            </div>
+          })}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default PayPalButton;
+
+
+/*
+onApprove={async (data) => {
             try {
               const response = await fetch(`http://localhost:3002/process/paypal/api/orders/capture`, {
                 method: 'POST',
@@ -85,21 +123,21 @@ const PayPalButton = () => {
                   'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
+                  cart: [
+                    {
+                      product_token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9kdWN0X25hbWUiOiJDYWxsIG9mIGR1dHkgUHJpbWUiLCJwcm9kdWN0X2NhdGVnb3J5IjoiWGJveCBTfFgiLCJwcmljZSI6NTAwLjk5LCJwcm9kdWN0X2N1cnJlbmN5IjoiVVNEIiwicHJvZHVjdF9pZCI6NjMsImlhdCI6MTcxMDA5Mjc0MH0.jSYM1FcGHR-mnOhThv1HcIqCdAhawNkXb4Lg4OlVyWA"
+                    }
+                  ],
                   orderID: data.orderID
                 })
               });
               console.log(response);
-              if (response.status === 201) {
+              if (response.status === 200) {
                 setIsApproved(true)
               }
             } catch (error) {
+              setIsError(true)
               console.log(error.message);
             }
-          }} createOrder={createOrder} onCancel={() => { setIsCancel(true) }} />
-        </PayPalScriptProvider>
-      </div>
-    </div>
-  );
-};
-
-export default PayPalButton;
+          }}
+*/

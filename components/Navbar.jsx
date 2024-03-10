@@ -38,6 +38,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import ProjectLogo from "../public/imgs/Odibay.png"
 import ProjectLogoDark from "../public/imgs/Odibay-black.png"
 
+
 import { FaHeart } from "react-icons/fa";
 import { FaKey } from "react-icons/fa";
 import { FaBookmark } from "react-icons/fa6";
@@ -192,6 +193,12 @@ function Navbar(props) {
   const [ishover4, setIsHover4] = useState(false)
   const [ishover5, setIsHover5] = useState(false)
   const [searchModal,setSearchModal] = useState(false)
+  const [searchString,setSearchString] = useState("")
+
+const handleSearch = () => {
+  if (!searchString) return;
+  router.push(`/search/${searchString}`)
+}
 
   // account meun state
   const [accountMenu, setAccountMenu] = useState(false)
@@ -363,8 +370,8 @@ function Navbar(props) {
 
         <div onMouseOver={() => { setAccountMenu(false) }} className=" hidden lg:flex items-center w-6/12 gap-1">
           <div className=" hidden sm:flex items-center justify-between w-full search-background py-2 outline outline-1 outline-gray-300  p-1 pr-2 pl-3 rounded-md gap-2">
-            <input style={{ border: "none", outline: "none" }} placeholder="Search.. GTAV, Minecraft, Steam, PC , PS5" className=" text-black w-full text-lg search-background " />
-            <button className=" p-2 px-4  bg-orange-500 rounded-md shadow-2xl text-white">
+            <input onChange={(e) => {setSearchString(e.target.value)}} style={{ border: "none", outline: "none" }} placeholder="Search.. GTAV, Minecraft, Steam, PC , PS5" className=" text-black w-full text-lg search-background " />
+            <button onClick={() => {handleSearch()}} className=" p-2 px-4  bg-orange-500 rounded-md shadow-2xl text-white">
               <SearchOutlinedIcon fontSize="small" />
             </button>
           </div>

@@ -47,7 +47,7 @@ const data = [
 function Carousel() {
   const [curentIndex,setCurrentIndex] = useState(0)
   return (
-    <div  className='  flex items-center  h-96 relative w-full '>
+    <div  className='  flex items-center  h-auto relative w-full '>
         <Image
           src={FeaturedImg1}
           alt={"gfdh"}
