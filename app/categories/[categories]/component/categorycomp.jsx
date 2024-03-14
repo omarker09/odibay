@@ -9,8 +9,20 @@ import batman from "../../../../public/imgs/batman.avif"
 import legopirate from "../../../../public/imgs/lego-pirates-of-carribean.avif"
 
 
-function Categorycomp(props) {
+async function Categorycomp(props) {
+  const fetchdata = await fetch("http://localhost:3002/api/v1/props/metadata", { cache: "no-cache" })
+  const response = await fetchdata.json()
+
+  const routesList = ["Popular", "Anime", "Sports", "Open world", "RPG", "MMORPG"];
+  const userRoute = "dgjkgkg";
+  let listOfBoleans = []
+  for (var i = 0; i < routesList.length; i++) {
+    const resultIndexing = userRoute.includes(routesList[i]);
+    listOfBoleans.push(resultIndexing)
+  }
+  listOfBoleans.includes(true) ? console.log("Yes the route exist") : console.log("The route wrong");
   return (
+
     <div className='px-2 sm:px-10 md:px-16 lg:px-20 cart-parent flex flex-col gap-6 py-5 h-auto overflow-hidden'>
       <div className=' h-auto  flex gap-4 flex-col py-5'>
         <div className=' flex gap-4 flex-col'>
@@ -34,12 +46,9 @@ function Categorycomp(props) {
           </div>
         </div>
         <div className='grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-2 extralarge md:gap-8 w-full'>
-            <Card image={darksouls} title={"dark souls 2"} />
-            <Card image={elden} title={"Elden Ring"} />
-            <Card image={parfic} title={"dark souls 2"} />
-            <Card image={batman} title={"BATMAN"} />
-            <Card image={legopirate} title={"lEGO Pirates"} />
-            <Card image={resd4} title={"Resident evil 4"} />
+          {response.map((el, index) => {
+            return <Card image={el.product_img} token={el.product_token} price={el.price} promo_price={el.promo_price} title={el.product_name} />
+          })}
         </div>
       </div>
     </div>
@@ -47,3 +56,12 @@ function Categorycomp(props) {
 }
 
 export default Categorycomp
+
+/*
+            
+            <Card image={elden} title={"Elden Ring"} />
+            <Card image={parfic} title={"dark souls 2"} />
+            <Card image={batman} title={"BATMAN"} />
+            <Card image={legopirate} title={"lEGO Pirates"} />
+            <Card image={resd4} title={"Resident evil 4"} />
+*/

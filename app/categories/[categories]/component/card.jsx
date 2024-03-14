@@ -33,7 +33,7 @@ function Card(props) {
                                 View
                                 <FaArrowCircleRight />
                             </button>
-                            <button className=' text-base orange-background p-2 px-2 sm:px-5  flex items-center gap-2 text-black rounded-md'>
+                            <button onClick={() => {console.log(`Your product token ${props.token}`)}} className=' text-base orange-background p-2 px-2 sm:px-5  flex items-center gap-2 text-black rounded-md'>
                                 Add
                                 <FaCartShopping />
                             </button>
@@ -47,6 +47,8 @@ function Card(props) {
                     className='w-full h-full object-cover'
                     layout='responsive'
                     style={{ borderTopRightRadius: 12, borderTopLeftRadius: 12 }}
+                    width={160}
+                    height={160}
                 />
             </div>
             <div style={{ borderBottomRightRadius: 12, borderBottomLeftRadius: 12 }} className=' w-full h-auto px-4 cart-box flex justify-between items-center'>
@@ -61,8 +63,8 @@ function Card(props) {
                         <h1 className=' text-white text-sm sm:text-base font-medium'>-30%</h1>
                     </div>
                     <div className=' p-1 flex flex-col h-full justify-between items-center '>
-                        <p className=' text-gray-500 line-through text-xs sm:text-sm font-medium'>$29.99</p>
-                        <p className=' orange-text-colo line-through text-sm sm:text-base font-medium'>$24.99</p>
+                        <p className=' text-gray-500 line-through text-xs sm:text-sm font-medium'>${props.promo_price}</p>
+                        <p className=' orange-text-colo  text-sm sm:text-base font-medium'>${props.price}</p>
                     </div>
                 </div>
             </div>
