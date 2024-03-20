@@ -8,20 +8,18 @@ import { useTheme } from 'next-themes'
 import "../app/globals.css"
 
 // Redux
-import { useSelector } from 'react-redux'
+
 
 // Material UI 
 import Divider from '@mui/material/Divider';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
-import Button from '@mui/material/Button';
 
-// Images
-import img1 from "../public/collectble/ouadkniss.svg"
+
+
 import ProjectLogo from "../public/imgs/Odibay.png"
 import ProjectLogoBlack from "../public/imgs/Odibay-black.png"
 
 function Footer() {
-  const isLight = useSelector(state => state.darkMode.mode);
   const { theme, setTheme } = useTheme()
   return (
     <div style={{borderTop: "soild 2px rgb(209 213 219)"}} className={theme !== "dark" ? 'flex flex-col duration-300  h-auto bg-white p-6  pb-0 border-t-2 border-gray-200' : 'flex duration-300 flex-col  h-auto border-t-2 border-transparent cart-box p-6 pb-0'}>

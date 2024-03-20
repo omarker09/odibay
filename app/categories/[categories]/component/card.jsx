@@ -1,22 +1,50 @@
 "use client"
-import React from 'react'
-import Box from '@mui/material/Box';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
+import React, { useEffect } from 'react'
 import steamLogo from "../../../../public/collectble/steamblack.svg"
 import Image from 'next/image';
-import Link from 'next/link';
 import "./catstyles.css"
 import "../../../globals.css"
-import darksouls from "../../../../public/imgs/dark souls.avif"
-import { GoHeartFill } from "react-icons/go";
 import { IoHeartOutline } from "react-icons/io5";
 import { FaCartShopping } from "react-icons/fa6";
 import { FaArrowCircleRight } from "react-icons/fa";
+import { useSelector, useDispatch } from 'react-redux';
+import { addToCart } from '@/app/redux/slices/cartSlice';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 
 function Card(props) {
+    const dispatch = useDispatch()
+    const selectCart = useSelector((state) => state.cart)
+    const [open, setOpen] = React.useState(false);
+    const payload = {
+        id: props.id,
+        title: props.title,
+        promo_price: props.promo_price,
+        price: props.price,
+        img: props.image
+    }
+    function handleDispatchEvent() {
+        dispatch(addToCart(payload))
+        console.log(selectCart);
+        if (isInCart) {
+            handleClose()
+        } else {
+            handleClick()
+        }
+    }
+    const isInCart = selectCart.some(product => product.id === props.id);
+
+    const handleClick = () => {
+        setOpen(true);
+    };
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpen(false);
+    };
     return (
         <div className='parent-hov cursor-pointer lg:w-full h-auto  boxsh2 rounded-xl cart-box flex items-center relative flex-col'>
             <div style={{ borderTopRightRadius: 12, borderTopLeftRadius: 12, borderBottomRightRadius: 12, borderBottomLeftRadius: 12 }} className=' background-transparent-black z-50 w-full h-full  absolute'>
@@ -33,8 +61,8 @@ function Card(props) {
                                 View
                                 <FaArrowCircleRight />
                             </button>
-                            <button onClick={() => {console.log(`Your product token ${props.token}`)}} className=' text-base orange-background p-2 px-2 sm:px-5  flex items-center gap-2 text-black rounded-md'>
-                                Add
+                            <button onClick={() => { handleDispatchEvent() }} className=' text-base orange-background p-2 px-2 sm:px-5  flex items-center gap-2 text-black rounded-md'>
+                                {isInCart ? "In Cart" : "Add"}
                                 <FaCartShopping />
                             </button>
                         </div>
@@ -68,6 +96,16 @@ function Card(props) {
                     </div>
                 </div>
             </div>
+            <Snackbar open={open} autoHideDuration={4000} onClose={handleClose}>
+                <Alert
+                    onClose={handleClose}
+                    severity="success"
+                    variant="filled"
+                    sx={{ width: '100%' }}
+                >
+                    This Product has been added into Your cart !!
+                </Alert>
+            </Snackbar>
         </div>
     )
 }

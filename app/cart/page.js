@@ -2,22 +2,9 @@
 
 import React, { useState, useEffect } from 'react';
 import Divider from '@mui/material/Divider';
-import gixiLogo from "../../public/imgs/Odibay-black.png"
 import Navbar from '@/components/Navbar';
 import Image from "next/image";
 import Footer from '@/components/footer';
-import Bottomtabs from '@/components/bottomtabs';
-import { redirect, useRouter } from 'next/navigation';
-import Link from "next/link";
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import CircularProgress from '@mui/material/CircularProgress';
-import axios from "axios";
-import GppBadIcon from '@mui/icons-material/GppBad';
-import { errorsLang } from "@/language_config";
-import Cookies from 'js-cookie';
-import Checkbox from '@mui/material/Checkbox';
-import Breadcrumbslinks from '@/componnent-sm/Breadcrumbslinks';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import CustomizedTooltips from '@/components/muicomponent/tooltip';
 import CardGiftcardIcon from '@mui/icons-material/CardGiftcard';
@@ -25,21 +12,24 @@ import imgTest from "../../public/collectble/netflix.png"
 import Steamicon from "../../public/imgs/steam.svg"
 import SteamiconDark from "../../public/imgs/steam-black.svg"
 import CloseIcon from '@mui/icons-material/Close';
-import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import dzFlag from "../../public/flags/DZ.avif"
 import LockIcon from '@mui/icons-material/Lock';
-import { changeTheme } from '../redux/slices/themeSlice';
 import { useSelector, useDispatch } from 'react-redux';
+import { removeCart } from '../redux/slices/cartSlice';
 import { useTheme } from 'next-themes';
-export default function SignIn() {
-    const dispatch = useDispatch();
-    const {theme,setTheme} = useTheme()
-    function handleTheme() {
-        dispatch(changeTheme());
-    }
 
+export default function Cart() {
+    const selectCart = useSelector((state) => state.cart)
+    const dispatch = useDispatch();
+    const { theme, setTheme } = useTheme()
+    const totalPrice = selectCart.reduce((acc, current) => {
+        return acc += current.price
+    }, 0)
+    useEffect(() => {
+        console.log(selectCart);
+    }, [])
     return (
         <div className=' flex w-full flex-col justify-between h-auto'>
             <Navbar />
@@ -61,43 +51,48 @@ export default function SignIn() {
                             </div>
                         </div>
                         <div className=' w-full flex gap-2 flex-col'>
-                            {/* the cart data will wrap here */}
-                            <div className={theme !== "dark" ? ' w-full p-3 pr-6 flex items-center gap-3 rounded-lg bg-white box-shadow' : ' w-full p-3 pr-6 flex items-center gap-3 rounded-lg cart-box box-shadow'}>
-                                <div className='w-full flex items-center gap-3 '>
-                                    <Image
-                                        src={imgTest}
-                                        height={140}
-                                        width={140}
-                                        className=' rounded-lg'
-                                    />
-                                    <div className=' flex flex-col items-start gap-2'>
-                                        <h1 className={theme !== "dark" ? ' text-black font-bold' : ' text-white font-bold'}>Mystery Star Bundle (Tier 5)</h1>
-                                        <Image
-                                            src={theme !== "dark" ? SteamiconDark : Steamicon}
-                                            height={60}
-                                            width={60}
-                                        />
-                                    </div>
-                                </div>
-                                <div className=' flex items-center gap-6'>
-                                    <div>
-                                        <h1 className={theme !== "dark" ? ' text-black ' : ' text-white '}>-16%</h1>
-                                    </div>
-                                    <div>
-                                        <h1 className=' text-gray-400  line-through '>15.99$</h1>
-                                        <h1 className=' orange-text-colo text-lg'>5.99$</h1>
-                                    </div>
-                                    <Tooltip title="Move to wishlist" arrow>
-                                        <FavoriteIcon className={theme !== "dark" ? ' cursor-pointer text-black' : ' cursor-pointer text-white'} />
-                                    </Tooltip>
-
-                                    <Tooltip  title="Remove from cart" arrow>
-                                        <CloseIcon className={theme !== "dark" ? ' cursor-pointer text-black' : ' cursor-pointer text-white'} />
-                                    </Tooltip>
+                            <div className={selectCart.length < 1 ? 'flex': "hidden"}>
+                                <div className={theme !== "dark" ? ' w-full p-3 pr-6 flex items-center gap-3 rounded-lg bg-white box-shadow justify-center' : ' w-full p-3 pr-6 flex items-center gap-3 rounded-lg cart-box box-shadow justify-center'}>
+                                    <h1 className={theme !== "dark" ? "text-black text-lg" : "text-white text-lg"}>Cart is Empty !!</h1>
                                 </div>
                             </div>
+                            {selectCart.map((product, index) => {
+                                return <div className={theme !== "dark" ? ' w-full p-3 pr-6 flex items-center gap-3 rounded-lg bg-white box-shadow' : ' w-full p-3 pr-6 flex items-center gap-3 rounded-lg cart-box box-shadow'}>
+                                    <div className='w-full flex items-center gap-3 '>
+                                        <Image
+                                            src={product.img}
+                                            height={140}
+                                            width={140}
+                                            className=' rounded-lg'
+                                        />
+                                        <div className=' flex flex-col items-start gap-2'>
+                                            <h1 className={theme !== "dark" ? ' text-black font-bold' : ' text-white font-bold'}>{product.title}</h1>
+                                            <Image
+                                                src={theme !== "dark" ? SteamiconDark : Steamicon}
+                                                height={60}
+                                                width={60}
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className=' flex items-center gap-6'>
+                                        <div>
+                                            <h1 className={theme !== "dark" ? ' text-black ' : ' text-white '}>-16%</h1>
+                                        </div>
+                                        <div>
+                                            <h1 className=' text-gray-400  line-through '>{product.promo_price}$</h1>
+                                            <h1 className=' orange-text-colo text-lg'>{product.price}$</h1>
+                                        </div>
+                                        <Tooltip title="Move to wishlist" arrow>
+                                            <FavoriteIcon className={theme !== "dark" ? ' cursor-pointer text-black' : ' cursor-pointer text-white'} />
+                                        </Tooltip>
 
-                        
+                                        <Tooltip onClick={() => { dispatch(removeCart(product)) }} title="Remove from cart" arrow>
+                                            <CloseIcon className={theme !== "dark" ? ' cursor-pointer text-black' : ' cursor-pointer text-white'} />
+                                        </Tooltip>
+                                    </div>
+                                </div>
+
+                            })}
 
                             {/* the cart data will end here */}
                         </div>
@@ -140,7 +135,7 @@ export default function SignIn() {
                         <Divider className=' bg-gray-400' />
                         <div className=' flex items-center justify-between'>
                             <h1 className={theme !== "dark" ? ' text-2xl text-black font-semibold' : ' text-2xl text-white font-semibold'}>Total : </h1>
-                            <h1 className=' text-2xl orange-text-colo font-semibold'>55.99$</h1>
+                            <h1 className=' text-2xl orange-text-colo font-semibold'>{totalPrice}$</h1>
                         </div>
                         <div>
                             <h1 className=' text-x text-gray-400'>Prices displayed in US Dollar</h1>

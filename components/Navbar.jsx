@@ -1,44 +1,16 @@
 "use client";
 
-// Main
-
-import { MegaMenu } from 'primereact/megamenu';
-import React, { useEffect, useState, useContext } from "react";
-import avatartest from '../public/avatars/avatar-03.png'
-import { themeProvider } from "@/app/page";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { redirect, useRouter } from 'next/navigation'
 import Image from 'next/image'
-import { deleteProduct } from '@/app/redux/slices/cartSlice';
 import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import Link from "next/link";
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import SearchIcon from '@mui/icons-material/Search';
-import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
-import Avatar from '@mui/material/Avatar';
-import Stack from '@mui/material/Stack';
-import Badge from '@mui/material/Badge';
-import { styled } from '@mui/material/styles';
-import IconButton from '@mui/material/IconButton';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Modal from '@mui/material/Modal';
-import { deepOrange, deepPurple } from '@mui/material/colors';
 import MenuIcon from '@mui/icons-material/Menu';
-import Slide from '@mui/material/Slide';
 import { useSelector, useDispatch } from 'react-redux';
-import { trigerdon, trigerdoff } from "@/app/redux/slices/testSlice";
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
 import ProjectLogo from "../public/imgs/Odibay.png"
 import ProjectLogoDark from "../public/imgs/Odibay-black.png"
-
-
 import { FaHeart } from "react-icons/fa";
 import { FaKey } from "react-icons/fa";
 import { FaBookmark } from "react-icons/fa6";
@@ -48,14 +20,8 @@ import { FaSignOutAlt } from "react-icons/fa";
 import { FaShoppingCart } from "react-icons/fa";
 import { FaSearch } from "react-icons/fa";
 import { FaUser } from "react-icons/fa";
-
-
 import "../app/globals.css"
 import CloseIcon from '@mui/icons-material/Close';
-import Typography from '@mui/material/Typography';
-import DesktopMacOutlinedIcon from '@mui/icons-material/DesktopMacOutlined';
-import CardGiftcardOutlinedIcon from '@mui/icons-material/CardGiftcardOutlined';
-import PhoneIphoneOutlinedIcon from '@mui/icons-material/PhoneIphoneOutlined';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import PersonIcon from '@mui/icons-material/Person';
 import Box from '@mui/material/Box';
@@ -64,127 +30,27 @@ import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
-import ouad from "../public/collectble/ouadkniss.svg"
-import DiscordIcon from "../public/collectble/discord.png"
-import cartEmpty from "../public/collectble/add-to-cart.png"
 import Categoryitems from "@/data/categoryitems";
 import LogoutIcon from '@mui/icons-material/Logout';
 import Cookies from 'js-cookie';
-import nouser_image from "../public/avatars/no_user.jpg"
-import avatar1 from "../public/avatars/team-01.jpg"
-import { changeTheme } from "@/app/redux/slices/themeSlice";
-//import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropDownIcon from '@mui/icons-material/ExpandMoreOutlined';
-import FormGroup from '@mui/material/FormGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Switch from '@mui/material/Switch';
-import ThemeSwitcher from "@/app/appComponent/themeSwitcher";
 import { useTheme } from "next-themes";
-
-// mega menus
 import { MegaMenu1, MegaMenu2, MegaMenu3, MegaMenu4, MegaMenu5 } from './megamenus/megas';
-
-const MaterialUISwitch = styled(Switch)(({ theme }) => ({
-  width: 62,
-  height: 34,
-  padding: 7,
-  '& .MuiSwitch-switchBase': {
-    margin: 1,
-    padding: 0,
-    transform: 'translateX(6px)',
-    '&.Mui-checked': {
-      color: '#fff',
-      transform: 'translateX(22px)',
-      '& .MuiSwitch-thumb:before': {
-        backgroundImage: `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 0 20 20"><path fill="${encodeURIComponent(
-          '#fff',
-        )}" d="M4.2 2.5l-.7 1.8-1.8.7 1.8.7.7 1.8.6-1.8L6.7 5l-1.9-.7-.6-1.8zm15 8.3a6.7 6.7 0 11-6.6-6.6 5.8 5.8 0 006.6 6.6z"/></svg>')`,
-      },
-      '& + .MuiSwitch-track': {
-        opacity: 1,
-        backgroundColor: theme.palette.mode === 'dark' ? '#8796A5' : '#aab4be',
-      },
-    },
-  },
-  '& .MuiSwitch-thumb': {
-    backgroundColor: theme.palette.mode === 'dark' ? '#003892' : '#001e3c',
-    width: 32,
-    height: 32,
-    '&::before': {
-      content: "''",
-      position: 'absolute',
-      width: '100%',
-      height: '100%',
-      left: 0,
-      top: 0,
-      backgroundRepeat: 'no-repeat',
-      backgroundPosition: 'center',
-      backgroundImage: `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 0 20 20"><path fill="${encodeURIComponent(
-        '#fff',
-      )}" d="M9.305 1.667V3.75h1.389V1.667h-1.39zm-4.707 1.95l-.982.982L5.09 6.072l.982-.982-1.473-1.473zm10.802 0L13.927 5.09l.982.982 1.473-1.473-.982-.982zM10 5.139a4.872 4.872 0 00-4.862 4.86A4.872 4.872 0 0010 14.862 4.872 4.872 0 0014.86 10 4.872 4.872 0 0010 5.139zm0 1.389A3.462 3.462 0 0113.471 10a3.462 3.462 0 01-3.473 3.472A3.462 3.462 0 016.527 10 3.462 3.462 0 0110 6.528zM1.665 9.305v1.39h2.083v-1.39H1.666zm14.583 0v1.39h2.084v-1.39h-2.084zM5.09 13.928L3.616 15.4l.982.982 1.473-1.473-.982-.982zm9.82 0l-.982.982 1.473 1.473.982-.982-1.473-1.473zM9.305 16.25v2.083h1.389V16.25h-1.39z"/></svg>')`,
-    },
-  },
-  '& .MuiSwitch-track': {
-    opacity: 1,
-    backgroundColor: theme.palette.mode === 'dark' ? '#8796A5' : '#aab4be',
-    borderRadius: 20 / 2,
-  },
-}));
-
-
-const BootstrapDialog = styled(Dialog)(({ theme }) => ({
-  '& .MuiDialogContent-root': {
-    padding: theme.spacing(2),
-  },
-  '& .MuiDialogActions-root': {
-    padding: theme.spacing(1),
-  },
-}));
-
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 400,
-  bgcolor: 'background.paper',
-  boxShadow: 24,
-  p: 4,
-};
 
 
 
 function Navbar(props) {
 
-  const router = useRouter();
-  const [open, setOpen] = React.useState(false);
-  const [iscat, setIscat] = React.useState(false)
-  const [bolstate, setBolstate] = useState(false)
   const [searchBtnH, setSearchBtnH] = useState(false)
-  const [ConditionScroll, setConditionScroll] = useState(false)
-  const [offsetY, setOffsetY] = useState("fixed")
-  const [isOpen, setIsopen] = useState(false)
   const [state, setState] = React.useState(false);
   const [username, setUsername] = useState('')
-  const data = useSelector((e) => e.cart)
-  const [dataStorage, setdataStorage] = useState([])
+  const selectCart = useSelector((state) => state.cart)
   const [open2, setOpen2] = React.useState(false);
-  const handleOpen2 = () => setOpen(true);
   const handleClose2 = () => setOpen(false);
   const [noAuth, setoAuth] = useState(false)
   const [avatarPath, setAvatarPath] = useState("")
-  const dispatch = useDispatch()
-  const currentState = useSelector((state) => state.getCart)
-  const [isLightStr, setIslight] = useState()
-  const isLight = useSelector(state => state.darkMode.mode);
-  const [tb, setTb] = useState(null)
-  // const isLight = useSelector(state => state.themeSlice.isLight);
-  const [mounted, setIsMounted] = useState(null)
   const { theme, setTheme } = useTheme()
   // mega-menu hovers
   const [ishover1, setIsHover1] = useState(false)
@@ -202,46 +68,7 @@ const handleSearch = () => {
 
   // account meun state
   const [accountMenu, setAccountMenu] = useState(false)
-  function handleChache() {
-    dispatch(changeTheme());
 
-    console.log(isLight);
-  }
-  useEffect(() => {
-    setIsMounted(true)
-    const loc = JSON.parse(localStorage.getItem("darkMode"))
-  }, [])
-  const totalNormal = data.reduce((acc, product) => {
-    acc += product.price * product.quantity
-    return acc;
-  }, 0)
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
-  const StyledBadge = styled(Badge)(({ theme }) => ({
-    '& .MuiBadge-badge': {
-      right: -3,
-      top: 13,
-      border: `2px solid ${theme.palette.background.paper}`,
-      padding: '0 4px',
-    },
-  }));
-
-  const handleChangeThemes = () => {
-    console.log(theme);
-  }
-
-  function CatHoveEnter() {
-    setBolstate(true)
-  }
-
-  function CatHovLeave() {
-    setBolstate(false)
-  }
   function getUserinfo() {
     try {
       const usr_info = localStorage.getItem("u_inf")
@@ -262,7 +89,6 @@ const handleSearch = () => {
     let email_str;
     let user_id_str;
     let token = Cookies.get("u_tk")
-
     try {
       let storageMail = localStorage.getItem("u_inf")
       let storageMailJson = JSON.parse(storageMail)
@@ -299,16 +125,12 @@ const handleSearch = () => {
     }
   }
   useEffect(() => {
-    console.log("from nav", props.isLight);
-    console.log(username);
     const u_k = Cookies.get("u_tk")
     if (!u_k || u_k === "") {
       setoAuth(true)
-
     } else {
       setoAuth(false)
     }
-    CatHovLeave()
     getUserinfo()
     getAvatar()
     getCartStateStorage()
@@ -437,7 +259,7 @@ const handleSearch = () => {
 
           <Link onMouseOver={() => { setAccountMenu(false) }} href={'/cart'} className="cart-box relative duration-250  rounded-md">
             <div style={{ backgroundColor: "yellow", marginTop: -10, marginRight: -10 }} className=" absolute rounded-full z-50  flex items-center text-center justify-center  top-1 right-1 orange-background">
-              <span style={{ color: "black" }} className="orange-text-colo w-5 text-base flex items-center justify-center h-5 text-center">{data.length}</span>
+              <span style={{ color: "black" }} className="orange-text-colo w-5 text-base flex items-center justify-center h-5 text-center">{selectCart.length}</span>
             </div>
             <div className='cart-box relative duration-250  rounded-md" text-white py-2 sm:py-3 px-4 sm:px-6  rounded-md'>
               <FaShoppingCart className='text-xl' />

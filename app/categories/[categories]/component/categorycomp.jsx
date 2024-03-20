@@ -47,7 +47,7 @@ async function Categorycomp(props) {
         </div>
         <div className='grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-2 extralarge md:gap-8 w-full'>
           {response.map((el, index) => {
-            return <Card image={el.product_img} token={el.product_token} price={el.price} promo_price={el.promo_price} title={el.product_name} />
+            return <Card image={el.product_img} id={el.public_product_id} token={el.product_token} price={el.price} promo_price={el.promo_price} title={el.product_name} />
           })}
         </div>
       </div>

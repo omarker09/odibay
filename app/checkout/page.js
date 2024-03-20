@@ -24,10 +24,7 @@ const PayPalButton = () => {
         body: JSON.stringify({
           cart: [
             {
-              product_token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9kdWN0X25hbWUiOiJBdmF0YXIiLCJwcm9kdWN0X2NhdGVnb3J5IjoiUFM1IiwicHJpY2UiOjQ5Ljk5LCJwcm9kdWN0X2N1cnJlbmN5IjoiVVNEIiwicHJvZHVjdF9pZCI6NjUsInByb2R1Y3Rfa2V5IjoiVTJGc2RHVmtYMS9COWNCc2wwU09CM0tLUGZINDFsOExFSUNWd05Zd3ZBQjloNmE1WXhpLy9LVEJBZ2NVUm5EdiIsImlhdCI6MTcxMDI1NTQ4N30.NwqmovTLz5jDBhhyuzoPArr3tqa8cCm4HY8UcsfnSRc"
-            },
-            {
-              product_token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9kdWN0X25hbWUiOiJBdmF0YXIgMiIsInByb2R1Y3RfY2F0ZWdvcnkiOiJQUzUiLCJwcmljZSI6MzkuOTksInByb2R1Y3RfY3VycmVuY3kiOiJVU0QiLCJwcm9kdWN0X2lkIjo2NiwicHJvZHVjdF9rZXkiOiJVMkZzZEdWa1gxK0MxVy9ESm8wanFlbjZjenNIaUdaY1ZFNUlacW5XTzlrWS9wM3E5VmZaN3FnWVhmMGY0MGc5IiwiaWF0IjoxNzEwMjU1NjEwfQ.iH-BvA6P6PeMxRyiOHuGrUPPugh01wpMoud7M1hX4Xg"
+              product_token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbmNyeXB0ZWRQcm9kdWN0TmFtZSI6IlUyRnNkR1ZrWDErY2FJWE4vcnRINEJ5N1dnZEszRFYreGlYb2tvckwxc2c9IiwiZW5jcnlwdGVkUHJvZHVjdENhdGVnb3J5IjoiVTJGc2RHVmtYMTlDSHN3VzRMYTFSUkZnRm5CUy9ia3FlYngwUmkvelBIMD0iLCJlbmNyeXB0ZWRQcmljZSI6IlUyRnNkR1ZrWDEvczB5aXRLWTFYY0JFM3I1QUpxK0thd0JIUU5kYllqeDA9IiwiZW5jcnlwdGVkUHJvZHVjdEN1cnJlbmN5IjoiVTJGc2RHVmtYMTkrWU9qL2VaSXJHcXVXL0tzd2RhQ2QvTlMvWmQzTlEzND0iLCJpYXQiOjE3MTA4MTM2ODR9.8kvfkB00e0bdigGko_mptjfXGs7Tdx67Ho8WHTB-s2I"
             }
           ]
         }),
@@ -74,19 +71,16 @@ const PayPalButton = () => {
         <h1 className=' text-white text-xl text-center f'>Your order is under processing please be pation it may take a mineuts</h1>
         <h1 className=' text-white text-xl text-center f'>Dont worry once it finished the product will be saved and sent to your email</h1>
       </div>
-      <div className={isError || isLoading === true ? "hidden" :' h-52 flex items-center justify-center p-8'}>
+      <div className={isError || isLoading === true || isApproved ? "hidden" :' h-52 flex items-center justify-center p-8'}>
         <PayPalScriptProvider options={initialOptions}>
           <PayPalButtons style={{ color: "blue", label: "pay" }} onApprove={async (data) => {
             setIsLoading(true)
             try {
               const cart = [
-                {
-                  product_token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9kdWN0X25hbWUiOiJBdmF0YXIiLCJwcm9kdWN0X2NhdGVnb3J5IjoiUFM1IiwicHJpY2UiOjQ5Ljk5LCJwcm9kdWN0X2N1cnJlbmN5IjoiVVNEIiwicHJvZHVjdF9pZCI6NjUsInByb2R1Y3Rfa2V5IjoiVTJGc2RHVmtYMS9COWNCc2wwU09CM0tLUGZINDFsOExFSUNWd05Zd3ZBQjloNmE1WXhpLy9LVEJBZ2NVUm5EdiIsImlhdCI6MTcxMDI1NTQ4N30.NwqmovTLz5jDBhhyuzoPArr3tqa8cCm4HY8UcsfnSRc"
-                },
-                {
-                  product_token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9kdWN0X25hbWUiOiJBdmF0YXIgMiIsInByb2R1Y3RfY2F0ZWdvcnkiOiJQUzUiLCJwcmljZSI6MzkuOTksInByb2R1Y3RfY3VycmVuY3kiOiJVU0QiLCJwcm9kdWN0X2lkIjo2NiwicHJvZHVjdF9rZXkiOiJVMkZzZEdWa1gxK0MxVy9ESm8wanFlbjZjenNIaUdaY1ZFNUlacW5XTzlrWS9wM3E5VmZaN3FnWVhmMGY0MGc5IiwiaWF0IjoxNzEwMjU1NjEwfQ.iH-BvA6P6PeMxRyiOHuGrUPPugh01wpMoud7M1hX4Xg"
-                }
-              ]
+            {
+              product_token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbmNyeXB0ZWRQcm9kdWN0TmFtZSI6IlUyRnNkR1ZrWDErY2FJWE4vcnRINEJ5N1dnZEszRFYreGlYb2tvckwxc2c9IiwiZW5jcnlwdGVkUHJvZHVjdENhdGVnb3J5IjoiVTJGc2RHVmtYMTlDSHN3VzRMYTFSUkZnRm5CUy9ia3FlYngwUmkvelBIMD0iLCJlbmNyeXB0ZWRQcmljZSI6IlUyRnNkR1ZrWDEvczB5aXRLWTFYY0JFM3I1QUpxK0thd0JIUU5kYllqeDA9IiwiZW5jcnlwdGVkUHJvZHVjdEN1cnJlbmN5IjoiVTJGc2RHVmtYMTkrWU9qL2VaSXJHcXVXL0tzd2RhQ2QvTlMvWmQzTlEzND0iLCJpYXQiOjE3MTA4MTM2ODR9.8kvfkB00e0bdigGko_mptjfXGs7Tdx67Ho8WHTB-s2I"
+            }
+          ]
               const payload = {
                 cart: cart,
                 orderID: data.orderID
