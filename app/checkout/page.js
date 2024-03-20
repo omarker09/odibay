@@ -1,11 +1,7 @@
 "use client"
 import React, { useState, useEffect } from 'react';
-import { Elements } from '@stripe/react-stripe-js';
-import { loadStripe } from '@stripe/stripe-js';
-import Page from './pagemain'; // Assuming Page is your component that uses Stripe functionality
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import axios from 'axios';
-import Box from '@mui/material/Box';
 import LinearProgress from '@mui/material/LinearProgress';
 
 const PayPalButton = () => {
