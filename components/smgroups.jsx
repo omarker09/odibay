@@ -5,9 +5,6 @@ import winimgz from "../public/collectble/netflix.png"
 import winimgs from "../public/collectble/nordvpn.png"
 import winimge from "../public/collectble/razer.png"
 
-import img2 from "../public/collectble/app-development.png"
-import img3 from "../public/collectble/gift-card.png"
-import img4 from "../public/collectble/playstation.png"
 
 function Smgroups() {
   return (

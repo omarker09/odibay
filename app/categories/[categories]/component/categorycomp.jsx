@@ -12,7 +12,6 @@ import legopirate from "../../../../public/imgs/lego-pirates-of-carribean.avif"
 async function Categorycomp(props) {
   const fetchdata = await fetch("http://localhost:3002/api/v1/props/metadata", { cache: "no-cache" })
   const response = await fetchdata.json()
-  console.log(response);
   return (
 
     <div className='px-2 sm:px-10 md:px-16 lg:px-20 cart-parent flex flex-col gap-6 py-5 h-auto overflow-hidden'>

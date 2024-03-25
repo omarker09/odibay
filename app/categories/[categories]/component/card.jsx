@@ -8,15 +8,13 @@ import { IoHeartOutline } from "react-icons/io5";
 import { FaCartShopping } from "react-icons/fa6";
 import { FaArrowCircleRight } from "react-icons/fa";
 import { useSelector, useDispatch } from 'react-redux';
-import { addToCart } from '@/app/redux/slices/cartSlice';
-import { CartToken } from '@/app/redux/slices/cart';
+import { addToCart, addToStorage } from '@/app/redux/slices/cartSlice';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 
 function Card(props) {
     const dispatch = useDispatch()
     const selectCart = useSelector((state) => state.cart)
-    const selectTokenCart = useSelector((state) => state.cartToken)
     const [open, setOpen] = React.useState(false);
     const payload = {
         id: props.id,
@@ -31,6 +29,7 @@ function Card(props) {
     }
     function handleDispatchEvent() {
         dispatch(addToCart(payload))
+        // dispatch(addToStorage(payload))
         console.log(selectCart);
         if (isInCart) {
             handleClose()
