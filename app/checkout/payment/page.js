@@ -7,6 +7,7 @@ import Image from "next/image";
 import Footer from "@/components/footer";
 import LockIcon from "@mui/icons-material/Lock";
 import { useSelector, useDispatch } from "react-redux";
+import { OnRefresh } from "@/app/redux/slices/cartSlice";
 import { useTheme } from "next-themes";
 import paypalLogo from "../../../public/imgs/paypal.svg";
 import visLogo from "../../../public/imgs/visa.svg";
@@ -25,6 +26,7 @@ import Collapse from "@mui/material/Collapse";
 export default function Cart() {
   const [open, setOpen] = React.useState(false);
   const [open2, setOpen2] = React.useState(false);
+  const [cartData,setCartData] = useState([]);
   const selectCart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
   const { theme, setTheme } = useTheme();
@@ -72,7 +74,7 @@ export default function Cart() {
       console.log(error.message);
     }
   };
-  const totalPrice = selectCart.reduce((acc, current) => {
+  const totalPrice = cartData.reduce((acc, current) => {
     return (acc += current.price);
   }, 0);
   const initialOptions = {
@@ -81,6 +83,25 @@ export default function Cart() {
     clientId:
       "AekJv-ARPKH-LoicG-ybAlfu2S1o6yZKKdK9rucpOsD1e11LDpt8Acn-eiXFuEgZDLp1D0DwHnVezb11",
   };
+  useEffect(() => {
+    dispatch(OnRefresh());
+    /*
+        const fetchData = async () => {
+      try {
+        const gettingLocal = localStorage?.getItem("cartSystem");
+        const cartParse = JSON.parse(gettingLocal);
+        if (cartParse !== undefined) {
+          setCartData(cartParse);
+        }
+      } catch (error) {
+        console.log("Error parsing:", error);
+      }
+    };
+  
+    fetchData();
+    */
+  }, []);
+  
   return (
     <div className=" flex w-full flex-col justify-between h-auto">
       <Navbar />

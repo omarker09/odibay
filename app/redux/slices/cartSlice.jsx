@@ -16,23 +16,48 @@ const cartSlice = createSlice({
       return [...state, itemToAdd];
     },
     getCart: (state, action) => {
-      const localCart = localStorage.getItem("cartSystem");
-      return localCart ? JSON.parse(localCart) : state;
+      try {
+        const localCart = localStorage.getItem("cartSystem");
+        return localCart ? JSON.parse(localCart) : state;
+      } catch (error) {
+        console.error("Error while fetching cart from local storage:", error);
+        return state;
+      }
     },
     removeCart: (state, action) => {
       const itemIdToRemove = action.payload.id;
       return state.filter((item) => item.id !== itemIdToRemove);
     },
     addToStorage: (state, action) => {
-      let existingCart = JSON.parse(localStorage.getItem("cartSystem")) || [];
+      // You should handle localStorage availability in the component where you dispatch this action
+      let existingCart = JSON.parse(localStorage.getItem("cartSystem") || "[]");
       existingCart = [...existingCart, action.payload];
       localStorage.setItem("cartSystem", JSON.stringify(existingCart));
-      return existingCart
+      return existingCart;
     },
+    removeFromStorage: (state, action) => {
+      // Parse existing items from local storage
+      let existingCart = JSON.parse(localStorage.getItem("cartSystem") || "[]");
+      // Filter out the item with the provided ID
+      const updatedCart = existingCart.filter(item => item.id !== action.payload.id);
+      // Update local storage with the modified cart
+      localStorage.setItem("cartSystem", JSON.stringify(updatedCart));
+      return updatedCart;
+    },
+    OnRefresh: (state, action) => {
+      try {
+        const localData = localStorage.getItem("cartSystem");
+        const parsedData = JSON.parse(localData);
+        return parsedData || state;
+      } catch (error) {
+        console.error("Error while refreshing cart from local storage:", error);
+        return state;
+      }
+    }
   },
 });
 
-export const { addToCart, getCart, removeCart, addToStorage } =
+export const { addToCart, getCart, removeCart, addToStorage, removeFromStorage, OnRefresh } =
   cartSlice.actions;
 
 export default cartSlice.reducer;

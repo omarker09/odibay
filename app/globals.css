@@ -233,6 +233,16 @@ body {
 .boxcart-resp {
   width: 100%;
 }
+.hover-cart-box {
+  background-color: transparent;
+  transition: 300ms;
+  color: black;
+}
+.hover-cart-box:hover {
+  transition: 300ms;
+  background-color: #3a3a3a;
+  color: white;
+}
 @media screen and (min-width: 1024){
   .boxcart-resp {
     width: 500px;
@@ -366,6 +376,12 @@ body {
     border-left:1px solid rgba(255, 255, 255, 0.18);
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
 }
+.glass-borderless {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
 .width-max-cont {
   max-width: max-content;
 }
@@ -410,3 +426,6 @@ body {
     height: 4rem/* 64px */;
   }
 }
+
+
+

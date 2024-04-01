@@ -31,8 +31,8 @@ export default function App() {
           <Sectionads2 />
           <ProductsCards />
           <FastSlider />
-          <Trusted />
           <ScrollTop />
+          <Trusted />
           <Footer />
         </div>
       </NextUIProvider>

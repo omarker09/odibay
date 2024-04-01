@@ -5,7 +5,6 @@ import React, { useState, useEffect } from "react";
 import Navbar from "../../components/Navbar";
 import Image from "next/image";
 import Footer from "@/components/footer";
-import Bottomtabs from "@/components/bottomtabs";
 import Link from "next/link";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
@@ -229,7 +228,6 @@ export default function SignUp() {
             </div>
           </div>
           <Footer />
-          <Bottomtabs />
         </div>
       )}
     </div>

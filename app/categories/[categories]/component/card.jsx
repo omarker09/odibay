@@ -29,6 +29,7 @@ function Card(props) {
     }
     function handleDispatchEvent() {
         dispatch(addToCart(payload))
+        dispatch(addToStorage(payload))
         // dispatch(addToStorage(payload))
         console.log(selectCart);
         if (isInCart) {

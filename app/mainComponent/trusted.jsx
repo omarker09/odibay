@@ -6,7 +6,7 @@ import "../globals.css";
 
 function Trusted() {
   return (
-    <div className="bg-black my-4 px-2 py-5 sm:px-10 md:px-16 lg:px-20 items-center justify-center gap-3 sm:justify-between h-44 flex ">
+    <div className="bg-black  px-2 py-4 sm:px-10 md:px-16 lg:px-20 items-center justify-center gap-3 sm:justify-between h-44 flex ">
       <div className=" trst-one items-center gap-3 py-5">
         <div>
           <SlSpeedometer className=" text-white h-11 lg:h-16 w-8 lg:w-10  text-xl lg:text-2xl" />

@@ -9,6 +9,7 @@ import Link from "next/link";
 import Modal from "@mui/material/Modal";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useSelector, useDispatch } from "react-redux";
+import { OnRefresh } from "@/app/redux/slices/cartSlice";
 import ProjectLogo from "../public/imgs/Odibay.png";
 import ProjectLogoDark from "../public/imgs/Odibay-black.png";
 import { FaHeart } from "react-icons/fa";
@@ -20,6 +21,8 @@ import { FaSignOutAlt } from "react-icons/fa";
 import { FaShoppingCart } from "react-icons/fa";
 import { FaSearch } from "react-icons/fa";
 import { FaUser } from "react-icons/fa";
+import { BsBasket2Fill } from "react-icons/bs";
+
 import "../app/globals.css";
 import CloseIcon from "@mui/icons-material/Close";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
@@ -44,17 +47,62 @@ import {
   MegaMenu4,
   MegaMenu5,
 } from "./megamenus/megas";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import dzFlag from "../public/flags/DZ.avif";
+
+
+const CurrenceyModal = ({open3, handleClose3, setOpen3}) => {
+  return (
+    <Modal
+    open={open3}
+    onClose={handleClose3}
+    aria-labelledby="modal-modal-title"
+    aria-describedby="modal-modal-description"
+  >
+    <div className=" w-full h-full bg-transparent flex  items-center justify-center">
+      <div className=" w-80 h-auto cart-box flex items-center flex-col justify-center rounded-md gap-y-3 py-10 px-5">
+        <h1 className=" text-white text-center w-full">
+          Are you sure you want Sign out ?
+        </h1>
+        <div className=" flex items-center w-full  gap-x-4 justify-center">
+          <button
+            onClick={() => {
+              setOpen3(false);
+            }}
+            className=" p-1 px-4  outline outline-1 outline-orange-500 py-2 rounded-md w-full flex items-center justify-center gap-3 shadow-2xl text-white"
+          >
+            <span>No</span>
+          </button>
+          <button
+            onClick={() => {
+              signOut();
+            }}
+            className=" p-1 px-4  bg-orange-500 py-2 rounded-md w-full flex items-center justify-center gap-3 shadow-2xl text-white"
+          >
+            <span>Yes</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </Modal>
+  )
+}
 
 function Navbar(props) {
   const [searchBtnH, setSearchBtnH] = useState(false);
   const [state, setState] = React.useState(false);
+  const [cartData, setCartData] = useState([]);
   const [username, setUsername] = useState("");
   const selectCart = useSelector((state) => state.cart);
   const [open2, setOpen2] = React.useState(false);
+  const [open3, setOpen3] = React.useState(false);
   const handleClose2 = () => setOpen(false);
+  const handleClose3 = () => setOpen3(false);
   const [noAuth, setoAuth] = useState(false);
   const [avatarPath, setAvatarPath] = useState("");
   const { theme, setTheme } = useTheme();
+  const dispatch = useDispatch();
   // mega-menu hovers
   const [ishover1, setIsHover1] = useState(false);
   const [ishover2, setIsHover2] = useState(false);
@@ -130,7 +178,18 @@ function Navbar(props) {
       console.log("error while trying getting data from local storage ");
     }
   }
+  const fetchLocalData = async () => {
+    try {
+      let items = localStorage.getItem("cartSystem");
+      if (items !== undefined) {
+        setCartData(JSON.parse(items));
+      }
+    } catch {
+      console.log("no data navbar");
+    }
+  };
   useEffect(() => {
+    dispatch(OnRefresh());
     const u_k = Cookies.get("u_tk");
     if (!u_k || u_k === "") {
       setoAuth(true);
@@ -140,6 +199,7 @@ function Navbar(props) {
     getUserinfo();
     getAvatar();
     getCartStateStorage();
+    fetchLocalData();
   }, []);
 
   const toggleDrawer = (anchor, open) => (event) => {
@@ -168,9 +228,10 @@ function Navbar(props) {
     window.location.reload();
   }
   const bgColorClassTheme = theme === "dark" ? "nav-background" : "bg-white";
+
   return (
     <div style={{ zIndex: 999 }} className="   duration-200 w-full">
-      {/* top navbar start here */}
+      {/* Top Bar Start Here */}
       <div
         onMouseOver={() => {
           setIsHover1(false);
@@ -180,34 +241,37 @@ function Navbar(props) {
           setIsHover5(false);
         }}
         style={{ display: "flex", zIndex: 9999 }}
-        className={`py-4 h-auto  w-full  flex items-center duration-300 z-50 justify-between  text-black ${bgColorClassTheme}  px-2 sm:px-10 md:px-16 lg:px-20`}
+        className={` py-2 h-auto  w-full  flex items-center duration-300 z-50 justify-between  text-black ${bgColorClassTheme}  px-2 sm:px-10 md:px-16 lg:px-20`}
       >
+        {/* Logo Bar Start Here */}
         <div className=" flex justify-center text-white items-center">
           <Link href={"/"} className=" flex items-center p-1 ">
             <Image
               className="  object-cover"
               src={theme === "dark" ? ProjectLogo : ProjectLogoDark}
-              width={145}
-              height={145}
+              width={125}
+              height={125}
               alt="Picture of the author"
             />
           </Link>
         </div>
+        {/* Logo Bar End Here */}
 
+        {/* Search Bar Start Here */}
         <div
           onMouseOver={() => {
             setAccountMenu(false);
           }}
-          className=" hidden lg:flex items-center w-6/12 gap-1"
+          className=" hidden lg:flex items-center lg:w-4/12 gap-1"
         >
-          <div className=" hidden sm:flex items-center justify-between w-full search-background py-2 outline outline-1 outline-gray-300  p-1 pr-2 pl-3 rounded-md gap-2">
+          <div className=" hidden sm:flex items-center justify-between w-full search-background py-1 outline outline-1 outline-gray-300  p-1 pr-2 pl-3 rounded-md gap-2">
             <input
               onChange={(e) => {
                 setSearchString(e.target.value);
               }}
               style={{ border: "none", outline: "none" }}
-              placeholder="Search.. GTAV, Minecraft, Steam, PC , PS5"
-              className=" text-black w-full text-lg search-background "
+              placeholder="Search.. Minecraft, PC , PS5"
+              className=" text-black bg-black w-full lg:text-sm search-background "
             />
             <button
               onClick={() => {
@@ -219,21 +283,10 @@ function Navbar(props) {
             </button>
           </div>
         </div>
+        {/* Search Bar End Here */}
 
-        <div
-          on
-          className=" z-50 flex justify-center relative items-center gap-3 "
-        >
-          <Link
-            href={"/login"}
-            className={
-              !Cookies.get("u_tk") || Cookies.get("u_tk") === ""
-                ? "  items-center hidden lg:flex"
-                : " hidden"
-            }
-          >
-            <button className=" orange-text-colo text-large">SIGN IN</button>
-          </Link>
+        {/* Buttons Bar Start Here */}
+        <div className=" z-50 flex h-full justify-center  relative items-center gap-x-3 ">
           <div
             className={
               Cookies.get("u_tk")
@@ -248,7 +301,8 @@ function Navbar(props) {
               onMouseOut={() => {
                 setAccountMenu(false);
               }}
-              style={{ marginTop: 340 }}
+              onClick={() => setAccountMenu(!accountMenu)}
+              style={{ marginTop: 330, marginLeft: 178 }}
               className={
                 accountMenu
                   ? " bg-white outline outline-1 outline-gray-300 flex gap-2 flex-col h-auto zed-index w-auto rounded-md shadow-2xl py-2 absolute"
@@ -321,20 +375,6 @@ function Navbar(props) {
               </div>
             </div>
           </div>
-          <div className=" flex">{/* <ThemeSwitcher /> */}</div>
-
-          <div
-            onMouseOver={() => {
-              setAccountMenu(true);
-            }}
-            className={
-              Cookies.get("u_tk")
-                ? "cart-box flex  relative duration-250 text-xl rounded-md text-white py-2 sm:py-3 px-4 sm:px-6 cursor-pointer"
-                : "hidden"
-            }
-          >
-            <FaUser />
-          </div>
 
           <div
             onClick={() => {
@@ -343,34 +383,104 @@ function Navbar(props) {
             onMouseOver={() => {
               setAccountMenu(false);
             }}
-            className="cart-box flex lg:hidden relative duration-250 text-xl rounded-md text-white py-2 sm:py-3 px-4 sm:px-6 cursor-pointer"
+            className={
+              theme === "dark"
+                ? "cart-box flex lg:hidden relative duration-250 h-full text-xl rounded-md text-white hover:text-white  px-3  cursor-pointer"
+                : "cart-light-box flex lg:hidden relative duration-250 h-full text-xl rounded-md text-black  px-3  cursor-pointer"
+            }
           >
-            <FaSearch />
+            <span
+              style={{ paddingTop: 14, paddingBottom: 14 }}
+              className=" h-full px-1 "
+            >
+              <FaSearch className=" text-xl" />
+            </span>
+          </div>
+
+          <div
+          onClick={() => {setOpen3(true)}}
+            className={
+              theme !== "dark"
+                ? Cookies.get("u_tk")
+                  ? "cart-light-box hidden md:flex relative duration-250 h-full text-xl rounded-md text-black  px-3  cursor-pointer"
+                  : "hidden"
+                : Cookies.get("u_tk")
+                ? "cart-box hidden md:flex  relative duration-250 h-full text-xl rounded-md text-white  px-3  cursor-pointer"
+                : "hidden"
+            }
+          >
+            <span
+              style={{ paddingTop: 14, paddingBottom: 14 }}
+              className=" h-full flex px-1 text-xl gap-4"
+            >
+              <Image src={dzFlag} height={20} width={20} />
+              <p className=" text-sm">DZD | English</p>
+            </span>
           </div>
 
           <div
             onMouseOver={() => {
-              setAccountMenu(false);
+              setAccountMenu(true);
             }}
-            className="cart-box relative duration-250 text-xl rounded-md text-white py-2 sm:py-3 px-4 sm:px-6  cursor-pointer"
+            className={
+              theme !== "dark"
+                ? Cookies.get("u_tk")
+                  ? "cart-light-box hidden sm:flex relative duration-250 h-full text-xl rounded-md text-black  px-3  cursor-pointer"
+                  : "hidden"
+                : Cookies.get("u_tk")
+                ? "cart-box hidden sm:flex  relative duration-250 h-full text-xl rounded-md text-white  px-3  cursor-pointer"
+                : "hidden"
+            }
           >
-            <FaHeart />
+            <span
+              style={{ paddingTop: 14, paddingBottom: 14 }}
+              className=" h-full px-1 "
+            >
+              <FaUser
+                className={
+                  theme !== "dark"
+                    ? " text-xl text-black"
+                    : " text-xl text-white"
+                }
+              />
+            </span>
+          </div>
+
+          <div
+            onClick={() => {
+              setOpen3(true);
+            }}
+            className={
+              theme !== "dark"
+                ? !Cookies.get("u_tk") || Cookies.get("u_tk") === ""
+                  ? "hidden"
+                  : "cart-light-box hidden sm:flex  relative duration-250 h-full text-xl rounded-md text-black hover:text-white  px-3  cursor-pointer"
+                : !Cookies.get("u_tk") || Cookies.get("u_tk") === ""
+                ? "hidden"
+                : "cart-box hidden sm:flex  relative duration-250 h-full text-xl rounded-md text-black hover:text-white  px-3  cursor-pointer"
+            }
+          >
+            <span
+              style={{ paddingTop: 14, paddingBottom: 14 }}
+              className={
+                theme !== "dark" ? " text-xl text-black" : " text-xl text-white"
+              }
+            >
+              <FaHeart />
+            </span>
           </div>
 
           <Link
-            onMouseOver={() => {
-              setAccountMenu(false);
-            }}
             href={"/cart"}
-            className="cart-box relative duration-250  rounded-md"
+            className={
+              theme === "dark"
+                ? "cart-box flex  relative duration-250 h-full text-xl rounded-md text-white   px-4 sm:px-6 cursor-pointer"
+                : "cart-light-box flex  relative duration-250 h-full text-xl rounded-md text-white   px-4 sm:px-6 cursor-pointer"
+            }
           >
             <div
-              style={{
-                backgroundColor: "yellow",
-                marginTop: -10,
-                marginRight: -10,
-              }}
-              className=" absolute rounded-full z-50  flex items-center text-center justify-center  top-1 right-1 orange-background"
+              style={{ marginTop: -10, marginRight: -10 }}
+              className=" absolute orange-background rounded-full z-50  flex items-center text-center justify-center  top-1 right-1"
             >
               <span
                 style={{ color: "black" }}
@@ -379,9 +489,38 @@ function Navbar(props) {
                 {selectCart.length}
               </span>
             </div>
-            <div className='cart-box relative duration-250  rounded-md" text-white py-2 sm:py-3 px-4 sm:px-6  rounded-md'>
-              <FaShoppingCart className="text-xl" />
-            </div>
+            <span
+              style={{ paddingTop: 14, paddingBottom: 14 }}
+              className={
+                theme === "dark"
+                  ? " h-full px-1 text-white"
+                  : " h-full px-1 text-black"
+              }
+            >
+              <BsBasket2Fill className=" text-xl" />
+            </span>
+          </Link>
+
+          <Link
+            href={"/login"}
+            className={
+              !Cookies.get("u_tk") || Cookies.get("u_tk") === ""
+                ? "cart-box hidden sm:flex  relative duration-250 text-xl rounded-md text-white  px-4 sm:px-4 cursor-pointer"
+                : " hidden"
+            }
+          >
+            <span className=" h-full py-3 text-white text-base">SignIn</span>
+          </Link>
+
+          <Link
+            href={"/signup"}
+            className={
+              !Cookies.get("u_tk") || Cookies.get("u_tk") === ""
+                ? "orange-background hidden sm:flex  relative duration-250 text-xl rounded-md text-white py-2 sm:py-3 px-4 sm:px-4 cursor-pointer"
+                : " hidden"
+            }
+          >
+            <button className="text-black text-base">SignUp</button>
           </Link>
           <button
             className={
@@ -395,13 +534,10 @@ function Navbar(props) {
             <MenuIcon className=" text-4xl" />
           </button>
         </div>
+        {/* Buttons Bar End Here */}
       </div>
-      {/* top navbar end here */}
+      {/* Top Bar End Here */}
 
-      {/* bottom navbar start here 
-      
-      
-      */}
       <div
         onMouseOut={() => {
           setAccountMenu(false);
@@ -411,10 +547,11 @@ function Navbar(props) {
         }}
         className={` ${bgColorClassTheme} relative gap-0 duration-300  hidden lg:flex items-center p-0 justify-between h-auto w-full `}
       >
+        {/* Draawer Start here */}
         <div className=" text-white">
           {["left"].map((anchor) => (
             <React.Fragment key={anchor}>
-              <div className=" flex lg:hidden items-center justify-center text-md gap-1">
+              <div className=" flex lg:hidden items-center  justify-center text-md gap-1">
                 <button
                   className=" text-white rounded-full mr-2 px-2 py-2 duration-300 bg-gray-700 hover:bg-gray-600"
                   onClick={toggleDrawer(anchor, true)}
@@ -426,12 +563,18 @@ function Navbar(props) {
               <SwipeableDrawer
                 anchor={anchor}
                 open={state[anchor]}
-                className=""
+                className="glass-borderless"
                 onClose={toggleDrawer(anchor, false)}
                 onOpen={toggleDrawer(anchor, true)}
               >
-                <div className=" flex  items-end justify-between py-3 pr-3 ">
-                  <p className=" ml-4 py-0"></p>
+                <div
+                  className={
+                    theme !== "dark"
+                      ? " flex  items-end bg-white justify-between  py-3 pr-3 "
+                      : " flex  items-end justify-between cart-parent py-3 pr-3 "
+                  }
+                >
+                  <p></p>
                   <button
                     onClick={toggleDrawer(anchor, false)}
                     size="small"
@@ -444,6 +587,7 @@ function Navbar(props) {
                   sx={{
                     width:
                       anchor === "top" || anchor === "bottom" ? "auto" : 250,
+                    backgroundColor: theme !== "dark" ? "white" : "#1f1f1f",
                   }}
                   role="presentation"
                   onClick={toggleDrawer(anchor, true)}
@@ -457,16 +601,34 @@ function Navbar(props) {
                     >
                       <ListItem disablePadding>
                         <ListItemButton className=" flex items-center gap-3">
-                          <PersonIcon />
-                          <Link href={"/login"}>
+                          <PersonIcon
+                            className={
+                              theme !== "dark" ? " text-black" : " text-white"
+                            }
+                          />
+                          <Link
+                            className={
+                              theme !== "dark" ? " text-black" : " text-white"
+                            }
+                            href={"/login"}
+                          >
                             <ListItemText primary={"Login"} />
                           </Link>
                         </ListItemButton>
                       </ListItem>
                       <ListItem disablePadding>
                         <ListItemButton className=" flex items-center gap-3">
-                          <PersonAddIcon />
-                          <Link href={"/signup"}>
+                          <PersonAddIcon
+                            className={
+                              theme !== "dark" ? " text-black" : " text-white"
+                            }
+                          />
+                          <Link
+                            className={
+                              theme !== "dark" ? " text-black" : " text-white"
+                            }
+                            href={"/signup"}
+                          >
                             <ListItemText primary={"Register"} />
                           </Link>
                         </ListItemButton>
@@ -489,8 +651,11 @@ function Navbar(props) {
                       />
                       <div className=" w-full flex justify-center gap-1 items-center flex-col">
                         <span
-                          style={{ color: "#6f6f6f" }}
-                          className="  text-base"
+                          className={
+                            theme !== "dark"
+                              ? " text-black text-base"
+                              : " text-white text-base"
+                          }
                         >
                           {!username || username === "" ? "" : username}
                         </span>
@@ -511,13 +676,25 @@ function Navbar(props) {
                   </div>
                   <Divider />
                   <List className=" w-full">
-                    <p className=" ml-4 py-1">Account</p>
+                    <p
+                      className={
+                        theme !== "dark"
+                          ? "text-black ml-4 py-1"
+                          : "text-gray-300 ml-4 py-1"
+                      }
+                    >
+                      Account
+                    </p>
                     <ListItem className=" flex" disablePadding>
                       <ListItemButton className=" flex justify-center items-center gap-3">
                         <ListItemText>
                           <Link
                             href={"/myprofile/me"}
-                            className=" text-gray-600 w-full flex text-base items-center gap-2"
+                            className={
+                              theme !== "dark"
+                                ? " text-gray-600 w-full flex text-base items-center gap-2"
+                                : " text-gray-400 w-full flex text-base items-center gap-2"
+                            }
                           >
                             {" "}
                             <FaUser /> Account Managment
@@ -528,10 +705,24 @@ function Navbar(props) {
                   </List>
                   <Divider />
                   <List className=" w-full">
-                    <p className=" ml-4 py-2">Categories</p>
+                    <p
+                      className={
+                        theme !== "dark"
+                          ? "text-black ml-4 py-1"
+                          : "text-gray-300 ml-4 py-1"
+                      }
+                    >
+                      Categories
+                    </p>
                     {Categoryitems.map((text, index) => (
                       <ListItem key={text.Title} disablePadding>
-                        <ListItemButton className=" flex items-center gap-3">
+                        <ListItemButton
+                          className={
+                            theme !== "dark"
+                              ? " flex text-black items-center gap-3"
+                              : " flex text-gray-400 items-center gap-3"
+                          }
+                        >
                           <Image src={text.img} height={30} width={30} />
                           <ListItemText primary={text.Title} />
                         </ListItemButton>
@@ -540,7 +731,15 @@ function Navbar(props) {
                   </List>
                   <Divider />
                   <List>
-                    <p className=" ml-4 py-1">Theme</p>
+                    <p
+                      className={
+                        theme !== "dark"
+                          ? "text-black ml-4 py-1"
+                          : "text-gray-300 ml-4 py-1"
+                      }
+                    >
+                      Theme
+                    </p>
                     <ListItem className=" flex py-2" disablePadding>
                       <ListItemButton className=" flex justify-center items-center gap-3">
                         <div
@@ -555,7 +754,13 @@ function Navbar(props) {
                           className=" w-full duration-300 flex cursor-pointer"
                         >
                           {theme === "dark" ? (
-                            <ListItemText className=" text-gray-600 w-full flex flex-row text-base items-center gap-2">
+                            <ListItemText
+                              className={
+                                theme !== "dark"
+                                  ? " text-gray-600 w-full flex flex-row text-base items-center gap-2"
+                                  : " text-gray-300 w-full flex flex-row text-base items-center gap-2"
+                              }
+                            >
                               <span className=" flex items-center gap-2">
                                 <MdLightMode /> Light Mode
                               </span>
@@ -613,6 +818,7 @@ function Navbar(props) {
             </React.Fragment>
           ))}
         </div>
+        {/* Draawer End here */}
 
         <div className=" flex items-center nav-background justify-between w-full px-2 sm:px-10 md:px-16 lg:px-20">
           <div className="hidden lg:flex w-full h-full justify-start items-center ">
@@ -762,70 +968,7 @@ function Navbar(props) {
           </div>
         </div>
 
-        <div className=" flex  items-center gap-2">
-          {/*
-                  <React.Fragment key={"right"}>
-            <SwipeableDrawer
-              anchor={"right"}
-              open={state["right"]}
-              onClose={toggleDrawer("right", false)}
-              onOpen={toggleDrawer("right", true)}
-              className=" flex flex-col justify-between">
-              <div className=" flex w-full  items-end justify-between pt-2 px-3">
-                <button onClick={toggleDrawer("right", false)} size="small" className="rounded-full text-xs bg-black duration-300  p-1 text-white">
-                  <CloseIcon fontSize="small" />
-                </button>
-                <p className=" ml-4 py-0">Cart</p>
-              </div>
-              <Box
-                sx={{ width: "right" === 'top' || "right" === 'bottom' ? 'auto' : 250, display: "flex", height: "100%", justifyContent: "space-between", flexDirection: "column" }}
-                role="presentation"
-                onClick={toggleDrawer("right", true)}
-                onKeyDown={toggleDrawer("right", false)}>
-                <div className="flex flex-col h-full gap-2 py-2 px-2">
-                  {data.length === 0 ? <div className='h-full  flex w-full flex-col gap-3 items-center justify-center text-black'>
-                    <span>Cart is Empty</span>
-                    <Image height={70} width={70} src={cartEmpty} />
-                  </div> : (
-                    <div className="flex flex-col gap-2 py-2 px-2">
-                      {data.map((e) => (
-                        <List key={e.id} className="w-full flex items-start gap-3 outline outline-1 outline-gray-300 justify-start text-white rounded-md p-2">
-                          <div className="flex items-center justify-center">
-                            <Image alt='img' height={50} width={50} className="rounded-md" src={e.image} />
-                          </div>
-                          <div className="w-full">
-                            <span className="text-black">{e.title}</span>
-                            <div className="flex items-center gap-1">
-                              <span className="text-gray-400">{!e.oldpriceCart ? e.price + " DZD" : e.oldpriceCart + " DZD"}</span>
-                              <span className="text-gray-400">x{e.quantity}</span>
-                            </div>
-                          </div>
-                          <div className="flex items-center h-full justify-center">
-                            <button onClick={() => dispatch(deleteProduct(e))} size="small" className="rounded-full text-sm duration-300 p-1 c text-gray-500">
-                              <CloseIcon fontSize="small" />
-                            </button>
-                          </div>
-                        </List>))}
-                    </div>)}
-                </div>
-
-                <List className=" flex items-center flex-col gap-3  px-3 justify-center">
-                  {data.length === 0 ? "" : <div className=" w-full items-center   justify-center flex flex-col gap-2">
-                    <div className="flex items-center w-full justify-between">
-                      <span>total: </span>
-                      <span>{totalNormal + " DZD"}</span>
-                    </div>
-                    <button className=" w-full h-10 bg-black text-white p-2 rounded-md">
-                      Checkout
-                    </button>
-                  </div>}
-                  <span className=" text-gray-400 text-xs text-center">Copyright © 2023 Gixify.com , All rights reserved</span>
-                </List>
-              </Box>
-            </SwipeableDrawer>
-          </React.Fragment>
-         */}
-        </div>
+        <div className=" flex  items-center gap-2"></div>
       </div>
 
       <div
@@ -871,7 +1014,11 @@ function Navbar(props) {
       >
         <div
           style={{ borderBottomRightRadius: 6, borderBottomLeftRadius: 6 }}
-          className=" glass h-auto relative p-8"
+          className={
+            theme !== "dark"
+              ? "cart-box h-auto relative p-8"
+              : " glass h-auto relative p-8"
+          }
         >
           <MegaMenu1 />
         </div>
@@ -894,7 +1041,11 @@ function Navbar(props) {
       >
         <div
           style={{ borderBottomRightRadius: 6, borderBottomLeftRadius: 6 }}
-          className="glass  h-auto relative p-8"
+          className={
+            theme !== "dark"
+              ? "cart-box h-auto relative p-8"
+              : " glass h-auto relative p-8"
+          }
         >
           <MegaMenu2 />
         </div>
@@ -919,7 +1070,11 @@ function Navbar(props) {
       >
         <div
           style={{ borderBottomRightRadius: 6, borderBottomLeftRadius: 6 }}
-          className="glass  h-auto relative p-8"
+          className={
+            theme !== "dark"
+              ? "cart-box h-auto relative p-8"
+              : " glass h-auto relative p-8"
+          }
         >
           <MegaMenu3 />
         </div>
@@ -948,7 +1103,11 @@ function Navbar(props) {
       >
         <div
           style={{ borderBottomRightRadius: 6, borderBottomLeftRadius: 6 }}
-          className="glass h-auto  relative p-8"
+          className={
+            theme !== "dark"
+              ? "cart-box h-auto relative p-8"
+              : " glass h-auto relative p-8"
+          }
         >
           <MegaMenu4 />
         </div>
@@ -977,12 +1136,15 @@ function Navbar(props) {
       >
         <div
           style={{ borderBottomRightRadius: 6, borderBottomLeftRadius: 6 }}
-          className="glass  h-auto  relative p-8 "
+          className={
+            theme !== "dark"
+              ? "cart-box h-auto relative p-8"
+              : " glass h-auto relative p-8"
+          }
         >
           <MegaMenu5 />
         </div>
       </div>
-      {/* bottom navbar end here */}
 
       <Modal
         open={open2}
@@ -1016,6 +1178,7 @@ function Navbar(props) {
           </div>
         </div>
       </Modal>
+      <CurrenceyModal open3={open3} handleClose3={handleClose3} setOpen3={setOpen3} />
     </div>
   );
 }

@@ -254,6 +254,7 @@ export default function SignIn() {
     } else {
     }
   }
+ /*
   async function getAvatar() {
     let email_str;
     let user_id_str;
@@ -284,6 +285,7 @@ export default function SignIn() {
       })
       .catch((err) => {});
   }
+ */
   function getUserBilling() {
     let email_str;
     let user_id_str;
@@ -316,9 +318,9 @@ export default function SignIn() {
       .catch((err) => {});
   }
   useEffect(() => {
-    getAvatar();
-    const emSt = localStorage.getItem("u_billing");
-    const u_inf = localStorage.getItem("u_inf");
+    //getAvatar();
+    const emSt = localStorage?.getItem("u_billing");
+    const u_inf = localStorage?.getItem("u_inf");
     if (!emSt) {
       getUserBilling();
     }

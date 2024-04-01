@@ -18,17 +18,29 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import dzFlag from "../../public/flags/DZ.avif";
 import LockIcon from "@mui/icons-material/Lock";
 import { useSelector, useDispatch } from "react-redux";
-import { removeCart } from "../redux/slices/cartSlice";
+import { removeCart, removeFromStorage } from "../redux/slices/cartSlice";
 import { useTheme } from "next-themes";
 
 export default function Cart() {
   const selectCart = useSelector((state) => state.cart);
+  const [cartData, setCartData] = useState([]);
   const dispatch = useDispatch();
   const { theme, setTheme } = useTheme();
-  const totalPrice = selectCart.reduce((acc, current) => {
+  const totalPrice = cartData?.reduce((acc, current) => {
     return (acc += current.price);
   }, 0);
+  const fetchLocalData = async () => {
+    try {
+      let items = localStorage.getItem("cartSystem");
+      if (items !== undefined) {
+        setCartData(JSON.parse(items));
+      }
+    } catch {
+      console.log("no data navbar");
+    }
+  };
   useEffect(() => {
+    fetchLocalData();
     console.log(selectCart);
   }, []);
   return (
@@ -70,7 +82,7 @@ export default function Cart() {
               </div>
             </div>
             <div className=" w-full flex gap-2 flex-col">
-              <div className={selectCart.length < 1 ? "flex" : "hidden"}>
+              <div className={cartData?.length < 1 ? "flex" : "hidden"}>
                 <div
                   className={
                     theme !== "dark"
@@ -89,7 +101,7 @@ export default function Cart() {
                   </h1>
                 </div>
               </div>
-              {selectCart.map((product, index) => {
+              {cartData?.map((product, index) => {
                 return (
                   <div
                     className={
@@ -152,7 +164,11 @@ export default function Cart() {
 
                       <Tooltip
                         onClick={() => {
-                          dispatch(removeCart(product));
+                          dispatch(removeFromStorage(product));
+                          const updatedCart = cartData.filter(
+                            (item) => item.id !== product.id
+                          );
+                          setCartData(updatedCart)
                         }}
                         title="Remove from cart"
                         arrow
@@ -271,10 +287,14 @@ export default function Cart() {
                 Cart Summary
               </h1>
             </div>
-            <div className=" flex items-center justify-between">
-              <h1 className=" text-x text-gray-400">Full Price</h1>
-              <h1 className=" text-x  text-gray-400">0.00$</h1>
-            </div>
+            {cartData?.map((el, index) => {
+              return (
+                <div className=" flex items-center justify-between">
+                  <h1 className=" text-x text-gray-400">{el.title}</h1>
+                  <h1 className=" text-x  text-gray-400">{el.price}$</h1>
+                </div>
+              );
+            })}
             <Divider className=" bg-gray-400" />
             <div className=" flex items-center justify-between">
               <h1
