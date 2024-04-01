@@ -50,44 +50,82 @@ import {
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import dzFlag from "../public/flags/DZ.avif";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import { styled } from '@mui/system';
 
+const StyledSelect = styled(Select)({
+  '& .MuiOutlinedInput-root': {
+    '& fieldset': {
+      borderColor: 'red', // Change 'red' to your desired outline color
+    },
+  },
+});
+const CurrenceyModal = ({ open3, handleClose3, setOpen3 }) => {
+  const [age, setAge] = React.useState("");
 
-const CurrenceyModal = ({open3, handleClose3, setOpen3}) => {
+  const handleChange = (event) => {
+    setAge(event.target.value);
+  };
   return (
     <Modal
-    open={open3}
-    onClose={handleClose3}
-    aria-labelledby="modal-modal-title"
-    aria-describedby="modal-modal-description"
-  >
-    <div className=" w-full h-full bg-transparent flex  items-center justify-center">
-      <div className=" w-80 h-auto cart-box flex items-center flex-col justify-center rounded-md gap-y-3 py-10 px-5">
-        <h1 className=" text-white text-center w-full">
-          Are you sure you want Sign out ?
-        </h1>
-        <div className=" flex items-center w-full  gap-x-4 justify-center">
-          <button
-            onClick={() => {
-              setOpen3(false);
-            }}
-            className=" p-1 px-4  outline outline-1 outline-orange-500 py-2 rounded-md w-full flex items-center justify-center gap-3 shadow-2xl text-white"
-          >
-            <span>No</span>
-          </button>
-          <button
-            onClick={() => {
-              signOut();
-            }}
-            className=" p-1 px-4  bg-orange-500 py-2 rounded-md w-full flex items-center justify-center gap-3 shadow-2xl text-white"
-          >
-            <span>Yes</span>
-          </button>
+      open={open3}
+      onClose={handleClose3}
+      aria-labelledby="modal-modal-title"
+      aria-describedby="modal-modal-description"
+    >
+      <div className=" w-full h-full bg-transparent flex  items-center justify-center">
+        <div className=" w-96 h-96 flex flex-col gap-4 cart-parent rounded-md p-5">
+          <div className="w-full flex items-center justify-between">
+            <div className="w-full flex items-start gap-2 flex-col">
+              <div className="w-full flex justify-between items-center">
+                <h1 className="text-white text-xl font-bold">
+                  Update your settings
+                </h1>
+                <span
+                  onClick={() => {
+                    setOpen3(false);
+                  }}
+                  className="text-white cursor-pointer"
+                >
+                  &#10006;
+                </span>
+              </div>
+              <p className="text-gray-400">
+                Set your preferred region and currency
+              </p>
+            </div>
+          </div>
+          <Divider style={{ height: 1 }} className=" w-full bg-gray-700" />
+          <div>
+            <div className="flex flex-col gap-3">
+              <h1 className="text-white font-extrabold text-sm">COUNTRY | CURRENCY</h1>
+              <Box sx={{ minWidth: 120 }}>
+                <FormControl className="  " fullWidth>
+                  <InputLabel className="text-white " id="demo-simple-select-label">Age</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={age}
+                    label="Age"
+                    onChange={handleChange}
+                    className=" border-none outline-none  cart-box text-white"
+                  >
+                    <MenuItem value={10}>Ten</MenuItem>
+                    <MenuItem value={20}>Twenty</MenuItem>
+                    <MenuItem value={30}>Thirty</MenuItem>
+                  </Select>
+                </FormControl>
+              </Box>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </Modal>
-  )
-}
+    </Modal>
+  );
+};
 
 function Navbar(props) {
   const [searchBtnH, setSearchBtnH] = useState(false);
@@ -398,7 +436,9 @@ function Navbar(props) {
           </div>
 
           <div
-          onClick={() => {setOpen3(true)}}
+            onClick={() => {
+              setOpen3(true);
+            }}
             className={
               theme !== "dark"
                 ? Cookies.get("u_tk")
@@ -1178,7 +1218,11 @@ function Navbar(props) {
           </div>
         </div>
       </Modal>
-      <CurrenceyModal open3={open3} handleClose3={handleClose3} setOpen3={setOpen3} />
+      <CurrenceyModal
+        open3={open3}
+        handleClose3={handleClose3}
+        setOpen3={setOpen3}
+      />
     </div>
   );
 }
