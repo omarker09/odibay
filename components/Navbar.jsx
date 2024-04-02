@@ -53,22 +53,23 @@ import dzFlag from "../public/flags/DZ.avif";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-import { styled } from '@mui/system';
+//import Select from '@mui/material/Select';
+import { styled } from "@mui/system";
+import Select from "react-select";
 
-const StyledSelect = styled(Select)({
-  '& .MuiOutlinedInput-root': {
-    '& fieldset': {
-      borderColor: 'red', // Change 'red' to your desired outline color
-    },
-  },
-});
+
 const CurrenceyModal = ({ open3, handleClose3, setOpen3 }) => {
-  const [age, setAge] = React.useState("");
+  const { theme, setTheme } = useTheme();
 
-  const handleChange = (event) => {
-    setAge(event.target.value);
-  };
+  const options = [
+    { value: "Algeria | DZD", label: "Algeria | DZD" },
+    { value: "United States | USD", label: "United States | USD" },
+    { value: "Europe | EUR", label: "Europe | EUR" },
+  ];
+  const langOptions = [
+    { value: "العربية", label: "العربية" },
+    { value: "English", label: "English" },
+  ];
   return (
     <Modal
       open={open3}
@@ -77,34 +78,117 @@ const CurrenceyModal = ({ open3, handleClose3, setOpen3 }) => {
       aria-describedby="modal-modal-description"
     >
       <div className=" w-full h-full bg-transparent flex  items-center justify-center">
-        <div className=" w-96 h-96 flex flex-col gap-4 cart-parent rounded-md p-5">
+        <div
+          className={
+            theme === "dark"
+              ? " w-96 h-auto flex flex-col gap-4 cart-parent rounded-md p-5"
+              : " w-96 h-auto flex flex-col gap-4 bg-white rounded-md p-5"
+          }
+        >
           <div className="w-full flex items-center justify-between">
             <div className="w-full flex items-start gap-2 flex-col">
               <div className="w-full flex justify-between items-center">
-                <h1 className="text-white text-xl font-bold">
+                <h1
+                  className={
+                    theme === "dark"
+                      ? "text-white text-xl font-bold"
+                      : "text-black text-xl font-bold"
+                  }
+                >
                   Update your settings
                 </h1>
                 <span
                   onClick={() => {
                     setOpen3(false);
                   }}
-                  className="text-white cursor-pointer"
+                  className={
+                    theme === "dark"
+                      ? "text-white cursor-pointer"
+                      : "text-black cursor-pointer"
+                  }
                 >
                   &#10006;
                 </span>
               </div>
-              <p className="text-gray-400">
+              <p
+                className={theme === "dark" ? "text-gray-400" : "text-gray-400"}
+              >
                 Set your preferred region and currency
               </p>
             </div>
           </div>
-          <Divider style={{ height: 1 }} className=" w-full bg-gray-700" />
+          <Divider
+            style={{ height: 1 }}
+            className={
+              theme === "dark" ? " w-full bg-gray-700" : " w-full bg-gray-300"
+            }
+          />
           <div>
             <div className="flex flex-col gap-3">
-              <h1 className="text-white font-extrabold text-sm">COUNTRY | CURRENCY</h1>
+              <h1
+                className={
+                  theme === "dark"
+                    ? "text-white font-extrabold text-sm"
+                    : "text-black font-extrabold text-sm"
+                }
+              >
+                COUNTRY | CURRENCY
+              </h1>
+              <Select className="cursor-pointer" options={options} />
+            </div>
+          </div>
+          <div>
+            <div className="flex flex-col gap-3">
+              <h1
+                className={
+                  theme === "dark"
+                    ? "text-white font-extrabold text-sm"
+                    : "text-black font-extrabold text-sm"
+                }
+              >
+                Language
+              </h1>
+              <Select className="cursor-pointer" options={langOptions} />
+            </div>
+          </div>
+          <div className="flex items-center gap-4 justify-between w-full">
+            <button
+              onClick={() => {
+                setOpen3(false)
+                window.location.reload();
+              }}
+              className=" p-3 orange-background text-base font-bold w-full rounded-md"
+            >
+              Save
+            </button>
+            <button
+              onClick={() => {
+                setOpen3(false);
+              }}
+              className={
+                theme === "dark"
+                  ? " p-3 cart-box w-full text-white text-base font-bold rounded-md"
+                  : " p-3 cart-light-box w-full text-black text-base font-bold rounded-md"
+              }
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </Modal>
+  );
+};
+
+/*
               <Box sx={{ minWidth: 120 }}>
-                <FormControl className="  " fullWidth>
-                  <InputLabel className="text-white " id="demo-simple-select-label">Age</InputLabel>
+                <FormControl className=" cart-box " fullWidth>
+                  <InputLabel
+                    className="text-white "
+                    id="demo-simple-select-label"
+                  >
+                    Age
+                  </InputLabel>
                   <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
@@ -113,19 +197,13 @@ const CurrenceyModal = ({ open3, handleClose3, setOpen3 }) => {
                     onChange={handleChange}
                     className=" border-none outline-none  cart-box text-white"
                   >
-                    <MenuItem value={10}>Ten</MenuItem>
+                    <MenuItem className="cart-box" value={10}>Ten</MenuItem>
                     <MenuItem value={20}>Twenty</MenuItem>
                     <MenuItem value={30}>Thirty</MenuItem>
                   </Select>
                 </FormControl>
               </Box>
-            </div>
-          </div>
-        </div>
-      </div>
-    </Modal>
-  );
-};
+*/
 
 function Navbar(props) {
   const [searchBtnH, setSearchBtnH] = useState(false);
