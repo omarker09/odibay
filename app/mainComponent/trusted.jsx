@@ -6,10 +6,10 @@ import "../globals.css";
 
 function Trusted() {
   return (
-    <div className="bg-black  px-2 py-4 sm:px-10 md:px-16 lg:px-20 items-center justify-center gap-3 sm:justify-between h-44 flex ">
+    <div className="bg-black  px-2 py-4 sm:px-10 md:px-16 lg:px-20 items-center justify-center gap-3 sm:justify-between h-28 flex ">
       <div className=" trst-one items-center gap-3 py-5">
         <div>
-          <SlSpeedometer className=" text-white h-11 lg:h-16 w-8 lg:w-10  text-xl lg:text-2xl" />
+          <SlSpeedometer className=" text-white h-11 lg:h-11 w-8 lg:w-10  text-xl lg:text-2xl" />
         </div>
         <div>
           <h1 className="orange-text-colo text-xl">Super fast</h1>
@@ -23,7 +23,7 @@ function Trusted() {
 
       <div className=" trst-two items-center gap-3 py-5">
         <div>
-          <MdVerified className=" text-white h-14 w-9 lg:h-16 lg:w-16 text-2xl" />
+          <MdVerified className=" text-white h-11 lg:h-11 w-8 lg:w-10 text-2xl" />
         </div>
         <div>
           <h1 className="orange-text-colo text-lg lg:text-xl">
@@ -41,7 +41,7 @@ function Trusted() {
       ></span>
       <div className=" trst-three items-center gap-3 py-5">
         <div>
-          <RiCustomerService2Fill className=" text-white h-16 w-12 md:h-14 md:w-9 lg:h-16 lg:w-16 text-2xl" />
+          <RiCustomerService2Fill className=" text-white h-11 lg:h-11 w-8 lg:w-10 text-2xl" />
         </div>
         <div>
           <h1 className="orange-text-colo text-xl md:text-lg lg:text-xl">
@@ -58,7 +58,7 @@ function Trusted() {
       ></span>
       <div className=" flex items-center gap-3 py-5">
         <div>
-          <MdVerified className=" text-white h-16 w-12 md:h-14 md:w-9 lg:h-16 lg:w-16 text-2xl" />
+          <MdVerified className=" text-white h-11 lg:h-11 w-8 lg:w-10 text-2xl" />
         </div>
         <div>
           <h1 className="orange-text-colo text-xl md:text-lg lg:text-xl">

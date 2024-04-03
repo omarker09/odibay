@@ -28,7 +28,7 @@ function Mainpage() {
   ];
   const data = [
     {
-      src: "https://cdn.mos.cms.futurecdn.net/3D9dh6TgNMUXwC7kYD5rP-1200-80.jpg",
+      src: "https://static.driffle.com/media-gallery/production/260a9067-a616-4757-95fb-f0f67eca85ad_helldivers-2-mobilewebp",
       title: "GTA 6",
       alt: "Image 1 for carousel",
       price: 99.99,
@@ -36,7 +36,7 @@ function Mainpage() {
       tags: ["Open World", "POP"],
     },
     {
-      src: "https://static1.srcdn.com/wordpress/wp-content/uploads/2022/01/gta-6-infinite-endless-concept-art.jpeg",
+      src: "https://static.driffle.com/media-gallery/production/008e7124-0d50-4855-885b-e5cbaf872425_horizon-forbidden-west-complete-edition-desktopwebp",
       title: "GTA 5",
       alt: "Image 2 for carousel",
       price: 59.99,
@@ -44,7 +44,7 @@ function Mainpage() {
       tags: ["RPG", "Simulation", "ACTION"],
     },
     {
-      src: "https://picsum.photos/seed/img3/600/400",
+      src: "https://static.driffle.com/media-gallery/production/ebe509ab-60ad-4cc5-8a15-14eaae7d333e_alone-in-the-dark-mobilewebp",
       title: "Nature ",
       alt: "Image 3 for carousel",
       price: 20.99,
@@ -54,13 +54,12 @@ function Mainpage() {
   ];
 
   return (
-    <div className="  h-auto w-full cart-parent flex flex-col">
+    <div className="  h-auto w-full cart-parent gap-4 flex flex-col">
       <SectionAds />
-      <Carousel data={data} />
       <div
         className={`w-full h-auto duration-300 ${bgColorClassTheme} flex-col  flex gap-4 items-center px-2 sm:px-10 md:px-16 lg:px-20 justify-center`}
       >
-        {/* leave it empty */}
+        <Carousel data={data} />
       </div>
     </div>
   );

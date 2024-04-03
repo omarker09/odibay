@@ -57,9 +57,10 @@ import FormControl from "@mui/material/FormControl";
 import { styled } from "@mui/system";
 import Select from "react-select";
 
-
 const CurrenceyModal = ({ open3, handleClose3, setOpen3 }) => {
   const { theme, setTheme } = useTheme();
+  const [selectedOption, setSelectedOption] = useState([]);
+  const [selectedOption2, setSelectedOption2] = useState([]);
 
   const options = [
     { value: "Algeria | DZD", label: "Algeria | DZD" },
@@ -70,6 +71,15 @@ const CurrenceyModal = ({ open3, handleClose3, setOpen3 }) => {
     { value: "العربية", label: "العربية" },
     { value: "English", label: "English" },
   ];
+
+  const handleChange = (selectedOption) => {
+    setSelectedOption(selectedOption);
+    console.log(selectedOption);
+  };
+  const handleChange2 = (param) => {
+    setSelectedOption2(param);
+    console.log(selectedOption2);
+  };
   return (
     <Modal
       open={open3}
@@ -134,7 +144,12 @@ const CurrenceyModal = ({ open3, handleClose3, setOpen3 }) => {
               >
                 COUNTRY | CURRENCY
               </h1>
-              <Select className="cursor-pointer" options={options} />
+              <Select
+                className="cursor-pointer"
+                value={selectedOption}
+                onChange={handleChange}
+                options={options}
+              />
             </div>
           </div>
           <div>
@@ -148,13 +163,18 @@ const CurrenceyModal = ({ open3, handleClose3, setOpen3 }) => {
               >
                 Language
               </h1>
-              <Select className="cursor-pointer" options={langOptions} />
+              <Select
+                className="cursor-pointer"
+                options={langOptions}
+                onChange={handleChange2}
+                value={selectedOption2}
+              />
             </div>
           </div>
           <div className="flex items-center gap-4 justify-between w-full">
             <button
               onClick={() => {
-                setOpen3(false)
+                setOpen3(false);
                 window.location.reload();
               }}
               className=" p-3 orange-background text-base font-bold w-full rounded-md"
@@ -519,12 +539,8 @@ function Navbar(props) {
             }}
             className={
               theme !== "dark"
-                ? Cookies.get("u_tk")
-                  ? "cart-light-box hidden md:flex relative duration-250 h-full text-xl rounded-md text-black  px-3  cursor-pointer"
-                  : "hidden"
-                : Cookies.get("u_tk")
-                ? "cart-box hidden md:flex  relative duration-250 h-full text-xl rounded-md text-white  px-3  cursor-pointer"
-                : "hidden"
+                ? "cart-light-box hidden md:flex relative duration-250 h-full text-xl rounded-md text-black  px-3  cursor-pointer"
+                : "cart-box hidden md:flex  relative duration-250 h-full text-xl rounded-md text-white  px-3  cursor-pointer"
             }
           >
             <span
@@ -688,15 +704,17 @@ function Navbar(props) {
                 <div
                   className={
                     theme !== "dark"
-                      ? " flex  items-end bg-white justify-between  py-3 pr-3 "
-                      : " flex  items-end justify-between cart-parent py-3 pr-3 "
+                      ? " flex  items-end bg-white justify-between  py-3 px-3 "
+                      : " flex  items-end justify-between cart-parent py-3 px-3 "
                   }
                 >
-                  <p></p>
+                  <p className={theme === "dark" ? "text-white" : "text-black"}>
+                    Menu
+                  </p>
                   <button
                     onClick={toggleDrawer(anchor, false)}
                     size="small"
-                    className="rounded-full text-sm bg-black p-1 text-white"
+                    className="rounded-full text-sm  p-1 text-white"
                   >
                     <CloseIcon fontSize="small" />
                   </button>

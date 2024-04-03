@@ -426,6 +426,10 @@ body {
     height: 4rem/* 64px */;
   }
 }
-
-
-
+.arrow-background {
+  transition: 300ms;
+}
+.arrow-background:hover {
+  transition: 300ms;
+  background-color: rgb(0, 0, 0, 0.3);
+}

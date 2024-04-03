@@ -1,258 +1,187 @@
-"use client";
-import React, { useEffect, useState, useRef } from "react";
+import { useState, useEffect } from "react";
+import { motion, useMotionValue } from "framer-motion"; // Import motion from Framer Motion
+import "../globals.css";
+import BasicRating from "@/components/muicomponent/rating";
 import Image from "next/image";
 import ArrowRightIcon from "@mui/icons-material/ChevronRight";
-import SteamLight from "../../public/imgs/steam.svg";
-import SteamDark from "../../public/imgs/steam-black.svg";
 import ArrowLeftIcon from "@mui/icons-material/ChevronLeft";
+import Mainproducts from "@/components/mainproducts";
 import { useTheme } from "next-themes";
-import FeaturedImg1 from "../../public/imgs/featured.jpg";
-import "../globals.css";
-import "./carousel.css";
-const data = [
-  {
-    src: "https://gaming-cdn.com/img/products/9575/hcover/1400x500/9575.jpg?v=1708503564",
-    title: "GTA 6",
-    alt: "Image 1 for carousel",
-    price: 99.99,
-    perc: 40,
-    tags: ["Open World", "POP"],
-  },
-  {
-    src: "https://static1.srcdn.com/wordpress/wp-content/uploads/2022/01/gta-6-infinite-endless-concept-art.jpeg",
-    title: "GTA 5",
-    alt: "Image 2 for carousel",
-    price: 59.99,
-    perc: 20,
-    tags: ["RPG", "Simulation", "ACTION"],
-  },
-  {
-    src: "https://picsum.photos/seed/img3/600/400",
-    title: "Nature ",
-    alt: "Image 3 for carousel",
-    price: 20.99,
-    perc: 10,
-    tags: ["Nature"],
-  },
-];
-function Carousel() {
-  const [curentIndex, setCurrentIndex] = useState(0);
-  return (
-    <div className="  flex items-center  h-auto relative w-full ">
-      <Image
-        src={FeaturedImg1}
-        alt={"gfdh"}
-        className="h-full w-full object-cover no-drag-img"
-      />
-      <div className="absolute no-drag-text w-full flex items-center md:items-start  flex-col gap-3 px-2 sm:px-10 md:px-16 lg:px-20">
-        <h1 className="text-white text-2xl md:text-4xl font-bold">FQF gsdf</h1>
-        <div className="flex items-center gap-3">
-          <button className="bg-orange-600 py-1 md:py-2 px-2 md:px-3 text-lg md:text-xl text-white rounded-lg">
-            -30%
-          </button>
-          <h1 className="text-white text-2xl md:text-4xl font-bold">$25.99</h1>
-        </div>
-      </div>
-    </div>
-  );
-}
-export default Carousel;
 
-/*
- function Carousel({ data }) {
-  const [slide, setSlide] = useState(0)
-  const [localData, setLocalData] = useState([])
-  const [title, setTitle] = useState("")
-  const [promo, setPromo] = useState(0)
-  const [tags, setTags] = useState([])
-  const { theme, setTheme } = useTheme()
-  const bgColorClassTheme = theme === 'dark' ? 'cart-box' : 'bg-white';
+const DRAG_BUFFER = 30;
+const DELAY_VALUE_MS = 2000;
 
-  const nextSlide = () => {
-    setSlide(slide === data.length - 1 ? 0 : slide + 1);
-  }
-
-  const prevSlide = () => {
-    setSlide(slide === 0 ? data.length - 1 : slide - 1)
-  }
+const Carousel = ({ data }) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isDrag, setIsDrag] = useState(false);
+  const [isHover, setIsHover] = useState(false);
+  const [delayValue, setDelayValue] = useState(3000);
+  const { theme, setTheme } = useTheme();
+  const dragX = useMotionValue(0);
+  const fakeApiResponse = [
+    {
+      id: 1,
+      title: "Slide 1",
+      content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    },
+    {
+      id: 2,
+      title: "Slide 2",
+      content:
+        "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    },
+    {
+      id: 3,
+      title: "Slide 3",
+      content:
+        "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+    },
+    {
+      id: 4,
+      title: "Slide 4",
+      content:
+        "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+    },
+    {
+      id: 5,
+      title: "Slide 5",
+      content:
+        "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    },
+  ];
+  const handleBack = () => {
+    setCurrentIndex(currentIndex === data.length - 1 ? 0 : currentIndex + 1);
+  };
+  const handleNext = () => {
+    setCurrentIndex(currentIndex === 0 ? data.length - 1 : currentIndex - 1);
+  };
+  const DragStart = () => {
+    setIsDrag(true);
+  };
+  const DragEnd = () => {
+    const currentDrag = dragX.get();
+    console.log(dragX.get());
+    setIsDrag(false);
+    if (currentDrag <= -DRAG_BUFFER) {
+      setCurrentIndex(currentIndex === data.length - 1 ? 0 : currentIndex + 1);
+    } else if (currentDrag >= DRAG_BUFFER) {
+      setCurrentIndex(currentIndex === 0 ? data.length - 1 : currentIndex - 1);
+    }
+  };
+// Auto slider 
   useEffect(() => {
-    const tip = data.find((tit, index) => {
-      return index === slide;
-    })?.tags;
-    console.log(tags);
-    setTags(tip)
-  }, [slide, data]);
+    let interval;
+  
+    if (!isHover) {
+      interval = setInterval(() => {
+        setCurrentIndex(prevIndex => prevIndex === data.length - 1 ? 0 : prevIndex + 1);
+      }, delayValue);
+    }
+
+    return () => clearInterval(interval);
+  }, [isHover, delayValue]);
+// End Auto slider  
 
   return (
-    <div className=' w-full hidden  md:flex  h-full py-10  items-center  justify-between'>
+    <div className="  flex duration-300 h-auto rounded-xl items-center gap-3 justify-center overflow-hidden relative">
+      <button
+        onMouseEnter={() => {
+          setIsHover(true);
+        }}
+        onMouseLeave={() => {
+          setIsHover(false);
+        }}
+        onClick={() => {
+          handleNext();
+        }}
+        className="absolute left-4 flex items-center justify-center rounded-full arrow-background duration-300  text-4xl z-50  text-white"
+      >
+        <ArrowLeftIcon style={{ fontSize: 40 }} className=" text-4xl" />
+      </button>
 
-      <div className='h-full hidden items-center justify-center'>
-        <button onClick={() => prevSlide()} className="  p-1  right-0 z-10">
-          <ArrowLeftIcon className=' text-white text-3xl' />
-        </button>
-      </div>
-
-      <div className=' w-full  flex justify-between flex-col gap-3 h-full'>
-        <h1 className={theme !== "dark" ? ' text-black text-2xl z-50 w-full' : ' text-white text-2xl z-50 w-full'}>FEATURED & RECOMMENDED</h1>
-
-        <div className={`w-full h-96 duration-300 box-large ${bgColorClassTheme} flex flex-col md:flex-row items-start justify-between boxsh2 `}>
-
-          <div className=' relative flex  w-full rounded-md  h-full items-center justify-between'>
-            <button onClick={() => prevSlide()} className="  p-1  right-0 z-10">
-              <ArrowLeftIcon className=' absolute text-white text-4xl' />
-            </button>
-            {data.map((item, index) => {
-              return <img src={item.src} key={index} alt={item.alt} className={`absolute  w-full h-full object-cover duration-1000 ${slide !== index ? 'opacity-0' : 'opacity-100'}`}
-                style={{ transition: 'opacity 0.2s ease-in-out' }} />
-            })}
-            <button onClick={() => nextSlide()} className="  p-1  right-0 z-10">
-              <ArrowRightIcon className=' text-white text-4xl' />
-            </button>
-          </div>
-
-          <div className=' w-full md:w-96  flex flex-col gap-4  justify-start h-auto items-start p-4 '>
-
-            <div className=' flex w-full items-center justify-between'>
-              <div className=' relative bg-green-600 flex overflow-hidden'>
-                <button className=' bg-green-600 rounded-sm w-auto px-4 text-white p-1'>Release SED 2</button>
-              </div>
-              <button className={theme !== "dark" ? ' text-black text-xs' : ' text-white text-xs'}>ON Watchlist</button>
+      <div className=" flex duration-300 rounded-xl w-full h-auto gap-7 flex-col">
+        <motion.div
+          animate={{
+            translateX: `-${currentIndex * 100}%`,
+            transition: {
+              type: "tween", // or use "tween", "inertia", etc. the default is "spring"
+              stiffness: 100, // Adjust stiffness and damping as needed
+              damping: 10,
+            },
+          }}
+          style={{ x: dragX }}
+          onDragStart={DragStart}
+          onDragEnd={DragEnd}
+          onMouseEnter={() => {
+            setIsHover(true);
+          }}
+          onMouseLeave={() => {
+            setIsHover(false);
+          }}
+          dragConstraints={{ right: 0, left: 0 }}
+          drag="x"
+          className="w-full  cursor-pointer rounded-xl h-auto lg:h-80   flex "
+        >
+          {data.map((el, index) => (
+            <div
+              key={el.id}
+              className={
+                theme !== "dark"
+                  ? " border border-gray-200 min-w-full h-full flex flex-col rounded-xl lg:flex-row items-center justify-between"
+                  : "   min-w-full h-full flex flex-col lg:flex-row items-center rounded-xl justify-between"
+              }
+            >
+              <img
+                src={el.src}
+                className="no-drag-img w-full rounded-xl h-44 lg:h-full object-cover lg:object-cover"
+              />
             </div>
+          ))}
 
-            <div className=' flex flex-col gap-2 w-full items-center justify-between'>
-              <h1 style={{ transition: 'opacity 0.2s ease-in-out' }} className={` w-full  ${theme !== "dark" ? "text-black" : " text-white"} duration-300 text-2xl `}>{data.find((tit, index) => index === slide)?.title}</h1>
-              <div className=' w-full flex items-center gap-2'>
-                {tags.map((e, index) => {
-                  return <button className='tags-theme p-1 opacity-80 hover:opacity-100 hover:text-white duration-200 px-2 rounded-xl text-xs shadow-sm text-gray-200'>{e}</button>
-                })}
-              </div>
-            </div>
-
-            <div className=' w-full flex flex-col items-center justify-center bg-black p-3'>
-              <h1 className=' text-white text-2xl'>SAVE 12%</h1>
-              <h1 className=' text-white'>PEE-ORDER-NOW</h1>
-            </div>
-            <div className=' w-full flex h-auto items-end  justify-between'>
-
-              <div className=' flex w-full items-center justify-between'>
-                <div>
-                  <Image src={theme !== "dark" ? SteamDark : SteamLight} className=' h-20 w-20' alt="" />
-                </div>
-                <div className=' flex  items-center'>
-                  <span className=' p-2 bg-black text-white rounded-md'>
-                    -16%
-                  </span>
-                  <span className=' p-2  text-white flex flex-col rounded-md'>
-                    <p className=' text-gray-500 line-through'>$69.99</p>
-                    <p className='orange-text-colo'>$60.89</p>
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
+        </motion.div>
+        <div className="  w-full gap-3 text-white absolute bottom-3 flex items-center justify-center">
+          {data.map((_, index) => (
+            <span
+              style={{ padding: 5 }}
+              onMouseEnter={() => {
+                setIsHover(true);
+              }}
+              onMouseLeave={() => {
+                setIsHover(false);
+              }}
+              key={index}
+              onClick={() => {
+                setCurrentIndex(index);
+              }}
+              className={
+                theme !== "dark"
+                  ? ` cursor-pointer ${
+                      index !== currentIndex ? " bg-gray-500" : "bg-gray-100"
+                    } rounded-full`
+                  : ` cursor-pointer ${
+                      index !== currentIndex ? " bg-gray-500" : "bg-slate-100"
+                    } rounded-full`
+              }
+            ></span>
+          ))}
         </div>
-
-        <div className=' w-full items-center justify-center flex'>
-          <span className=' z-50  duration-300 bottom-2 flex gap-3'>
-            {data.map((_, index) => {
-              return <button onClick={() => { setSlide(index) }} className={index === slide ? ' p-1 h-2 w-6 opacity-100 duration-30 bg-slate-300 cursor-pointer rounded-sm' : ' p-1 h-2 w-6 opacity-70 duration-30 bg-gray-600 cursor-pointer rounded-sm'}></button>
-            })}
-          </span>
-        </div>
       </div>
-
-
-      <div className='h-full hidden  items-center justify-center'>
-        <button onClick={() => nextSlide()} className="  p-1  right-0 z-10">
-          <ArrowRightIcon className=' text-white text-3xl' />
-        </button>
-      </div>
-
+      <button
+        onMouseEnter={() => {
+          setIsHover(true);
+        }}
+        onMouseLeave={() => {
+          setIsHover(false);
+        }}
+        onClick={() => {
+          handleBack();
+        }}
+        className="  absolute right-4 arrow-background duration-300 flex items-center justify-center rounded-full z-50  text-white"
+      >
+        <ArrowRightIcon style={{ fontSize: 40 }} className=" text-4xl" />
+      </button>
     </div>
   );
-}
-export default Carousel;
-*/
+};
 
-/*
-"use client"
-import React, { useEffect, useState, useRef } from 'react';
-import Image from 'next/image';
-import ArrowRightIcon from '@mui/icons-material/ChevronRight';
-import SteamLight from "../../public/imgs/steam.svg"
-import SteamDark from "../../public/imgs/steam-black.svg"
-import ArrowLeftIcon from '@mui/icons-material/ChevronLeft';
-import { useTheme } from 'next-themes'
-import FeaturedImg1 from "../../public/imgs/featured.jpg"
-import "../globals.css"
-import "./carousel.css"
-const data = [
-  {
-    src: "https://gaming-cdn.com/img/products/9575/hcover/1400x500/9575.jpg?v=1708503564",
-    title: "GTA 6",
-    alt: "Image 1 for carousel",
-    price: 99.99,
-    perc: 40,
-    tags: [
-      "Open World",
-      "POP"
-    ]
-  },
-  {
-    src: "https://static1.srcdn.com/wordpress/wp-content/uploads/2022/01/gta-6-infinite-endless-concept-art.jpeg",
-    title: "GTA 5",
-    alt: "Image 2 for carousel",
-    price: 59.99,
-    perc: 20,
-    tags: [
-      "RPG",
-      "Simulation",
-      "ACTION"
-    ]
-  },
-  {
-    src: "https://picsum.photos/seed/img3/600/400",
-    title: "Nature ",
-    alt: "Image 3 for carousel",
-    price: 20.99,
-    perc: 10,
-    tags: [
-      "Nature"
-    ]
-  }
-]
-function Carousel() {
-  const [curentIndex,setCurrentIndex] = useState(0)
-  return (
-    <div  className='  flex items-center h-full relative w-full '>
-    {data.map((el, index) => (
-      <div key={index}  className={index !== curentIndex ? "hidden" : ' w-full  flex items-center justify-center relative'}>
-        <img
-          src={el.src}
-          alt={el.alt}
-          layout='responsive'
-          className='h-screen w-full object-cover no-drag-img'
-        />
-        <div className='absolute no-drag-text w-full flex flex-col gap-3 px-2 sm:px-10 md:px-16 lg:px-20'>
-          <h1 className='text-white text-4xl font-bold'>{el.title}</h1>
-          <div className='flex items-center gap-3'>
-            <button className='bg-orange-600 py-2 px-3 text-xl text-white rounded-lg'>
-              -{el.perc}%
-            </button>
-            <h1 className='text-white text-4xl font-bold'>${el.price}</h1>
-          </div>
-        </div>
-        <div className=' w-full items-center justify-center absolute bottom-4 flex'>
-          <span className=' z-50  duration-300 bottom-2 flex gap-3'>
-            {data.map((_, index) => {
-              return <button onClick={() => { setCurrentIndex(index) }} className={index === curentIndex ? ' p-1 h-2 w-6 opacity-100 duration-30 bg-slate-300 cursor-pointer rounded-sm' : ' p-1 h-2 w-6 opacity-70 duration-30 bg-gray-600 cursor-pointer rounded-sm'}></button>
-            })}
-          </span>
-        </div>
-      </div>
-    ))}
-  </div>
-  )
-}
 export default Carousel;
-*/

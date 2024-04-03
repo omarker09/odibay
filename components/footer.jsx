@@ -24,7 +24,7 @@ function Footer() {
       className={
         theme !== "dark"
           ? "flex flex-col duration-300  h-auto bg-white p-6  pb-0 border-t-2 border-gray-200"
-          : "flex duration-300 flex-col  h-auto border-t-2 border-transparent cart-box p-6 pb-0"
+          : "flex duration-300 flex-col  h-auto border-t-2 border-transparent nav-background p-6 pb-0"
       }
     >
       <div className=" w-full flex flex-col gap-4 items-center sm:items-start px-2 sm:px-10">
@@ -56,7 +56,7 @@ function Footer() {
         className={
           theme !== "dark"
             ? " w-full grid duration-300 grid-cols-1 h-auto sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 px-2 sm:px-10 gap-3  items-center justify-center py-6 bg-white"
-            : " w-full duration-300 grid grid-cols-1 h-auto sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 px-2 sm:px-10 gap-3  items-center justify-center py-6 cart-box"
+            : " w-full duration-300 grid grid-cols-1 h-auto sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 px-2 sm:px-10 gap-3  items-center justify-center py-6 nav-background"
         }
       >
         <div className=" flex flex-col gap-6 justify-center  h-full">
