@@ -11,6 +11,7 @@ import Productrow from "@/componnent-sm/productrow";
 import "react-image-gallery/styles/css/image-gallery.css";
 import "../app/caros.css";
 import Breadcrumbslinks from "@/componnent-sm/Breadcrumbslinks";
+import { usePathname } from 'next/navigation'
 
 // Import SwiperJS styles
 import "swiper/css";
@@ -77,7 +78,20 @@ function Categorypage() {
   const [age, setAge] = React.useState("");
   const t = 50000;
   const maxVal = t.toFixed(2);
+  const  pathname  = usePathname();
 
+  // Function to extract the name from the pathname
+  const extractNameFromPath = () => {
+    const parts = pathname.split('/'); // Split the pathname into parts
+    if (parts.length >= 3) {
+      // Check if the pathname has enough parts
+      return parts[2]; // Return the name part
+    }
+    return ''; // Return empty string if name is not found
+  };
+
+  // Call the function to extract the name
+  const name = extractNameFromPath();
   // options
   const handleChange2 = (event, newValue, activeThumb) => {
     if (!Array.isArray(newValue)) {
@@ -110,7 +124,6 @@ function Categorypage() {
   const handleClick2 = () => {
     setOpen2(!open2);
   };
-  let grd = localStorage.getItem("isGrid");
   const handleChange = (event, nextView) => {
     setView(nextView);
   };
@@ -118,14 +131,7 @@ function Categorypage() {
     setAge(event.target.value);
   };
 
-  // Hooks
-  useEffect(() => {
-    if (grd === "true") {
-      setView("module");
-    } else {
-      setView("list");
-    }
-  }, []);
+
 
   // Responsive Slider Proop
   const responsive = {
@@ -167,180 +173,7 @@ function Categorypage() {
     { title: "GTA 5", price: 1000, category: "XBOX Games", image: pf },
   ];
   // Grid Products Component
-  const GridProducts = () => {
-    // You must alway add discount proop with oldprice if you want discount percentage and price show up  !!
-    // or add the price with no discount if you want normal
-    return (
-      <>
-        <Product
-          img={gtv}
-          discount={99}
-          oldprice={6500}
-          price={1000}
-          title="GTA V"
-          category={"PS5 Games"}
-          rating={5}
-          width={290}
-          height={290}
-        />
-        <Product
-          img={gtv}
-          discount={5}
-          oldprice={100}
-          price={16500}
-          title="GTA V"
-          category={"PS5 Games"}
-          rating={5}
-          width={290}
-          height={290}
-        />
-        <Product
-          img={gtv}
-          discount={5}
-          price={16500}
-          title="GTA V"
-          category={"PS5 Games"}
-          rating={5}
-          width={290}
-          height={290}
-        />
-        <Product
-          img={gtv}
-          discount={5}
-          title="GTA V"
-          category={"PS5 Games"}
-          rating={5}
-          width={290}
-          height={290}
-        />
-        <Product
-          img={gtv}
-          discount={5}
-          title="GTA V"
-          category={"PS5 Games"}
-          rating={5}
-          width={290}
-          height={290}
-        />
-        <Product
-          img={gtv}
-          discount={5}
-          title="GTA V"
-          category={"PS5 Games"}
-          rating={5}
-          width={290}
-          height={290}
-        />
-        <Product
-          img={gtv}
-          discount={5}
-          title="GTA V"
-          category={"PS5 Games"}
-          rating={5}
-          width={290}
-          height={290}
-        />
-        <Product
-          img={gtv}
-          discount={5}
-          title="GTA V"
-          category={"PS5 Games"}
-          rating={5}
-          width={290}
-          height={290}
-        />
-      </>
-    );
-  };
 
-  // Row Products Component
-  const RowProducts = () => {
-    return (
-      <>
-        <Productrow
-          img={gtv}
-          discount={5}
-          oldprice={6500}
-          title="GTA V"
-          category={"PS5 Games fghgfhf fgjfdgj fghfdjgfdjhjdghjdghjdghjghjghjg"}
-          rating={5}
-          width={isGrid ? 290 : 240}
-          height={isGrid ? 290 : 190}
-        />
-        <Productrow
-          img={gtv}
-          discount={5}
-          title="GTA V"
-          price={2000}
-          category={"PS5 Games fghgfhf fgjfdgj fghfdjgfdjhjdghjdghjdghjghjghjg"}
-          rating={5}
-          width={isGrid ? 290 : 240}
-          height={isGrid ? 290 : 190}
-        />
-        <Productrow
-          img={gtv}
-          discount={5}
-          title="GTA V"
-          price={2000}
-          category={"PS5 Games fghgfhf fgjfdgj fghfdjgfdjhjdghjdghjdghjghjghjg"}
-          rating={5}
-          width={isGrid ? 290 : 240}
-          height={isGrid ? 290 : 190}
-        />
-        <Productrow
-          img={gtv}
-          discount={5}
-          oldprice={6500}
-          title="GTA V"
-          price={2000}
-          category={"PS5 Games fghgfhf fgjfdgj fghfdjgfdjhjdghjdghjdghjghjghjg"}
-          rating={5}
-          width={isGrid ? 290 : 240}
-          height={isGrid ? 290 : 190}
-        />
-        <Productrow
-          img={gtv}
-          discount={5}
-          title="GTA V"
-          price={2000}
-          category={"PS5 Games fghgfhf fgjfdgj fghfdjgfdjhjdghjdghjdghjghjghjg"}
-          rating={5}
-          width={isGrid ? 290 : 240}
-          height={isGrid ? 290 : 190}
-        />
-        <Productrow
-          img={gtv}
-          discount={5}
-          title="GTA V"
-          price={2000}
-          category={"PS5 Games fghgfhf fgjfdgj fghfdjgfdjhjdghjdghjdghjghjghjg"}
-          rating={5}
-          width={isGrid ? 290 : 240}
-          height={isGrid ? 290 : 190}
-        />
-        <Productrow
-          img={gtv}
-          discount={5}
-          title="GTA V"
-          price={2000}
-          category={"PS5 Games fghgfhf fgjfdgj fghfdjgfdjhjdghjdghjdghjghjghjg"}
-          rating={5}
-          width={isGrid ? 290 : 240}
-          height={isGrid ? 290 : 190}
-        />
-        <Productrow
-          img={gtv}
-          discount={5}
-          title="GTA V"
-          price={2000}
-          category={"PS5 Games fghgfhf fgjfdgj fghfdjgfdjhjdghjdghjdghjghjghjg"}
-          rating={5}
-          width={isGrid ? 290 : 240}
-          height={isGrid ? 290 : 190}
-        />
-      </>
-    );
-  };
 
   return (
     <div className=" flex flex-col justify-between relative h-auto    bg-white ">
@@ -691,8 +524,8 @@ function Categorypage() {
             <div className=" w-full p-2 bg-white outline outline-1 outline-gray-300 flex flex-col-reverse sm:flex-row items-center gap-5 justify-around">
               <div className=" flex items-center gap-4 w-full justify-start md:justify-start">
                 <div className=" flex gap-2">
-                  <span className=" text-xs lg:text-sm text-gray-500">
-                    Showing results for : 10 / 175 Products
+                  <span className=" text-xs flex items-center gap-3 lg:text-sm text-gray-500">
+                    Showing results for : <h1 className=" text-black font-medium text-lg">{name}</h1>
                   </span>
                 </div>
               </div>
@@ -758,7 +591,11 @@ function Categorypage() {
                 >
                   <ToggleButton
                     onClick={() => {
-                      localStorage.setItem("isGrid", true);
+                      try {
+                        localStorage.setItem("isGrid", true);
+                      } catch {
+                        return;
+                      }
                     }}
                     className=" h-8"
                     value="module"
@@ -768,7 +605,11 @@ function Categorypage() {
                   </ToggleButton>
                   <ToggleButton
                     onClick={() => {
-                      localStorage.setItem("isGrid", false);
+                      try {
+                        localStorage.setItem("isGrid", false);
+                      } catch {
+                        return;
+                      }
                     }}
                     className=" h-8"
                     value="list"
@@ -780,17 +621,15 @@ function Categorypage() {
               </div>
             </div>
             <div
-              className={
-                grd == "true"
-                  ? " w-full h-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 items-center gap-4 "
-                  : " w-full h-auto grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 items-center gap-4 "
-              }
+              className=" w-full h-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 items-center gap-4 "
             >
-              {grd == "true" ? <GridProducts /> : <RowProducts />}
+            <div className=" w-full flex items-center justify-start h-10 ">
+              <span className="text-black">No resault found !!</span>
+            </div>
             </div>
             <div className=" py-4">
               <Stack spacing={2}>
-                <Pagination count={175} shape="rounded" />
+                <Pagination count={0} shape="rounded" />
               </Stack>
             </div>
           </div>

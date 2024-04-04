@@ -22,6 +22,7 @@ import { FaShoppingCart } from "react-icons/fa";
 import { FaSearch } from "react-icons/fa";
 import { FaUser } from "react-icons/fa";
 import { BsBasket2Fill } from "react-icons/bs";
+import { useRouter } from 'next/navigation'
 
 import "../app/globals.css";
 import CloseIcon from "@mui/icons-material/Close";
@@ -50,6 +51,7 @@ import {
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import dzFlag from "../public/flags/DZ.avif";
+import UsFlag from "../public/flags/us.svg";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
@@ -200,30 +202,6 @@ const CurrenceyModal = ({ open3, handleClose3, setOpen3 }) => {
   );
 };
 
-/*
-              <Box sx={{ minWidth: 120 }}>
-                <FormControl className=" cart-box " fullWidth>
-                  <InputLabel
-                    className="text-white "
-                    id="demo-simple-select-label"
-                  >
-                    Age
-                  </InputLabel>
-                  <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={age}
-                    label="Age"
-                    onChange={handleChange}
-                    className=" border-none outline-none  cart-box text-white"
-                  >
-                    <MenuItem className="cart-box" value={10}>Ten</MenuItem>
-                    <MenuItem value={20}>Twenty</MenuItem>
-                    <MenuItem value={30}>Thirty</MenuItem>
-                  </Select>
-                </FormControl>
-              </Box>
-*/
 
 function Navbar(props) {
   const [searchBtnH, setSearchBtnH] = useState(false);
@@ -231,6 +209,7 @@ function Navbar(props) {
   const [cartData, setCartData] = useState([]);
   const [username, setUsername] = useState("");
   const selectCart = useSelector((state) => state.cart);
+  const router = useRouter();
   const [open2, setOpen2] = React.useState(false);
   const [open3, setOpen3] = React.useState(false);
   const handleClose2 = () => setOpen(false);
@@ -547,8 +526,8 @@ function Navbar(props) {
               style={{ paddingTop: 14, paddingBottom: 14 }}
               className=" h-full flex px-1 text-xl gap-4"
             >
-              <Image src={dzFlag} height={20} width={20} />
-              <p className=" text-sm">DZD | English</p>
+              <Image src={UsFlag} height={20} width={20} />
+              <p className=" text-sm">USD | English</p>
             </span>
           </div>
 
@@ -671,7 +650,7 @@ function Navbar(props) {
         {/* Buttons Bar End Here */}
       </div>
       {/* Top Bar End Here */}
-
+      <Divider  className="cart-box-divider"/> 
       <div
         onMouseOut={() => {
           setAccountMenu(false);
@@ -954,7 +933,7 @@ function Navbar(props) {
             </React.Fragment>
           ))}
         </div>
-        {/* Draawer End here */}
+        {/* Drawer End here */}
 
         <div className=" flex items-center nav-background justify-between w-full px-2 sm:px-10 md:px-16 lg:px-20">
           <div className="hidden lg:flex w-full h-full justify-start items-center ">

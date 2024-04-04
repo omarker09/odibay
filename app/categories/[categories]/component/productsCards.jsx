@@ -12,7 +12,7 @@ import Link from "next/link";
 function ProductsCards() {
   const { theme, setTheme } = useTheme();
   return (
-    <div className=" w-full py-5 flex flex-col gap-3 px-2 sm:px-10 md:px-16 lg:px-20">
+    <div className={theme === "dark" ? " w-full py-5  flex flex-col gap-3 px-2 sm:px-10 md:px-16 lg:px-20" : " w-full py-5 bg-white flex flex-col gap-3 px-2 sm:px-10 md:px-16 lg:px-20"}>
       <div className=" w-full flex flex-col  py-2 gap-3 justify-between items-start">
         <div className=" w-full flex items-center justify-between">
           <h1

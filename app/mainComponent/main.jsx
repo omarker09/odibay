@@ -28,14 +28,6 @@ function Mainpage() {
   ];
   const data = [
     {
-      src: "https://static.driffle.com/media-gallery/production/260a9067-a616-4757-95fb-f0f67eca85ad_helldivers-2-mobilewebp",
-      title: "GTA 6",
-      alt: "Image 1 for carousel",
-      price: 99.99,
-      perc: 40,
-      tags: ["Open World", "POP"],
-    },
-    {
       src: "https://static.driffle.com/media-gallery/production/008e7124-0d50-4855-885b-e5cbaf872425_horizon-forbidden-west-complete-edition-desktopwebp",
       title: "GTA 5",
       alt: "Image 2 for carousel",
@@ -54,7 +46,7 @@ function Mainpage() {
   ];
 
   return (
-    <div className="  h-auto w-full cart-parent gap-4 flex flex-col">
+    <div className={theme === "dark" ? "  h-auto w-full cart-parent gap-4 flex flex-col" : "  h-auto w-full bg-white gap-4 flex flex-col"}>
       <SectionAds />
       <div
         className={`w-full h-auto duration-300 ${bgColorClassTheme} flex-col  flex gap-4 items-center px-2 sm:px-10 md:px-16 lg:px-20 justify-center`}

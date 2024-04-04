@@ -7,7 +7,7 @@ import Image from "next/image";
 import Footer from "@/components/footer";
 import LockIcon from "@mui/icons-material/Lock";
 import { useSelector, useDispatch } from "react-redux";
-import { OnRefresh } from "@/app/redux/slices/cartSlice";
+import { OnRefresh, removeFromStorage } from "@/app/redux/slices/cartSlice";
 import { useTheme } from "next-themes";
 import paypalLogo from "../../../public/imgs/paypal.svg";
 import visLogo from "../../../public/imgs/visa.svg";
@@ -17,7 +17,10 @@ import gpayLogo from "../../../public/imgs/googlepay.svg";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import "../../globals.css";
 import axios from "axios";
-
+import Modal from "@mui/material/Modal";
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
+import Button from '@mui/material/Button';
 // Material UI
 
 import List from "@mui/material/List";
@@ -26,7 +29,11 @@ import Collapse from "@mui/material/Collapse";
 export default function Cart() {
   const [open, setOpen] = React.useState(false);
   const [open2, setOpen2] = React.useState(false);
-  const [cartData,setCartData] = useState([]);
+  const [isError, setIsError] = React.useState(false);
+  const [isCancel, setIsCancel] = React.useState(false);
+  const [isApproved, setIsApproved] = useState(false);
+  const [key, setKey] = useState("");
+  const [data, setData] = useState([]);
   const selectCart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
   const { theme, setTheme } = useTheme();
@@ -37,6 +44,13 @@ export default function Cart() {
   const handleClick2 = () => {
     setOpen2(!open2);
     setOpen(false);
+  };
+  const [openBackdrop, setOpenBackDrop] = React.useState(false);
+  const handleCloseBackdrop = () => {
+    setOpenBackDrop(false);
+  };
+  const handleOpenBackdrop = () => {
+    setOpenBackDrop(true);
   };
   const createOrder = async (data, actions) => {
     try {
@@ -74,7 +88,7 @@ export default function Cart() {
       console.log(error.message);
     }
   };
-  const totalPrice = cartData.reduce((acc, current) => {
+  const totalPrice = selectCart.reduce((acc, current) => {
     return (acc += current.price);
   }, 0);
   const initialOptions = {
@@ -101,10 +115,17 @@ export default function Cart() {
     fetchData();
     */
   }, []);
-  
+
   return (
     <div className=" flex w-full flex-col justify-between h-auto">
       <Navbar />
+      <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={openBackdrop}
+        onClick={handleCloseBackdrop}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
       <div
         className={
           theme !== "dark"
@@ -121,9 +142,15 @@ export default function Cart() {
             <LockIcon /> SECURE PAYMENT
           </h1>
           <div className="">
-            <h1 className=" text-white w-auto p-2  bg-green-500 rounded-md">
-              YOUR PAYMENT IS ENCRYPTED AND SAFE
-            </h1>
+            {isCancel === true ? (
+              <h1 className=" text-white w-auto p-2  bg-red-500 rounded-md">
+                YOUR Payment has been declined
+              </h1>
+            ) : (
+              <h1 className=" text-white w-auto p-2  bg-green-500 rounded-md">
+                YOUR PAYMENT IS ENCRYPTED AND SAFE
+              </h1>
+            )}
           </div>
         </div>
         <div className=" w-full gap-10 flex flex-col lg:flex-row ">
@@ -185,10 +212,11 @@ export default function Cart() {
                             }}
                             createOrder={createOrder}
                             onCancel={() => {
-                              alert("Your Order has Been removed");
+                              setIsCancel(true);
                             }}
                             onApprove={async (data) => {
                               try {
+                                handleOpenBackdrop()
                                 const cart_init = [];
                                 for (let i = 0; i < selectCart.length; i++) {
                                   const cart_load = {
@@ -196,7 +224,7 @@ export default function Cart() {
                                   };
                                   cart_init.push(cart_load); // Push each modified item to the cart array
                                 }
-                                const cart = cart_init
+                                const cart = cart_init;
                                 const payload = {
                                   cart: cart,
                                   orderID: data.orderID,
@@ -209,17 +237,21 @@ export default function Cart() {
                                     Authorization: `Bearer ${bearerToken}`, // Including an Authorization header with a Bearer token
                                   },
                                 };
-                                axios.post(
+                                axios
+                                  .post(
                                     "http://localhost:3002/process/paypal/api/orders/capture",
                                     payload,
                                     config
                                   )
                                   .then((resp) => {
-                                    console.log(resp);
+                                    handleCloseBackdrop();
+                                    const response = resp.data.rest;
+                                    console.log(response);
+                                    setData(response);
                                     setIsApproved(true);
-                                    setProducts(resp.data.rest);
-                                    setIsLoading(false);
                                     setIsError(false);
+                                    dispatch(removeFromStorage)
+                                    dispatch(OnRefresh)
                                   })
                                   .catch((err) => {
                                     console.log(err);
@@ -340,6 +372,110 @@ export default function Cart() {
             </div>
           </div>
         </div>
+        <Modal
+          open={isApproved}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <div className=" w-full h-full bg-transparent flex  items-center justify-center">
+            <div
+              className={
+                theme === "dark"
+                  ? " w-96 h-auto flex flex-col gap-4 cart-parent rounded-md p-5"
+                  : " w-96 h-auto flex flex-col gap-4 bg-white rounded-md p-5"
+              }
+            >
+              <div className="w-full flex items-center justify-between">
+                <div className="w-full flex items-start gap-2 flex-col">
+                  <div className="w-full flex justify-between items-center">
+                    <h1
+                      className={
+                        theme === "dark"
+                          ? "text-white bg-green-600 p-2 rounded-md text-xl font-bold"
+                          : "text-black bg-green-600 p-2 rounded-md text-xl font-bold"
+                      }
+                    >
+                      Your Product Key
+                    </h1>
+                    <span
+                      onClick={() => {
+                        setIsApproved(false);
+                      }}
+                      className={
+                        theme === "dark"
+                          ? "text-white cursor-pointer"
+                          : "text-black cursor-pointer"
+                      }
+                    >
+                      &#10006;
+                    </span>
+                  </div>
+                  <p
+                    className={
+                      theme === "dark" ? "text-gray-400" : "text-gray-400"
+                    }
+                  >
+                    We have sent your Product Key to your email address
+                  </p>
+                </div>
+              </div>
+              <Divider
+                style={{ height: 1 }}
+                className={
+                  theme === "dark"
+                    ? " w-full bg-gray-700"
+                    : " w-full bg-gray-300"
+                }
+              />
+              <div>
+                <div className="flex flex-col gap-3">
+                  {data.map((el, index) => {
+                    return (
+                      <div className=" gap-3 flex flex-col">
+                        <span
+                          className={
+                            theme === "dark"
+                              ? "text-white font-extrabold text-sm"
+                              : "text-black font-extrabold text-sm"
+                          }
+                        >
+                          Product name : {el.name}
+                        </span>
+                        <h1
+                          className={
+                            theme === "dark"
+                              ? "text-white font-extrabold text-sm"
+                              : "text-black font-extrabold text-sm"
+                          }
+                        >
+                          KEY : {el.key}
+                        </h1>
+                        <Divider
+                          style={{ height: 1 }}
+                          className=" w-full bg-slate-600"
+                        />
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+              <div>
+                <div className="flex flex-col gap-3">
+                  <h1
+                    className={
+                      theme === "dark"
+                        ? "text-white font-extrabold text-sm"
+                        : "text-black font-extrabold text-sm"
+                    }
+                  >
+                    {key}
+                  </h1>
+                </div>
+              </div>
+              <div className="flex items-center gap-4 justify-between w-full"></div>
+            </div>
+          </div>
+        </Modal>
       </div>
       <Footer />
     </div>

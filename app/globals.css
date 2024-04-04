@@ -224,6 +224,11 @@ body {
 .cart-box {
   background-color: #3a3a3a;
 }
+.cart-box-divider{
+  background-color: #494949;
+  height: 1px;
+  width: 100%;
+}
 .orange-background{
   background-color: #FF9800;
 }
@@ -432,4 +437,25 @@ body {
 .arrow-background:hover {
   transition: 300ms;
   background-color: rgb(0, 0, 0, 0.3);
+}
+.explores-section-bg{
+  background-color: #252424;
+}
+.footer-dark-bg{
+  background-color: #1b1b1b;
+}
+.footer-dark-divider{
+  background-color: #424242;
+}
+.footer-dark-border-top{
+  border-top: 1px solid #2e2e2e;
+}
+.get-in-bg{
+  background-color: #2e2d2d;
+  transition-duration: 300ms;
+}
+.get-in-bg:hover{
+  background-color: #4e4d4d;
+  transition-duration: 300ms;
+
 }

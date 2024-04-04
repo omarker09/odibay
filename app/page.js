@@ -16,12 +16,14 @@ import Sectionads2 from "./mainComponent/Sectionads2";
 import Offere1 from "./mainComponent/offere1";
 import Trusted from "./mainComponent/trusted";
 import ProductsCards from "./categories/[categories]/component/productsCards";
-
+import Explore from "./mainComponent/explore";
+import { useTheme } from "next-themes";
 export default function App() {
+  const {theme,setTheme} = useTheme();
   return (
     <Provider store={store}>
       <NextUIProvider>
-        <div className=" h-auto flex flex-col duration-300  gap-0 w-full cart-parent ">
+        <div className={theme === "dark" ? " h-auto flex flex-col duration-300  gap-0 w-full cart-parent " : " h-auto flex flex-col duration-300  gap-0 w-full bg-white "}>
           <Navbar />
           <Mainpage />
           <ProductsCards />
@@ -32,6 +34,7 @@ export default function App() {
           <ProductsCards />
           <FastSlider />
           <ScrollTop />
+          <Explore/>
           <Trusted />
           <Footer />
         </div>

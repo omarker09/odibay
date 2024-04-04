@@ -65,7 +65,7 @@ function Offere1() {
           </div>
           <div className=" w-full flex justify-start sm:justify-start lg:justify-end items-end">
             <button className="orange-background duration-300 hover:opacity-70 text-black p-2 px-10 rounded-lg">
-              Get the Fanatical Extension
+              Get this Pack
             </button>
           </div>
         </div>
