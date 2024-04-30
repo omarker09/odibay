@@ -272,8 +272,8 @@ export default function Cart() {
           <div
             className={
               theme !== "dark"
-                ? " bg-white box-shadow w-full lg:w-96 rounded-lg py-5 px-5 gap-4 justify-between flex flex-col"
-                : " justify-between cart-box box-shadow w-full lg:w-96 rounded-lg py-5 px-5 gap-4 flex flex-col"
+                ? " bg-white box-shadow w-full h-min lg:w-96 rounded-lg py-5 px-5 gap-4 justify-between flex flex-col"
+                : " justify-between cart-box h-min box-shadow w-full lg:w-96 rounded-lg py-5 px-5 gap-4 flex flex-col"
             }
           >
             <div>
@@ -307,7 +307,7 @@ export default function Cart() {
                 Total :{" "}
               </h1>
               <h1 className=" text-2xl orange-text-colo font-semibold">
-                {totalPrice}$
+                {totalPrice.toFixed(2)}$
               </h1>
             </div>
             <div>
@@ -315,7 +315,7 @@ export default function Cart() {
                 Prices displayed in US Dollar
               </h1>
             </div>
-            <div className=" w-full  items-center px-3 py-3 flex gap-2 bg-black">
+            <div className=" w-full  items-center px-3 py-3 hidden gap-2 bg-black">
               <input type="checkbox" className=" text-lg h-4 w-4" />
               <CardGiftcardIcon className=" text-white text-base" />
               <h1 className=" text-lg text-white">Gift this order</h1>

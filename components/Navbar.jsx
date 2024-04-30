@@ -22,7 +22,7 @@ import { FaShoppingCart } from "react-icons/fa";
 import { FaSearch } from "react-icons/fa";
 import { FaUser } from "react-icons/fa";
 import { BsBasket2Fill } from "react-icons/bs";
-import { useRouter } from 'next/navigation'
+import { useRouter } from "next/navigation";
 
 import "../app/globals.css";
 import CloseIcon from "@mui/icons-material/Close";
@@ -201,7 +201,6 @@ const CurrenceyModal = ({ open3, handleClose3, setOpen3 }) => {
     </Modal>
   );
 };
-
 
 function Navbar(props) {
   const [searchBtnH, setSearchBtnH] = useState(false);
@@ -490,7 +489,6 @@ function Navbar(props) {
               </div>
             </div>
           </div>
-
           <div
             onClick={() => {
               setSearchModal(!searchModal);
@@ -511,7 +509,6 @@ function Navbar(props) {
               <FaSearch className=" text-xl" />
             </span>
           </div>
-
           <div
             onClick={() => {
               setOpen3(true);
@@ -650,7 +647,7 @@ function Navbar(props) {
         {/* Buttons Bar End Here */}
       </div>
       {/* Top Bar End Here */}
-      <Divider  className="cart-box-divider"/> 
+      <Divider className="cart-box-divider" />
       <div
         onMouseOut={() => {
           setAccountMenu(false);
@@ -819,7 +816,7 @@ function Navbar(props) {
                     </ListItem>
                   </List>
                   <Divider />
-                  <List className=" w-full">
+                  <List className=" w-full flex flex-col items-start">
                     <p
                       className={
                         theme !== "dark"
@@ -834,12 +831,12 @@ function Navbar(props) {
                         <ListItemButton
                           className={
                             theme !== "dark"
-                              ? " flex text-black items-center gap-3"
-                              : " flex text-gray-400 items-center gap-3"
+                              ? "text-black flex items-start gap-2  py-1"
+                              : "text-gray-300 flex items-start gap-2 py-1"
                           }
                         >
                           <Image src={text.img} height={30} width={30} />
-                          <ListItemText primary={text.Title} />
+                          <ListItemText className={theme !== "dark" ? "text-black": "text-white"} primary={text.Title} />
                         </ListItemButton>
                       </ListItem>
                     ))}
@@ -872,17 +869,17 @@ function Navbar(props) {
                             <ListItemText
                               className={
                                 theme !== "dark"
-                                  ? " text-gray-600 w-full flex flex-row text-base items-center gap-2"
-                                  : " text-gray-300 w-full flex flex-row text-base items-center gap-2"
+                                  ? "text-black ml-4 py-1"
+                                  : "text-gray-300 ml-4 py-1"
                               }
                             >
-                              <span className=" flex items-center gap-2">
+                              <span className={theme !== "dark" ? " flex items-center gap-2 text-black" : " flex items-center gap-2 text-white"}>
                                 <MdLightMode /> Light Mode
                               </span>
                             </ListItemText>
                           ) : (
                             <ListItemText className=" text-gray-600 w-full flex text-base items-center gap-2">
-                              <span className=" flex items-center gap-2">
+                              <span className={theme !== "dark" ? " flex items-center gap-2 text-black" : " flex items-center gap-2 text-white"}>
                                 <MdDarkMode /> Dark Mode
                               </span>
                             </ListItemText>
@@ -988,16 +985,9 @@ function Navbar(props) {
               }
             >
               <span
-                onMouseEnter={() => {
-                  setIsHover3(!ishover3);
-                  setIsHover1(false);
-                  setIsHover2(false);
-                  setIsHover4(false);
-                  setIsHover5(false);
-                }}
                 className=" menubtn cursor-pointer p-4  py-3 sm:text-base px-2 w-full  flex items-center justify-center text-white"
               >
-                Gift Cards <ArrowDropDownIcon />
+                Gift Cards
               </span>
             </div>
 
@@ -1009,16 +999,9 @@ function Navbar(props) {
               }
             >
               <span
-                onMouseEnter={() => {
-                  setIsHover4(!ishover4);
-                  setIsHover1(false);
-                  setIsHover2(false);
-                  setIsHover3(false);
-                  setIsHover5(false);
-                }}
                 className=" menubtn cursor-pointer p-4  py-3 sm:text-base px-2 w-full  flex items-center justify-center text-white"
               >
-                Xbox <ArrowDropDownIcon />
+                Xbox
               </span>
             </div>
 
@@ -1031,16 +1014,10 @@ function Navbar(props) {
               }
             >
               <span
-                onMouseEnter={() => {
-                  setIsHover5(!ishover5);
-                  setIsHover1(false);
-                  setIsHover2(false);
-                  setIsHover3(false);
-                  setIsHover4(false);
-                }}
+
                 className=" menubtn cursor-pointer p-4 h-full  py-3 sm:text-base px-2 w-full  flex items-center justify-center text-white"
               >
-                New Promo <ArrowDropDownIcon />
+                New Promo
               </span>
             </div>
           </div>

@@ -19,13 +19,14 @@ function Fastcategory() {
       >
         <h1
           className={
-            theme !== "dark"
-              ? " text-black duration-300 text-2xl"
-              : " text-white duration-300 text-2xl"
+            theme === "dark"
+              ? " text-xl font-extrabold text-white"
+              : " text-xl font-extrabold text-black"
           }
         >
-          Browse Fanatical
+             Browse Odibay
         </h1>
+
       </div>
       <div
         className={

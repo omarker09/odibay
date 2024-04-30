@@ -9,20 +9,26 @@ import legopirate from "../../../../public/imgs/lego-pirates-of-carribean.avif";
 import { useTheme } from "next-themes";
 import Link from "next/link";
 
-function ProductsCards() {
+function ProductsCards({ title, product_category }) {
   const { theme, setTheme } = useTheme();
   return (
-    <div className={theme === "dark" ? " w-full py-5  flex flex-col gap-3 px-2 sm:px-10 md:px-16 lg:px-20" : " w-full py-5 bg-white flex flex-col gap-3 px-2 sm:px-10 md:px-16 lg:px-20"}>
-      <div className=" w-full flex flex-col  py-2 gap-3 justify-between items-start">
+    <div
+      className={
+        theme === "dark"
+          ? " w-full py-5  flex flex-col gap-3 px-2 sm:px-10 md:px-16 lg:px-20"
+          : " w-full py-5 bg-white flex flex-col gap-3 px-2 sm:px-10 md:px-16 lg:px-20"
+      }
+    >
+      <div className=" w-full flex flex-col  py-2 gap-2 justify-between items-start">
         <div className=" w-full flex items-center justify-between">
           <h1
             className={
-              theme !== "dark"
-                ? " text-black text-2xl font-bold"
-                : " text-white text-2xl rounded-lg  text-md "
+              theme === "dark"
+                ? " text-xl font-extrabold text-white"
+                : " text-xl font-extrabold text-black"
             }
           >
-            Popular
+            {product_category}
           </h1>
           <Link
             className={
@@ -37,8 +43,7 @@ function ProductsCards() {
         </div>
         <div className="flex flex-col gap-0 justify-start">
           <p className={theme !== "dark" ? "text-gray-500" : "text-gray-200"}>
-            Explore exclusive programs and projects designed to enhance your
-            experience
+            {title}
           </p>
         </div>
       </div>

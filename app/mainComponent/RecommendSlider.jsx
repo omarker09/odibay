@@ -5,7 +5,6 @@ import BasicRating from "@/components/muicomponent/rating";
 import Image from "next/image";
 import ArrowRightIcon from "@mui/icons-material/ChevronRight";
 import ArrowLeftIcon from "@mui/icons-material/ChevronLeft";
-import Mainproducts from "@/components/mainproducts";
 import { useTheme } from "next-themes";
 const DRAG_BUFFER = 30;
 const DELAY_VALUE_MS = 2000;

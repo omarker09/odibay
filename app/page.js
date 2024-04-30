@@ -26,12 +26,12 @@ export default function App() {
         <div className={theme === "dark" ? " h-auto flex flex-col duration-300  gap-0 w-full cart-parent " : " h-auto flex flex-col duration-300  gap-0 w-full bg-white "}>
           <Navbar />
           <Mainpage />
-          <ProductsCards />
+          <ProductsCards product_category={"Fuck yeah"} title={"Try this games before its too late"} />
           <Offere1 />
           <Fastcategory />
-          <ProductsCards />
+          <ProductsCards  product_category={"Asshole"} title={"wtf Try this games before its too late wtf"} />
           <Sectionads2 />
-          <ProductsCards />
+          <ProductsCards  product_category={"Deprrision"} title={"Why Do ihave deprrision huh"} />
           <FastSlider />
           <ScrollTop />
           <Explore/>

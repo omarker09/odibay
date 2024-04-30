@@ -7,7 +7,6 @@ import Link from "next/link";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import Footer from "./footer";
-import Productrow from "@/componnent-sm/productrow";
 import "react-image-gallery/styles/css/image-gallery.css";
 import "../app/caros.css";
 import Breadcrumbslinks from "@/componnent-sm/Breadcrumbslinks";
@@ -39,7 +38,6 @@ import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
-import Product from "@/componnent-sm/product";
 
 // Material UI toggleld buttons
 

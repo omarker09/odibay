@@ -5,7 +5,6 @@ import BasicRating from "@/components/muicomponent/rating";
 import Image from "next/image";
 import ArrowRightIcon from "@mui/icons-material/ChevronRight";
 import ArrowLeftIcon from "@mui/icons-material/ChevronLeft";
-import Mainproducts from "@/components/mainproducts";
 import { useTheme } from "next-themes";
 
 const DRAG_BUFFER = 30;
@@ -68,19 +67,21 @@ const Carousel = ({ data }) => {
       setCurrentIndex(currentIndex === 0 ? data.length - 1 : currentIndex - 1);
     }
   };
-// Auto slider 
+  // Auto slider
   useEffect(() => {
     let interval;
-  
+
     if (!isHover) {
       interval = setInterval(() => {
-        setCurrentIndex(prevIndex => prevIndex === data.length - 1 ? 0 : prevIndex + 1);
+        setCurrentIndex((prevIndex) =>
+          prevIndex === data.length - 1 ? 0 : prevIndex + 1
+        );
       }, delayValue);
     }
 
     return () => clearInterval(interval);
   }, [isHover, delayValue]);
-// End Auto slider  
+  // End Auto slider
 
   return (
     <div className="  flex duration-300 h-auto rounded-xl items-center gap-3 justify-center overflow-hidden relative">
@@ -137,7 +138,6 @@ const Carousel = ({ data }) => {
               />
             </div>
           ))}
-
         </motion.div>
         <div className="  w-full gap-3 text-white absolute bottom-3 flex items-center justify-center">
           {data.map((_, index) => (

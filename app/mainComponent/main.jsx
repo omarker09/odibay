@@ -1,9 +1,7 @@
 import React from "react";
 import SectionAds from "./SectionAds";
 import Carousel from "./carousel";
-import Banner from "@/components/banner";
 import Navbar from "@/components/Navbar";
-import Mainproducts from "@/components/mainproducts";
 
 import { useTheme } from "next-themes";
 function Mainpage() {

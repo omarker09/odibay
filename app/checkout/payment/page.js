@@ -18,9 +18,9 @@ import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import "../../globals.css";
 import axios from "axios";
 import Modal from "@mui/material/Modal";
-import Backdrop from '@mui/material/Backdrop';
-import CircularProgress from '@mui/material/CircularProgress';
-import Button from '@mui/material/Button';
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
+import Button from "@mui/material/Button";
 // Material UI
 
 import List from "@mui/material/List";
@@ -99,28 +99,13 @@ export default function Cart() {
   };
   useEffect(() => {
     dispatch(OnRefresh());
-    /*
-        const fetchData = async () => {
-      try {
-        const gettingLocal = localStorage?.getItem("cartSystem");
-        const cartParse = JSON.parse(gettingLocal);
-        if (cartParse !== undefined) {
-          setCartData(cartParse);
-        }
-      } catch (error) {
-        console.log("Error parsing:", error);
-      }
-    };
-  
-    fetchData();
-    */
   }, []);
 
   return (
     <div className=" flex w-full flex-col justify-between h-auto">
       <Navbar />
       <Backdrop
-        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
         open={openBackdrop}
         onClick={handleCloseBackdrop}
       >
@@ -216,7 +201,7 @@ export default function Cart() {
                             }}
                             onApprove={async (data) => {
                               try {
-                                handleOpenBackdrop()
+                                handleOpenBackdrop();
                                 const cart_init = [];
                                 for (let i = 0; i < selectCart.length; i++) {
                                   const cart_load = {
@@ -250,8 +235,8 @@ export default function Cart() {
                                     setData(response);
                                     setIsApproved(true);
                                     setIsError(false);
-                                    dispatch(removeFromStorage)
-                                    dispatch(OnRefresh)
+                                    dispatch(removeFromStorage);
+                                    dispatch(OnRefresh);
                                   })
                                   .catch((err) => {
                                     console.log(err);
